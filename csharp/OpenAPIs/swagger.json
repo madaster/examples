@@ -1,0 +1,5697 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "Madaster Private API - Build: 7980",
+    "description": "Welcome to the **Madaster Private API** endpoint. This endpoint can be used to interact with the Madaster Platform and its resources. This API does not fully cover all functionality of the platform yet, please see below for the available functions and what they can be used for. For detailed information about the platform and this API, please refer to the [Madaster Documentation](https://docs.madaster.com) or the [Madaster API Documentation](https://docs.madaster.com/api).<br/><br/>To access these resources, you need an authorization token. If you do not have one yet, see the chapter about Authorization in the [API documentation](https://docs.madaster.com/api). This token should be sent as a header with the name 'X-API-Key', which will authenticate the request with the token. The documentation below specifies which requests are available and which responses they might produce.<br/><br/>This API can be reached at the endpoint: **[https://api.madaster.com/](https://api.madaster.com/)**<br/>The interactive Swagger/OpenAPI documentation can be found at: **[https://api.madaster.com/](https://api.madaster.com/)**<br/>If you prefer a static documentation: **[https://docs.madaster.com/api-docs](https://docs.madaster.com/api-docs)**",
+    "contact": {
+      "name": "Madaster Services B.V.",
+      "url": "https://www.madaster.com",
+      "email": "service@madaster.com"
+    },
+    "version": "v3.0"
+  },
+  "paths": {
+    "/api/v3.0/account": {
+      "get": {
+        "tags": [
+          "Account"
+        ],
+        "summary": "Gets the current account for the token",
+        "operationId": "Account_GetAccount",
+        "responses": {
+          "200": {
+            "description": "The account for the used token.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AccountResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v3.0/account/foldertypes": {
+      "get": {
+        "tags": [
+          "Account"
+        ],
+        "summary": "Gets the foldertypes for the account",
+        "operationId": "Account_GetFolderTypes",
+        "responses": {
+          "200": {
+            "description": "The foldertypes for the account.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/FolderType"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v3.0/building": {
+      "get": {
+        "tags": [
+          "Building"
+        ],
+        "summary": "Gets all buildings",
+        "operationId": "Building_GetBuildings",
+        "responses": {
+          "200": {
+            "description": "The request was successful and will return all buildings.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/BuildingResponse"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Building"
+        ],
+        "summary": "Adds a building",
+        "operationId": "Building_AddBuilding",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BuildingRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BuildingRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/BuildingRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "The building was created and the location of the resource will be returned in the 'location' header.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BuildingResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v3.0/building/{id}": {
+      "get": {
+        "tags": [
+          "Building"
+        ],
+        "summary": "Gets a building by its identifier",
+        "operationId": "Building_GetBuildingById",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The building identifier",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The request was successful and will return the building.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BuildingResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Building"
+        ],
+        "summary": "Replaces a building",
+        "operationId": "Building_UpdateBuilding",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The building identifier",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BuildingRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BuildingRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/BuildingRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The building was replaced in its entirety and the result will be returned.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BuildingResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Building"
+        ],
+        "summary": "Deletes the building and all related data",
+        "operationId": "Building_DeleteBuilding",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The building identifier",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "The building was successfully deleted."
+          }
+        }
+      }
+    },
+    "/api/v3.0/building/{id}/validation": {
+      "get": {
+        "tags": [
+          "Building"
+        ],
+        "summary": "Gets building validation parameters",
+        "operationId": "Building_GetValidation",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The building identifier",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The building validation paramaters for the active source files.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BuildingValidation"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v3.0/building/{id}/circular": {
+      "get": {
+        "tags": [
+          "Building"
+        ],
+        "summary": "Gets the circular information of a building",
+        "operationId": "Building_GetCircularInformation",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The building identifier",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The request was successful and will return the building's circular information.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BuildingCircularInformation"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v3.0/building/{id}/process": {
+      "post": {
+        "tags": [
+          "Building"
+        ],
+        "summary": "Schedules the building for proccesing, recalculates all data",
+        "operationId": "Building_RecalculateBuilding",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The building identifier",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "The processing was accepted for generation"
+          }
+        }
+      }
+    },
+    "/api/v3.0/building/{id}/exportpassport": {
+      "post": {
+        "tags": [
+          "Building"
+        ],
+        "summary": "Schedules the generation of a PDF building passport",
+        "operationId": "Building_CreatePdfPassport",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The building identifier",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "accept-language",
+            "in": "header",
+            "description": "The culture to use for the request",
+            "schema": {
+              "$ref": "#/components/schemas/AcceptLanguage"
+            }
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "The pdf passport was accepted for generation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BuildingFileResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v3.0/building/{id}/exportexcelpassport": {
+      "post": {
+        "tags": [
+          "Building"
+        ],
+        "summary": "Schedules the generation of a Excel building passport",
+        "operationId": "Building_CreateExcelPassport",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The building identifier",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "accept-language",
+            "in": "header",
+            "description": "The culture to use for the request",
+            "schema": {
+              "$ref": "#/components/schemas/AcceptLanguage"
+            }
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "The excel passport was accepted for generation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BuildingFileResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v3.0/building/{buildingId}/files": {
+      "get": {
+        "tags": [
+          "BuildingFile"
+        ],
+        "summary": "Gets all building files",
+        "operationId": "BuildingFile_GetFiles",
+        "parameters": [
+          {
+            "name": "buildingId",
+            "in": "path",
+            "description": "The building identifier",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The request was successful and will return all building files.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/BuildingFileResponse"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "BuildingFile"
+        ],
+        "summary": "Adds a building file",
+        "operationId": "BuildingFile_AddFile",
+        "parameters": [
+          {
+            "name": "buildingId",
+            "in": "path",
+            "description": "The building identifier",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BuildingFileRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BuildingFileRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/BuildingFileRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "The building file was created and the location of the resource will be returned in the 'location' header.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BuildingFileResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v3.0/building/{buildingId}/files/{id}": {
+      "get": {
+        "tags": [
+          "BuildingFile"
+        ],
+        "summary": "Gets a building file by its identifier",
+        "operationId": "BuildingFile_GetFileById",
+        "parameters": [
+          {
+            "name": "buildingId",
+            "in": "path",
+            "description": "The building identifier",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The file identifier",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The request was successful and will return the building file.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BuildingFileResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "BuildingFile"
+        ],
+        "summary": "Delete a building file",
+        "operationId": "BuildingFile_DeleteFile",
+        "parameters": [
+          {
+            "name": "buildingId",
+            "in": "path",
+            "description": "The building identifier",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The file identifier",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "The building was successfully deleted."
+          }
+        }
+      }
+    },
+    "/api/v3.0/building/{buildingId}/files/{id}/status": {
+      "get": {
+        "tags": [
+          "BuildingFile"
+        ],
+        "summary": "Gets a building file status by its identifier",
+        "operationId": "BuildingFile_GetStatusById",
+        "parameters": [
+          {
+            "name": "buildingId",
+            "in": "path",
+            "description": "The building identifier",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The file identifier",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The request was successful and will return the building file status.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BuildingFileStatusResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v3.0/building/{buildingId}/files/{id}/download": {
+      "get": {
+        "tags": [
+          "BuildingFile"
+        ],
+        "summary": "Gets a download url for the building file",
+        "operationId": "BuildingFile_Download",
+        "parameters": [
+          {
+            "name": "buildingId",
+            "in": "path",
+            "description": "The building identifier",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The file identifier",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The request was successful and will return the download url.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FileDownloadResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v3.0/building/{buildingId}/files/{id}/active": {
+      "post": {
+        "tags": [
+          "BuildingFile"
+        ],
+        "summary": "Activates or deactivates a building file",
+        "operationId": "BuildingFile_SetActive",
+        "parameters": [
+          {
+            "name": "buildingId",
+            "in": "path",
+            "description": "The building identifier",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The file identifier",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "boolean"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "type": "boolean"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "type": "boolean"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The active-status of the building file was updated and the building file will be returned.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BuildingFileResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v3.0/building/{buildingId}/files/{id}/setimporting": {
+      "post": {
+        "tags": [
+          "BuildingFile"
+        ],
+        "summary": "Sets the status of a file to 'importing', so element can be added or updated can be made.",
+        "operationId": "BuildingFile_SetImporting",
+        "parameters": [
+          {
+            "name": "buildingId",
+            "in": "path",
+            "description": "The building identifier",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The file identifier",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "The building file was set to 'importing', no content will be returned."
+          }
+        }
+      }
+    },
+    "/api/v3.0/building/{buildingId}/files/{id}/startrefinement": {
+      "post": {
+        "tags": [
+          "BuildingFile"
+        ],
+        "summary": "Starts the refinement of a building file.",
+        "operationId": "BuildingFile_StartRefinement",
+        "parameters": [
+          {
+            "name": "buildingId",
+            "in": "path",
+            "description": "The building identifier",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The file identifier",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "The refinement of the building file was started and the location to fetch it's status can be found in the header."
+          }
+        }
+      }
+    },
+    "/api/v3.0/building/{buildingId}/files/{id}/upload/{fileName}": {
+      "post": {
+        "tags": [
+          "BuildingFile"
+        ],
+        "summary": "Uploads a building file.",
+        "operationId": "BuildingFile_UploadFile",
+        "parameters": [
+          {
+            "name": "buildingId",
+            "in": "path",
+            "description": "The building identifier",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The file identifier",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "fileName",
+            "in": "path",
+            "description": "The file name",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "nullable": true
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/octet-stream": {
+              "schema": {
+                "type": "string",
+                "format": "binary"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "The building file was successfully uploaded, and scheduled for further processing."
+          },
+          "202": {
+            "description": "The building file was successfully uploaded."
+          }
+        }
+      }
+    },
+    "/api/v3.0/building/{buildingId}/files/{fileId}/elements": {
+      "get": {
+        "tags": [
+          "BuildingFileElement"
+        ],
+        "summary": "Gets a building file's elements",
+        "description": "This API is ODATA enabled, the following filters can be used:\r\n\r\n* $select\r\n* $filter\r\n* $skip\r\n* $top\r\n            \r\n[READ MORE](https://developer.microsoft.com/en-us/graph/docs/concepts/query_parameters)",
+        "operationId": "BuildingFileElement_GetElements",
+        "parameters": [
+          {
+            "name": "buildingId",
+            "in": "path",
+            "description": "The building identifier",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "fileId",
+            "in": "path",
+            "description": "The file identifier",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The request was successful and will return the building file element.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/BuildingFileElementResponse"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "BuildingFileElement"
+        ],
+        "summary": "Create a new building file element",
+        "operationId": "BuildingFileElement_AddElement",
+        "parameters": [
+          {
+            "name": "buildingId",
+            "in": "path",
+            "description": "The building identifier",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "fileId",
+            "in": "path",
+            "description": "The file identifier",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BuildingFileElementRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BuildingFileElementRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/BuildingFileElementRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "The building file element was created and the location of the resource will be returned in the 'location' header.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BuildingFileElementResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v3.0/building/{buildingId}/files/{fileId}/elements/{id}": {
+      "get": {
+        "tags": [
+          "BuildingFileElement"
+        ],
+        "summary": "Gets a building file element",
+        "operationId": "BuildingFileElement_GetElementById",
+        "parameters": [
+          {
+            "name": "buildingId",
+            "in": "path",
+            "description": "The building identifier",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "fileId",
+            "in": "path",
+            "description": "The file identifier",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The element identifier",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "nullable": true
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The request was successful and will return the building file element.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BuildingFileElementResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "BuildingFileElement"
+        ],
+        "summary": "Updated an existing building file element",
+        "operationId": "BuildingFileElement_UpdateElement",
+        "parameters": [
+          {
+            "name": "buildingId",
+            "in": "path",
+            "description": "The building identifier",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "fileId",
+            "in": "path",
+            "description": "The file identifier",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The element identifier",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "nullable": true
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BuildingFileElementRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BuildingFileElementRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/BuildingFileElementRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The building file element was replaced in its entirety and the result will be returned.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BuildingFileElementResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "BuildingFileElement"
+        ],
+        "summary": "Deletes an existing building file element",
+        "operationId": "BuildingFileElement_DeleteElement",
+        "parameters": [
+          {
+            "name": "buildingId",
+            "in": "path",
+            "description": "The building identifier",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "fileId",
+            "in": "path",
+            "description": "The file identifier",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The element identifier",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "nullable": true
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "The building file element was successfully deleted."
+          }
+        }
+      }
+    },
+    "/api/v3.0/building/{buildingId}/files/{fileId}/elements/batch": {
+      "post": {
+        "tags": [
+          "BuildingFileElement"
+        ],
+        "summary": "Batch: upsert (insert or update) multiple new building file elements (max 500)",
+        "operationId": "BuildingFileElement_UpsertElements",
+        "parameters": [
+          {
+            "name": "buildingId",
+            "in": "path",
+            "description": "The building identifier",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "fileId",
+            "in": "path",
+            "description": "The file identifier",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/BuildingFileElementRequest"
+                },
+                "nullable": true
+              }
+            },
+            "text/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/BuildingFileElementRequest"
+                },
+                "nullable": true
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/BuildingFileElementRequest"
+                },
+                "nullable": true
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The building file elements are created or updated.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ElementBatchResult"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v3.0/database": {
+      "get": {
+        "tags": [
+          "Database"
+        ],
+        "summary": "Gets all material databases",
+        "operationId": "Database_GetDatabases",
+        "parameters": [
+          {
+            "name": "accept-language",
+            "in": "header",
+            "description": "The culture to use for the request",
+            "schema": {
+              "$ref": "#/components/schemas/AcceptLanguage"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The available databases for the specified token.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DatabaseResponse"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Database"
+        ],
+        "summary": "Creates a new material database",
+        "operationId": "Database_CreateDatabase",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DatabaseRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "The created database.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DatabaseResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v3.0/database/{id}": {
+      "get": {
+        "tags": [
+          "Database"
+        ],
+        "summary": "Get a material databases",
+        "operationId": "Database_GetDatabaseById",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The database identifier",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "description": "The database identifier",
+              "format": "uuid",
+              "example": "a6f07c5a-5b0c-4b25-91fe-de91ca2d8276"
+            }
+          },
+          {
+            "name": "accept-language",
+            "in": "header",
+            "description": "The culture to use for the request",
+            "schema": {
+              "$ref": "#/components/schemas/AcceptLanguage"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The material database.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DatabaseResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Database"
+        ],
+        "summary": "Updates an existing database",
+        "operationId": "Database_UpdateDatabase",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The database identifier",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "description": "The database identifier",
+              "format": "uuid",
+              "example": "a6f07c5a-5b0c-4b25-91fe-de91ca2d8276"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DatabaseRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "202": {
+            "description": "The account for the used token.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DatabaseResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Database"
+        ],
+        "summary": "Delete an existing database",
+        "operationId": "Database_DeleteDatabase",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The database identifier",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "description": "The database identifier",
+              "format": "uuid",
+              "example": "a6f07c5a-5b0c-4b25-91fe-de91ca2d8276"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "The database was successfully deleted."
+          }
+        }
+      }
+    },
+    "/api/v3.0/folder": {
+      "get": {
+        "tags": [
+          "Folder"
+        ],
+        "summary": "Gets all folders",
+        "operationId": "Folder_GetFolders",
+        "responses": {
+          "200": {
+            "description": "The available folders for the account.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/FolderResponse"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Folder"
+        ],
+        "summary": "Create a new folder",
+        "operationId": "Folder_AddFolder",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FolderRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FolderRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/FolderRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "The folder was created and the location of the resource will be returned in the 'location' header.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FolderResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v3.0/folder/{id}": {
+      "get": {
+        "tags": [
+          "Folder"
+        ],
+        "summary": "Gets a portfolio by its identifier",
+        "operationId": "Folder_GetFolderById",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The folder identifier",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The request was successful and will return the folder.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FolderResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Folder"
+        ],
+        "summary": "Replaces a folder",
+        "operationId": "Folder_UpdateFolder",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The folder identifier",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FolderRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FolderRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/FolderRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The folder was replaced in its entirety and the result will be returned.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FolderResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v3.0/material/{databaseId}": {
+      "get": {
+        "tags": [
+          "Material"
+        ],
+        "summary": "Gets all materials from a database",
+        "operationId": "Material_GetMaterials",
+        "parameters": [
+          {
+            "name": "databaseId",
+            "in": "path",
+            "description": "The database identifier",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "description": "The database identifier",
+              "format": "uuid",
+              "example": "00000000-0000-0000-0000-000000000000"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "All materials in the database",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/MaterialResponse"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Material"
+        ],
+        "summary": "Create a new material",
+        "operationId": "Material_AddMaterial",
+        "parameters": [
+          {
+            "name": "databaseId",
+            "in": "path",
+            "description": "The database identifier",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "description": "The database identifier",
+              "format": "uuid",
+              "example": "00000000-0000-0000-0000-000000000000"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MaterialRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MaterialRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/MaterialRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "The material was created and the location of the resource will be returned in the 'location' header.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MaterialResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v3.0/material/{databaseId}/{id}": {
+      "get": {
+        "tags": [
+          "Material"
+        ],
+        "summary": "Gets a material by id",
+        "operationId": "Material_GetMaterialById",
+        "parameters": [
+          {
+            "name": "databaseId",
+            "in": "path",
+            "description": "The database identifier",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "description": "The database identifier",
+              "format": "uuid",
+              "example": "00000000-0000-0000-0000-000000000000"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The material identifier",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "description": "The material identifier",
+              "format": "uuid",
+              "example": "015bd663-faf7-449a-bca3-2246e326c047"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The material",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MaterialResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Material"
+        ],
+        "summary": "Update an existing material",
+        "operationId": "Material_UpdateMaterial",
+        "parameters": [
+          {
+            "name": "databaseId",
+            "in": "path",
+            "description": "The database identifier",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "description": "The database identifier",
+              "format": "uuid",
+              "example": "00000000-0000-0000-0000-000000000000"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The material identifier",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "description": "The material identifier",
+              "format": "uuid",
+              "example": "015bd663-faf7-449a-bca3-2246e326c047"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MaterialRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MaterialRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/MaterialRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The material was replaced in its entirety and the result will be returned.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MaterialResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v3.0/material/{databaseId}/{id}/financial": {
+      "get": {
+        "tags": [
+          "Material"
+        ],
+        "summary": "Gets the financial settings for a material",
+        "operationId": "Material_GetFinancialSettingsById",
+        "parameters": [
+          {
+            "name": "databaseId",
+            "in": "path",
+            "description": "The database identifier",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "description": "The database identifier",
+              "format": "uuid",
+              "example": "00000000-0000-0000-0000-000000000000"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The material identifier",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "description": "The material identifier",
+              "format": "uuid",
+              "example": "015bd663-faf7-449a-bca3-2246e326c047"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The material financial settings",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MaterialFinancialSettings"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Material"
+        ],
+        "summary": "Updates the financial settings for a material",
+        "operationId": "Material_UpdateFinancialSettingsById",
+        "parameters": [
+          {
+            "name": "databaseId",
+            "in": "path",
+            "description": "The database identifier",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "description": "The database identifier",
+              "format": "uuid",
+              "example": "00000000-0000-0000-0000-000000000000"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The material identifier",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "description": "The material identifier",
+              "format": "uuid",
+              "example": "015bd663-faf7-449a-bca3-2246e326c047"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MaterialFinancialSettings"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MaterialFinancialSettings"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/MaterialFinancialSettings"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The material financial settings",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MaterialFinancialSettings"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v3.0/material/{databaseId}/{id}/financialvalues": {
+      "get": {
+        "tags": [
+          "Material"
+        ],
+        "summary": "Gets the financial values for a material in manual import mode.",
+        "operationId": "Material_GetFinancialValues",
+        "parameters": [
+          {
+            "name": "databaseId",
+            "in": "path",
+            "description": "The database identifier",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "description": "The database identifier",
+              "format": "uuid",
+              "example": "00000000-0000-0000-0000-000000000000"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The material identifier",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "description": "The material identifier",
+              "format": "uuid",
+              "example": "015bd663-faf7-449a-bca3-2246e326c047"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The material financial values.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/MaterialFinancialValue"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Material"
+        ],
+        "summary": "Adds a financial value for a material",
+        "operationId": "Material_AddFinancialValue",
+        "parameters": [
+          {
+            "name": "databaseId",
+            "in": "path",
+            "description": "The database identifier",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "description": "The database identifier",
+              "format": "uuid",
+              "example": "00000000-0000-0000-0000-000000000000"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The material identifier",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "description": "The material identifier",
+              "format": "uuid",
+              "example": "015bd663-faf7-449a-bca3-2246e326c047"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MaterialFinancialValue"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MaterialFinancialValue"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/MaterialFinancialValue"
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "The financial value was added."
+          }
+        }
+      }
+    },
+    "/api/v3.0/material/{databaseId}/{id}/financialvalues/{valueId}": {
+      "put": {
+        "tags": [
+          "Material"
+        ],
+        "summary": "Updates a financial value for a material",
+        "operationId": "Material_UpdateFinancialValue",
+        "parameters": [
+          {
+            "name": "databaseId",
+            "in": "path",
+            "description": "The database identifier",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "description": "The database identifier",
+              "format": "uuid",
+              "example": "00000000-0000-0000-0000-000000000000"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The material identifier",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "description": "The material identifier",
+              "format": "uuid",
+              "example": "015bd663-faf7-449a-bca3-2246e326c047"
+            }
+          },
+          {
+            "name": "valueId",
+            "in": "path",
+            "description": "The financial value identifier",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MaterialFinancialValue"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MaterialFinancialValue"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/MaterialFinancialValue"
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "The financial value was updated."
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Material"
+        ],
+        "summary": "Deleted a financial value for a material",
+        "operationId": "Material_DeleteFinancialValue",
+        "parameters": [
+          {
+            "name": "databaseId",
+            "in": "path",
+            "description": "The database identifier",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "description": "The database identifier",
+              "format": "uuid",
+              "example": "00000000-0000-0000-0000-000000000000"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The material identifier",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "description": "The material identifier",
+              "format": "uuid",
+              "example": "015bd663-faf7-449a-bca3-2246e326c047"
+            }
+          },
+          {
+            "name": "valueId",
+            "in": "path",
+            "description": "The financial value identifier",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "The financial value was deleted."
+          }
+        }
+      }
+    },
+    "/api/v3.0/material/{databaseId}/{id}/matches": {
+      "get": {
+        "tags": [
+          "Material"
+        ],
+        "summary": "Gets the matching criteria for a material/product",
+        "operationId": "Material_GetMatches",
+        "parameters": [
+          {
+            "name": "databaseId",
+            "in": "path",
+            "description": "The database identifier",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The material/product identifier",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns all matches.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/MatchingCriterion"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Material"
+        ],
+        "summary": "Adds a matchingcriterion to a material/product",
+        "operationId": "Material_AddMatch",
+        "parameters": [
+          {
+            "name": "databaseId",
+            "in": "path",
+            "description": "The database identifier",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The material/product identifier",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MatchingCriterion"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MatchingCriterion"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/MatchingCriterion"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The match was added and will be returned.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MatchingCriterion"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v3.0/material/{databaseId}/{id}/matches/{matchId}": {
+      "get": {
+        "tags": [
+          "Material"
+        ],
+        "summary": "Gets a specific matching criteria for a material/product",
+        "operationId": "Material_GetMatchById",
+        "parameters": [
+          {
+            "name": "databaseId",
+            "in": "path",
+            "description": "The database identifier",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The material/product identifier",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "matchId",
+            "in": "path",
+            "description": "The match identifier",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns a specific match.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/MatchingCriterion"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Material"
+        ],
+        "summary": "Updates a matchingcriterion for a material/product",
+        "operationId": "Material_UpdateMatch",
+        "parameters": [
+          {
+            "name": "databaseId",
+            "in": "path",
+            "description": "The database identifier",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The material/product identifier",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "matchId",
+            "in": "path",
+            "description": "The match identifier",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MatchingCriterion"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MatchingCriterion"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/MatchingCriterion"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The match was updated and will be returned.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MatchingCriterion"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Material"
+        ],
+        "summary": "Deletes a matchingcriterion for a material/product",
+        "operationId": "Material_DeleteMatch",
+        "parameters": [
+          {
+            "name": "databaseId",
+            "in": "path",
+            "description": "The database identifier",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The material/product identifier",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "matchId",
+            "in": "path",
+            "description": "The match identifier",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "The match was deleted."
+          }
+        }
+      }
+    },
+    "/api/v3.0/product/{databaseId}": {
+      "get": {
+        "tags": [
+          "Product"
+        ],
+        "summary": "Gets all products from a database",
+        "operationId": "Product_GetProducts",
+        "parameters": [
+          {
+            "name": "databaseId",
+            "in": "path",
+            "description": "The database identifier",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "description": "The database identifier",
+              "format": "uuid",
+              "example": "00000000-0000-0000-0000-000000000000"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "All products in the database",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ProductResponse"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Product"
+        ],
+        "summary": "Create a new product",
+        "operationId": "Product_AddProduct",
+        "parameters": [
+          {
+            "name": "databaseId",
+            "in": "path",
+            "description": "The database identifier",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "description": "The database identifier",
+              "format": "uuid",
+              "example": "00000000-0000-0000-0000-000000000000"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ProductRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ProductRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ProductRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "The product was created and the location of the resource will be returned in the 'location' header.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProductResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v3.0/product/{databaseId}/{id}": {
+      "get": {
+        "tags": [
+          "Product"
+        ],
+        "summary": "Gets a product by id",
+        "operationId": "Product_GetProductById",
+        "parameters": [
+          {
+            "name": "databaseId",
+            "in": "path",
+            "description": "The database identifier",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "description": "The database identifier",
+              "format": "uuid",
+              "example": "00000000-0000-0000-0000-000000000000"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The product identifier",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "description": "The product identifier",
+              "format": "uuid",
+              "example": "015bd663-faf7-449a-bca3-2246e326c047"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The product",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProductResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Product"
+        ],
+        "summary": "Update an existing product",
+        "operationId": "Product_UpdateProduct",
+        "parameters": [
+          {
+            "name": "databaseId",
+            "in": "path",
+            "description": "The database identifier",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The product identifier",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ProductRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ProductRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ProductRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The product was replaced in its entirety and the result will be returned.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProductResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v3.0/product/{databaseId}/{id}/children": {
+      "get": {
+        "tags": [
+          "Product"
+        ],
+        "summary": "Gets the children of a product.",
+        "operationId": "Product_GetChildren",
+        "parameters": [
+          {
+            "name": "databaseId",
+            "in": "path",
+            "description": "The database identifier",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The material/product identifier",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The request was successful and will return the product's children.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ProductChild"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Product"
+        ],
+        "summary": "Adds a child for a product.",
+        "operationId": "Product_AddChild",
+        "parameters": [
+          {
+            "name": "databaseId",
+            "in": "path",
+            "description": "The database identifier",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The material/product identifier",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ProductChild"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ProductChild"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ProductChild"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The child was added and will be returned.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProductChild"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v3.0/product/{databaseId}/{id}/children/{childId}": {
+      "put": {
+        "tags": [
+          "Product"
+        ],
+        "summary": "Updates a child for a product.",
+        "operationId": "Product_UpdateChild",
+        "parameters": [
+          {
+            "name": "databaseId",
+            "in": "path",
+            "description": "The database identifier",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The material/product identifier",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "childId",
+            "in": "path",
+            "description": "The material/product identifier",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ProductChild"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ProductChild"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ProductChild"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The child was updated and will be returned.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProductChild"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Product"
+        ],
+        "summary": "Deleted a child from a product.",
+        "operationId": "Product_DeleteChild",
+        "parameters": [
+          {
+            "name": "databaseId",
+            "in": "path",
+            "description": "The database identifier",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The material/product identifier",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "childId",
+            "in": "path",
+            "description": "The material/product identifier",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "The child was deleted.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProductChild"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v3.0/product/{databaseId}/{id}/matches": {
+      "get": {
+        "tags": [
+          "Product"
+        ],
+        "summary": "Gets the matching criteria for a material/product",
+        "operationId": "Product_GetMatches",
+        "parameters": [
+          {
+            "name": "databaseId",
+            "in": "path",
+            "description": "The database identifier",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The material/product identifier",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns all matches.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/MatchingCriterion"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Product"
+        ],
+        "summary": "Adds a matchingcriterion to a material/product",
+        "operationId": "Product_AddMatch",
+        "parameters": [
+          {
+            "name": "databaseId",
+            "in": "path",
+            "description": "The database identifier",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The material/product identifier",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MatchingCriterion"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MatchingCriterion"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/MatchingCriterion"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The match was added and will be returned.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MatchingCriterion"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v3.0/product/{databaseId}/{id}/matches/{matchId}": {
+      "get": {
+        "tags": [
+          "Product"
+        ],
+        "summary": "Gets a specific matching criteria for a material/product",
+        "operationId": "Product_GetMatchById",
+        "parameters": [
+          {
+            "name": "databaseId",
+            "in": "path",
+            "description": "The database identifier",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The material/product identifier",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "matchId",
+            "in": "path",
+            "description": "The match identifier",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns a specific match.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/MatchingCriterion"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Product"
+        ],
+        "summary": "Updates a matchingcriterion for a material/product",
+        "operationId": "Product_UpdateMatch",
+        "parameters": [
+          {
+            "name": "databaseId",
+            "in": "path",
+            "description": "The database identifier",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The material/product identifier",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "matchId",
+            "in": "path",
+            "description": "The match identifier",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MatchingCriterion"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MatchingCriterion"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/MatchingCriterion"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The match was updated and will be returned.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MatchingCriterion"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Product"
+        ],
+        "summary": "Deletes a matchingcriterion for a material/product",
+        "operationId": "Product_DeleteMatch",
+        "parameters": [
+          {
+            "name": "databaseId",
+            "in": "path",
+            "description": "The database identifier",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The material/product identifier",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "matchId",
+            "in": "path",
+            "description": "The match identifier",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "The match was deleted."
+          }
+        }
+      }
+    },
+    "/api/v3.0/system/classificationmethods": {
+      "get": {
+        "tags": [
+          "SystemSettings"
+        ],
+        "summary": "Gets the available classification methods",
+        "operationId": "SystemSettings_GetClassificationMethods",
+        "responses": {
+          "200": {
+            "description": "The classification methods.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ClassificationMethod"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v3.0/system/buildingusages": {
+      "get": {
+        "tags": [
+          "SystemSettings"
+        ],
+        "summary": "Gets the available building usages",
+        "operationId": "SystemSettings_GetBuildingUsages",
+        "parameters": [
+          {
+            "name": "accept-language",
+            "in": "header",
+            "description": "The culture to use for the request",
+            "schema": {
+              "$ref": "#/components/schemas/AcceptLanguage"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The building usages.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v3.0/system/materialfamilies": {
+      "get": {
+        "tags": [
+          "SystemSettings"
+        ],
+        "summary": "Gets the available material families",
+        "operationId": "SystemSettings_GetMaterialClassifications",
+        "parameters": [
+          {
+            "name": "accept-language",
+            "in": "header",
+            "description": "The culture to use for the request",
+            "schema": {
+              "$ref": "#/components/schemas/AcceptLanguage"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The material family classifications.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/MaterialFamily"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v3.0/system/materialfamilies/{id}": {
+      "get": {
+        "tags": [
+          "SystemSettings"
+        ],
+        "summary": "Gets the material family members",
+        "operationId": "SystemSettings_GetMaterialClassificationsValues",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The family identifier",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "nullable": true
+            }
+          },
+          {
+            "name": "accept-language",
+            "in": "header",
+            "description": "The culture to use for the request",
+            "schema": {
+              "$ref": "#/components/schemas/AcceptLanguage"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The material family members.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v3.0/system/materialpricesets": {
+      "get": {
+        "tags": [
+          "SystemSettings"
+        ],
+        "summary": "Gets the available material price sets",
+        "operationId": "SystemSettings_GetMaterialPriceSets",
+        "parameters": [
+          {
+            "name": "accept-language",
+            "in": "header",
+            "description": "The culture to use for the request",
+            "schema": {
+              "$ref": "#/components/schemas/AcceptLanguage"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The material price sets.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/MaterialPriceSet"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "AccountType": {
+        "enum": [
+          "VerifiedDatabase",
+          "Supplier",
+          "General",
+          "Private"
+        ],
+        "type": "string",
+        "description": "The account type.",
+        "x-ms-enum": {
+          "name": "AccountType",
+          "modelAsString": false,
+          "values": [
+            {
+              "name": "VerifiedDatabase",
+              "value": "VerifiedDatabase"
+            },
+            {
+              "name": "Supplier",
+              "value": "Supplier"
+            },
+            {
+              "name": "General",
+              "value": "General"
+            },
+            {
+              "name": "Private",
+              "value": "Private"
+            }
+          ]
+        }
+      },
+      "AccountResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "The account identifier",
+            "format": "uuid",
+            "readOnly": true,
+            "example": "3fa85f64-5717-4562-b3fc-2c963f66afa6"
+          },
+          "name": {
+            "type": "string",
+            "description": "The account name",
+            "nullable": true,
+            "example": "Madaster Service B.V."
+          },
+          "accountType": {
+            "$ref": "#/components/schemas/AccountType"
+          }
+        },
+        "description": "The account information."
+      },
+      "FolderType": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "The foldertype identifier",
+            "format": "uuid",
+            "readOnly": true,
+            "example": "3fa85f64-5717-4562-b3fc-2c963f66afa6"
+          },
+          "name": {
+            "$ref": "#/components/schemas/MultiLingualString"
+          },
+          "pluralName": {
+            "$ref": "#/components/schemas/MultiLingualString"
+          },
+          "description": {
+            "$ref": "#/components/schemas/MultiLingualString"
+          },
+          "allowbuildings": {
+            "type": "boolean",
+            "description": "Are buildings allowed in folder based on this folder type"
+          },
+          "hasAddress": {
+            "type": "boolean",
+            "description": "Specifies if folders based on this type can be annotated with an address"
+          },
+          "hasSpatialCoordinates": {
+            "type": "boolean",
+            "description": "Specifies if folders based on this type can be annotated with coordinates"
+          },
+          "allowedSubFolderTypeIds": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "description": "Which foldertypes are allowed as subfolders",
+            "nullable": true
+          }
+        },
+        "description": "The folder type."
+      },
+      "BuildingResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "The identifier of the building",
+            "format": "uuid"
+          },
+          "folderId": {
+            "type": "string",
+            "description": "The identifier of the parent folder",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string",
+            "description": "The name of the building",
+            "nullable": true
+          },
+          "cadastralDesignation": {
+            "type": "string",
+            "description": "The cadastral designation of the building",
+            "nullable": true
+          },
+          "cadastralArea": {
+            "type": "integer",
+            "description": "The cadastral area of the building in square meters",
+            "format": "int32"
+          },
+          "parcelnumber": {
+            "type": "string",
+            "description": "The parcel number of the building",
+            "nullable": true
+          },
+          "publicLawRestriction": {
+            "type": "string",
+            "description": "The restrictions of public law in place for the building",
+            "nullable": true
+          },
+          "completionDate": {
+            "type": "string",
+            "description": "The completion date of the building",
+            "format": "date-time"
+          },
+          "lastRenovationDate": {
+            "type": "string",
+            "description": "The last renovation date of the building",
+            "format": "date-time"
+          },
+          "addressStreet": {
+            "type": "string",
+            "description": "The street that the building is situated on",
+            "nullable": true
+          },
+          "addressHousenumber": {
+            "type": "string",
+            "description": "The housenumber in the street that the building is situated on",
+            "nullable": true
+          },
+          "addressHousenumberAddition": {
+            "type": "string",
+            "description": "The addition of the housenumber in the street that the building is situated on",
+            "nullable": true
+          },
+          "addressZipcode": {
+            "type": "string",
+            "description": "The zipcode of the location that the building is situated on",
+            "nullable": true
+          },
+          "addressCity": {
+            "type": "string",
+            "description": "The city that the building is situated in",
+            "nullable": true
+          },
+          "addressCountry": {
+            "type": "string",
+            "description": "The identifier of the country that the building is situated in",
+            "nullable": true
+          },
+          "buildingUsage": {
+            "type": "string",
+            "description": "The current designation of the building",
+            "nullable": true
+          },
+          "grossSurfaceArea": {
+            "type": "number",
+            "description": "The gross surface area of the building",
+            "format": "double"
+          },
+          "energyLabel": {
+            "type": "string",
+            "description": "The current energy label of the building",
+            "nullable": true
+          },
+          "beng1": {
+            "type": "number",
+            "description": "Energiebehoefte (BENG 1) - kWh/m2.jr",
+            "format": "double",
+            "nullable": true
+          },
+          "beng2": {
+            "type": "number",
+            "description": "Primaire fossiele energie (BENG 2) - kWh/m2.jr",
+            "format": "double",
+            "nullable": true
+          },
+          "beng3": {
+            "type": "number",
+            "description": "Hernieuwbare energie (BENG 3) - %",
+            "format": "double",
+            "nullable": true
+          },
+          "rto": {
+            "type": "number",
+            "description": "Risico temperatuuroverschrijding (T0-juli)",
+            "format": "double",
+            "nullable": true
+          },
+          "energyIndex": {
+            "type": "number",
+            "description": "The energy index",
+            "format": "double"
+          },
+          "expectedLifespan": {
+            "type": "integer",
+            "description": "The expected lifespan for the building",
+            "format": "int32"
+          },
+          "expectedLifespanStructure": {
+            "type": "integer",
+            "description": "The expected lifespan building for the structure brand layer",
+            "format": "int32"
+          },
+          "expectedLifespanSkin": {
+            "type": "integer",
+            "description": "The expected lifespan building for the skin brand layer",
+            "format": "int32"
+          },
+          "expectedLifespanServices": {
+            "type": "integer",
+            "description": "The expected lifespan for the services brand layer",
+            "format": "int32"
+          },
+          "expectedLifespanSpacePlan": {
+            "type": "integer",
+            "description": "The expected lifespan for the space plan brand layer",
+            "format": "int32"
+          },
+          "expectedLifespanStuff": {
+            "type": "integer",
+            "description": "The expected lifespan for the stuff brand layer",
+            "format": "int32"
+          },
+          "breeamLabel": {
+            "type": "integer",
+            "description": "The BREEAM label",
+            "format": "int32"
+          },
+          "gprScoreEnergy": {
+            "type": "number",
+            "description": "The GPR-energy score of the building",
+            "format": "double",
+            "nullable": true
+          },
+          "gprScoreHealth": {
+            "type": "number",
+            "description": "The GPR-health score of the building",
+            "format": "double",
+            "nullable": true
+          },
+          "gprScoreFutureValue": {
+            "type": "number",
+            "description": "The GPR-future score of the building",
+            "format": "double",
+            "nullable": true
+          },
+          "gprScoreUsageQuality": {
+            "type": "number",
+            "description": "The GPR-usage quality score of the building",
+            "format": "double",
+            "nullable": true
+          },
+          "gprScoreEnvironment": {
+            "type": "number",
+            "description": "The GPR-environment score of the building",
+            "format": "double",
+            "nullable": true
+          },
+          "mpgLabel": {
+            "type": "number",
+            "description": "The MPG-score of the building",
+            "format": "double"
+          },
+          "mpgLabelManual": {
+            "type": "number",
+            "description": "The manual MPG-score of the building",
+            "format": "double"
+          },
+          "mpgLabelIndicative": {
+            "type": "number",
+            "description": "The indicative MPG-score of the building",
+            "format": "double"
+          },
+          "leedLabel": {
+            "type": "string",
+            "description": "The LEED label of the building",
+            "nullable": true
+          },
+          "wellScoreBuilding": {
+            "type": "integer",
+            "description": "The WELL score of the building",
+            "format": "int32"
+          },
+          "wellScoreInterior": {
+            "type": "integer",
+            "description": "The WELL score of the interior",
+            "format": "int32"
+          },
+          "wellScoreCoreAndShell": {
+            "type": "integer",
+            "description": "The WELL score of the core and shell",
+            "format": "int32"
+          },
+          "isDirty": {
+            "type": "boolean",
+            "description": "Indicates whether this building is dirty and thus contains data that should be updated"
+          },
+          "hasDirtyElements": {
+            "type": "boolean",
+            "description": "Indicates whether the building contains any elements that have changed"
+          },
+          "mostRecentBimInfo": {
+            "type": "string",
+            "description": "The time of the most recent BIM info change",
+            "format": "date-time"
+          },
+          "geoLatitude": {
+            "type": "number",
+            "description": "The geo latitude of the building",
+            "format": "double"
+          },
+          "geoLongtitude": {
+            "type": "number",
+            "description": "The geo longtitude of the building",
+            "format": "double"
+          },
+          "phaseType": {
+            "type": "string",
+            "description": "The identifier of the phase type of the buildinge",
+            "format": "uuid"
+          },
+          "classificationType": {
+            "type": "string",
+            "description": "The identifier of the building classification type of the buildinge",
+            "format": "uuid"
+          }
+        }
+      },
+      "BuildingPhase": {
+        "enum": [
+          "New",
+          "Existing",
+          "Renovation",
+          "Demolition"
+        ],
+        "type": "string",
+        "x-ms-enum": {
+          "name": "BuildingPhase",
+          "modelAsString": false,
+          "values": [
+            {
+              "name": "New",
+              "value": "New"
+            },
+            {
+              "name": "Existing",
+              "value": "Existing"
+            },
+            {
+              "name": "Renovation",
+              "value": "Renovation"
+            },
+            {
+              "name": "Demolition",
+              "value": "Demolition"
+            }
+          ]
+        }
+      },
+      "BuildingRequest": {
+        "required": [
+          "buildingUsage",
+          "classificationType",
+          "completionDate",
+          "folderId",
+          "grossSurfaceArea",
+          "materialClassificationTypeId",
+          "name",
+          "phase"
+        ],
+        "type": "object",
+        "properties": {
+          "folderId": {
+            "type": "string",
+            "description": "The identifier of the parent folder",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string",
+            "description": "The name of the building"
+          },
+          "phase": {
+            "$ref": "#/components/schemas/BuildingPhase"
+          },
+          "cadastralDesignation": {
+            "type": "string",
+            "description": "The cadastral designation of the building",
+            "nullable": true
+          },
+          "cadastralArea": {
+            "type": "integer",
+            "description": "The cadastral area of the building in square meters",
+            "format": "int32"
+          },
+          "parcelnumber": {
+            "type": "string",
+            "description": "The parcel number of the building",
+            "nullable": true
+          },
+          "publicLawRestriction": {
+            "type": "string",
+            "description": "The restrictions of public law in place for the building",
+            "nullable": true
+          },
+          "completionDate": {
+            "type": "string",
+            "description": "The completion date of the building",
+            "format": "date-time"
+          },
+          "lastRenovationDate": {
+            "type": "string",
+            "description": "The last renovation date of the building",
+            "format": "date-time",
+            "nullable": true
+          },
+          "addressStreet": {
+            "type": "string",
+            "description": "The street that the building is situated on",
+            "nullable": true
+          },
+          "addressHousenumber": {
+            "type": "string",
+            "description": "The housenumber in the street that the building is situated on",
+            "nullable": true
+          },
+          "addressHousenumberAddition": {
+            "type": "string",
+            "description": "The addition of the housenumber in the street that the building is situated on",
+            "nullable": true
+          },
+          "addressZipcode": {
+            "type": "string",
+            "description": "The zipcode of the location that the building is situated on",
+            "nullable": true
+          },
+          "addressCity": {
+            "type": "string",
+            "description": "The city that the building is situated in",
+            "nullable": true
+          },
+          "addressCountry": {
+            "type": "string",
+            "description": "The identifier of the country that the building is situated in",
+            "nullable": true
+          },
+          "buildingUsage": {
+            "type": "string",
+            "description": "The current designation of the building (call /api/v3.0/system/buildingusages, to retrieve possible values)"
+          },
+          "grossSurfaceArea": {
+            "type": "number",
+            "description": "The gross surface area of the building",
+            "format": "double",
+            "nullable": true
+          },
+          "energyLabel": {
+            "type": "string",
+            "description": "The current energy label of the building",
+            "nullable": true
+          },
+          "beng1": {
+            "type": "number",
+            "description": "Energiebehoefte (BENG 1) - kWh/m2.jr",
+            "format": "double",
+            "nullable": true
+          },
+          "beng2": {
+            "type": "number",
+            "description": "Primaire fossiele energie (BENG 2) - kWh/m2.jr",
+            "format": "double",
+            "nullable": true
+          },
+          "beng3": {
+            "type": "number",
+            "description": "Hernieuwbare energie (BENG 3) - %",
+            "format": "double",
+            "nullable": true
+          },
+          "rto": {
+            "type": "number",
+            "description": "Risico temperatuuroverschrijding (T0-juli)",
+            "format": "double",
+            "nullable": true
+          },
+          "energyIndex": {
+            "type": "number",
+            "description": "The energy index",
+            "format": "double"
+          },
+          "expectedLifespan": {
+            "type": "integer",
+            "description": "The expected lifespan for the building",
+            "format": "int32",
+            "nullable": true
+          },
+          "expectedLifespanStructure": {
+            "type": "integer",
+            "description": "The expected lifespan building for the structure brand layer",
+            "format": "int32",
+            "nullable": true
+          },
+          "expectedLifespanSkin": {
+            "type": "integer",
+            "description": "The expected lifespan building for the skin brand layer",
+            "format": "int32",
+            "nullable": true
+          },
+          "expectedLifespanServices": {
+            "type": "integer",
+            "description": "The expected lifespan for the services brand layer",
+            "format": "int32",
+            "nullable": true
+          },
+          "expectedLifespanSpacePlan": {
+            "type": "integer",
+            "description": "The expected lifespan for the space plan brand layer",
+            "format": "int32",
+            "nullable": true
+          },
+          "expectedLifespanStuff": {
+            "type": "integer",
+            "description": "The expected lifespan for the stuff brand layer",
+            "format": "int32",
+            "nullable": true
+          },
+          "breeamLabel": {
+            "type": "integer",
+            "description": "The BREEAM label",
+            "format": "int32"
+          },
+          "gprScoreEnergy": {
+            "type": "number",
+            "description": "The GPR-energy score of the building",
+            "format": "double",
+            "nullable": true
+          },
+          "gprScoreHealth": {
+            "type": "number",
+            "description": "The GPR-health score of the building",
+            "format": "double",
+            "nullable": true
+          },
+          "gprScoreFutureValue": {
+            "type": "number",
+            "description": "The GPR-future score of the building",
+            "format": "double",
+            "nullable": true
+          },
+          "gprScoreUsageQuality": {
+            "type": "number",
+            "description": "The GPR-usage quality score of the building",
+            "format": "double",
+            "nullable": true
+          },
+          "gprScoreEnvironment": {
+            "type": "number",
+            "description": "The GPR-environment score of the building",
+            "format": "double",
+            "nullable": true
+          },
+          "mpgLabel": {
+            "type": "number",
+            "description": "The MPG-score of the building",
+            "format": "double"
+          },
+          "mpgLabelManual": {
+            "type": "number",
+            "description": "The manual MPG-score of the building",
+            "format": "double"
+          },
+          "leedLabel": {
+            "type": "string",
+            "description": "The LEED label of the building",
+            "nullable": true
+          },
+          "wellScoreBuilding": {
+            "type": "integer",
+            "description": "The WELL score of the building",
+            "format": "int32"
+          },
+          "wellScoreInterior": {
+            "type": "integer",
+            "description": "The WELL score of the interior",
+            "format": "int32"
+          },
+          "wellScoreCoreAndShell": {
+            "type": "integer",
+            "description": "The WELL score of the core and shell",
+            "format": "int32"
+          },
+          "classificationType": {
+            "type": "string",
+            "description": "The identifier of the building classification type of the building (call /api/v3.0/system/classificationmethods, to retrieve possible values)",
+            "format": "uuid"
+          },
+          "materialClassificationTypeId": {
+            "type": "string",
+            "description": "The identifier of the material classification type of the building (call /api/v3.0/system/materialfamilies, to retrieve possible values)"
+          }
+        }
+      },
+      "BuildingValidation": {
+        "type": "object",
+        "properties": {
+          "percentageClassificationAssignedByNumber": {
+            "type": "number",
+            "description": "The percentage of elements that have an assigned classifications, counted by number of elements",
+            "format": "double"
+          },
+          "percentageClassificationAssignedByVolume": {
+            "type": "number",
+            "description": "The percentage of elements that have an assigned classifications, counted by volume of elements",
+            "format": "double"
+          },
+          "percentageVolumeBaseQuantityAssignedByNumber": {
+            "type": "number",
+            "description": "The percentage of elements that have a volume base quantity, counted by number of elements",
+            "format": "double"
+          },
+          "percentageAreaBaseQuantityAssignedByNumber": {
+            "type": "number",
+            "description": "The percentage of elements that have an area base quantity, counted by number of elements",
+            "format": "double"
+          },
+          "percentageLengthBaseQuantityAssignedByNumber": {
+            "type": "number",
+            "description": "The percentage of elements that have a length base quantity, counted by number of elements",
+            "format": "double"
+          },
+          "percentageBaseQuantitiesAssignedByNumber": {
+            "type": "number",
+            "description": "The percentage of elements that have base quantity information, counted by number of elements",
+            "format": "double"
+          },
+          "percentageMaterialSpecifiedByNumber": {
+            "type": "number",
+            "description": "The percentage of elements that have a material specified, counted by number of elements",
+            "format": "double"
+          },
+          "percentageMaterialSpecifiedByVolume": {
+            "type": "number",
+            "description": "The percentage of elements that have a material specified, counted by volume of elements",
+            "format": "double"
+          },
+          "percentageElementsWithKnownMassByNumber": {
+            "type": "number",
+            "description": "The percentage of elements that have a known mass, counted by number of elements",
+            "format": "double"
+          },
+          "percentageElementsMappedByNumber": {
+            "type": "number",
+            "description": "The percentage of elements that have been mapped to an element, counted by number of elements",
+            "format": "double"
+          },
+          "percentageElementsMappedByVolume": {
+            "type": "number",
+            "description": "The percentage of elements that have been mapped to an element, counted by volume of elements",
+            "format": "double"
+          }
+        },
+        "description": "Validation data about a building."
+      },
+      "BuildingCircularInformation": {
+        "type": "object",
+        "properties": {
+          "circularityConstructionPhase": {
+            "type": "number",
+            "description": "The use of non-virgin materials during the construction phase.",
+            "format": "double"
+          },
+          "circularityUsagePhase": {
+            "type": "number",
+            "description": "The utility of the building.",
+            "format": "double"
+          },
+          "circularityEndOfLifePhase": {
+            "type": "number",
+            "description": "The percentage of the content that is recoverable during the end-of-life phase.",
+            "format": "double"
+          },
+          "ciScoreBuilding": {
+            "type": "number",
+            "description": "The combined CI score of the building using the circularity of the phases.",
+            "format": "double"
+          },
+          "correctionUnknownMaterials": {
+            "type": "number",
+            "description": "The applicable correction for the amount of elements that have a known material.",
+            "format": "double"
+          },
+          "correctionUnknownBrandLayer": {
+            "type": "number",
+            "description": "The applicable correction for the amount of elements that have a known brand layer.",
+            "format": "double"
+          },
+          "madasterCiScore": {
+            "type": "number",
+            "description": "The final Madaster CI score, taking into account the corrections on the CI score.",
+            "format": "double"
+          }
+        },
+        "description": "Circular information about a building."
+      },
+      "BuildingFileStatuses": {
+        "enum": [
+          "Error",
+          "Uploaded",
+          "Refined",
+          "Mapped",
+          "Refining",
+          "Mapping",
+          "Creating",
+          "Importing",
+          "Imported",
+          "UnknownImportFile"
+        ],
+        "type": "string",
+        "description": "The building file status enum.",
+        "x-ms-enum": {
+          "name": "BuildingFileStatuses",
+          "modelAsString": false,
+          "values": [
+            {
+              "name": "Error",
+              "value": "Error"
+            },
+            {
+              "name": "Uploaded",
+              "value": "Uploaded"
+            },
+            {
+              "name": "Refined",
+              "value": "Refined"
+            },
+            {
+              "name": "Mapped",
+              "value": "Mapped"
+            },
+            {
+              "name": "Refining",
+              "value": "Refining"
+            },
+            {
+              "name": "Mapping",
+              "value": "Mapping"
+            },
+            {
+              "name": "Creating",
+              "value": "Creating"
+            },
+            {
+              "name": "Importing",
+              "value": "Importing"
+            },
+            {
+              "name": "Imported",
+              "value": "Imported"
+            },
+            {
+              "name": "UnknownImportFile",
+              "value": "UnknownImportFile"
+            }
+          ]
+        }
+      },
+      "BuildingFileType": {
+        "enum": [
+          "Source",
+          "Information",
+          "PassportPdf",
+          "PassportExcel"
+        ],
+        "type": "string",
+        "description": "The building file type enum.",
+        "x-ms-enum": {
+          "name": "BuildingFileType",
+          "modelAsString": false,
+          "values": [
+            {
+              "name": "Source",
+              "value": "Source"
+            },
+            {
+              "name": "Information",
+              "value": "Information"
+            },
+            {
+              "name": "PassportPdf",
+              "value": "PassportPdf"
+            },
+            {
+              "name": "PassportExcel",
+              "value": "PassportExcel"
+            }
+          ]
+        }
+      },
+      "BuildingFileValidation": {
+        "type": "object",
+        "properties": {
+          "percentageClassificationAssignedByNumber": {
+            "type": "number",
+            "description": "The percentage of elements that have an assigned classifications, counted by number of elements",
+            "format": "double"
+          },
+          "percentageClassificationAssignedByVolume": {
+            "type": "number",
+            "description": "The percentage of elements that have an assigned classifications, counted by volume of elements",
+            "format": "double"
+          },
+          "percentageVolumeBaseQuantityAssignedByNumber": {
+            "type": "number",
+            "description": "The percentage of elements that have a volume base quantity, counted by number of elements",
+            "format": "double"
+          },
+          "percentageAreaBaseQuantityAssignedByNumber": {
+            "type": "number",
+            "description": "The percentage of elements that have an area base quantity, counted by number of elements",
+            "format": "double"
+          },
+          "percentageLengthBaseQuantityAssignedByNumber": {
+            "type": "number",
+            "description": "The percentage of elements that have a length base quantity, counted by number of elements",
+            "format": "double"
+          },
+          "percentageBaseQuantitiesAssignedByNumber": {
+            "type": "number",
+            "description": "The percentage of elements that have base quantity information, counted by number of elements",
+            "format": "double"
+          },
+          "percentageMaterialSpecifiedByNumber": {
+            "type": "number",
+            "description": "The percentage of elements that have a material specified, counted by number of elements",
+            "format": "double"
+          },
+          "percentageMaterialSpecifiedByVolume": {
+            "type": "number",
+            "description": "The percentage of elements that have a material specified, counted by volume of elements",
+            "format": "double"
+          },
+          "percentageElementsWithKnownMassByNumber": {
+            "type": "number",
+            "description": "The percentage of elements that have a known mass, counted by number of elements",
+            "format": "double"
+          },
+          "percentageElementsMappedByNumber": {
+            "type": "number",
+            "description": "The percentage of elements that have been mapped to an element, counted by number of elements",
+            "format": "double"
+          },
+          "percentageElementsMappedByVolume": {
+            "type": "number",
+            "description": "The percentage of elements that have been mapped to an element, counted by volume of elements",
+            "format": "double"
+          }
+        },
+        "description": "Validation data about a building file."
+      },
+      "BuildingFileResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Gets or sets the building identifier.",
+            "format": "uuid"
+          },
+          "buildingId": {
+            "type": "string",
+            "description": "Gets or sets the building identifier.",
+            "format": "uuid"
+          },
+          "isActive": {
+            "type": "boolean",
+            "description": "Gets or sets a value indicating whether the buildingfile will be included in the building data."
+          },
+          "isDirty": {
+            "type": "boolean",
+            "description": "Gets or sets a value indicating whether the file is dirty."
+          },
+          "fileName": {
+            "type": "string",
+            "description": "Gets or sets the name of the file.",
+            "nullable": true
+          },
+          "fileSize": {
+            "type": "integer",
+            "description": "Get or sets the size of the file in bytes.",
+            "format": "int64"
+          },
+          "status": {
+            "$ref": "#/components/schemas/BuildingFileStatuses"
+          },
+          "type": {
+            "$ref": "#/components/schemas/BuildingFileType"
+          },
+          "lastModifiedDate": {
+            "type": "string",
+            "description": "Gets or sets the last modified date for the building file.",
+            "format": "date-time"
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Gets or sets the tags for the building file.",
+            "nullable": true
+          },
+          "validation": {
+            "$ref": "#/components/schemas/BuildingFileValidation"
+          }
+        }
+      },
+      "BuildingRequestFileType": {
+        "enum": [
+          "Source",
+          "Information"
+        ],
+        "type": "string",
+        "description": "The building file type enum.",
+        "x-ms-enum": {
+          "name": "BuildingRequestFileType",
+          "modelAsString": false,
+          "values": [
+            {
+              "name": "Source",
+              "value": "Source"
+            },
+            {
+              "name": "Information",
+              "value": "Information"
+            }
+          ]
+        }
+      },
+      "BuildingFileRequest": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "$ref": "#/components/schemas/BuildingRequestFileType"
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "The tags for the building file",
+            "nullable": true
+          },
+          "name": {
+            "type": "string",
+            "description": "The name of the building file",
+            "nullable": true
+          },
+          "preferredDatabaseIds": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "description": "The identifiers of the material databases to use for automatic mapping, in their preferred order",
+            "nullable": true
+          }
+        }
+      },
+      "BuildingFileStatusResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "$ref": "#/components/schemas/BuildingFileStatuses"
+          },
+          "elementProcessedCount": {
+            "type": "integer",
+            "description": "Gets or sets the total processed elements (imported or refined).",
+            "format": "int32"
+          },
+          "elementCount": {
+            "type": "integer",
+            "description": "Gets or sets the total elements.",
+            "format": "int32"
+          },
+          "statusMessage": {
+            "type": "string",
+            "description": "Gets or sets the import or refinement status message.",
+            "nullable": true
+          }
+        }
+      },
+      "FileDownloadResponse": {
+        "type": "object",
+        "properties": {
+          "url": {
+            "type": "string",
+            "description": "The download url for a file",
+            "nullable": true
+          },
+          "expirationDateTime": {
+            "type": "string",
+            "description": "The expiration date and time of the url",
+            "format": "date-time"
+          }
+        }
+      },
+      "ElementType": {
+        "enum": [
+          "Material",
+          "LegacyMaterial",
+          "VolumeProduct",
+          "QuantityProduct",
+          "AreaProduct",
+          "LengthProduct"
+        ],
+        "type": "string",
+        "x-ms-enum": {
+          "name": "ElementType",
+          "modelAsString": false,
+          "values": [
+            {
+              "name": "Material",
+              "value": "Material"
+            },
+            {
+              "name": "LegacyMaterial",
+              "value": "LegacyMaterial"
+            },
+            {
+              "name": "VolumeProduct",
+              "value": "VolumeProduct"
+            },
+            {
+              "name": "QuantityProduct",
+              "value": "QuantityProduct"
+            },
+            {
+              "name": "AreaProduct",
+              "value": "AreaProduct"
+            },
+            {
+              "name": "LengthProduct",
+              "value": "LengthProduct"
+            }
+          ]
+        }
+      },
+      "Mapping": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "type": {
+            "$ref": "#/components/schemas/ElementType"
+          }
+        },
+        "description": "A mapping."
+      },
+      "PhaseMatch": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string",
+            "description": "Gets or sets the name of the matched phase.",
+            "nullable": true
+          }
+        },
+        "description": "A phase match."
+      },
+      "BrandLayerMatch": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string",
+            "description": "Gets or sets the name of the matched brand layer.",
+            "nullable": true
+          }
+        },
+        "description": "A brand layer match."
+      },
+      "ClassificationMatch": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string",
+            "description": "Gets or sets the name of the matched classification.",
+            "nullable": true
+          },
+          "code": {
+            "type": "string",
+            "description": "Gets or sets the code of the matched classification.",
+            "nullable": true
+          }
+        },
+        "description": "A classification match."
+      },
+      "BuildingFileElementResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Gets or sets the mark.",
+            "nullable": true
+          },
+          "name": {
+            "type": "string",
+            "description": "Gets or sets the name.",
+            "nullable": true
+          },
+          "buildingFileId": {
+            "type": "string",
+            "description": "Gets or sets the building file identifier.",
+            "format": "uuid"
+          },
+          "materialName": {
+            "type": "string",
+            "description": "Gets or sets the name of the element.",
+            "nullable": true
+          },
+          "typeName": {
+            "type": "string",
+            "description": "Gets or sets the name of the type.",
+            "nullable": true
+          },
+          "elementClass": {
+            "type": "string",
+            "description": "Gets or sets the element class.",
+            "nullable": true
+          },
+          "volume": {
+            "type": "number",
+            "description": "Gets or sets the volume.",
+            "format": "double"
+          },
+          "area": {
+            "type": "number",
+            "description": "Gets or sets the area.",
+            "format": "double"
+          },
+          "height": {
+            "type": "number",
+            "description": "Gets or sets the height.",
+            "format": "double"
+          },
+          "width": {
+            "type": "number",
+            "description": "Gets or sets the width.",
+            "format": "double"
+          },
+          "length": {
+            "type": "number",
+            "description": "Gets or sets the length.",
+            "format": "double"
+          },
+          "mapping": {
+            "$ref": "#/components/schemas/Mapping"
+          },
+          "phaseMatch": {
+            "$ref": "#/components/schemas/PhaseMatch"
+          },
+          "brandLayerMatch": {
+            "$ref": "#/components/schemas/BrandLayerMatch"
+          },
+          "classificationMatch": {
+            "$ref": "#/components/schemas/ClassificationMatch"
+          },
+          "phaseLookup": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Gets or sets the building process phase lookups.",
+            "nullable": true
+          },
+          "classificationLookup": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Gets or sets the classification (NL/SfB) lookups.",
+            "nullable": true
+          },
+          "floor": {
+            "type": "string",
+            "description": "Gets or sets the floor name.",
+            "nullable": true
+          }
+        },
+        "description": "A response for a building file element."
+      },
+      "BuildingFileElementRequest": {
+        "required": [
+          "id"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "The identifier of the element",
+            "example": "1234567890"
+          },
+          "name": {
+            "type": "string",
+            "description": "The name of the element",
+            "nullable": true
+          },
+          "materialName": {
+            "type": "string",
+            "description": "The name of the element",
+            "nullable": true,
+            "example": "Concrete"
+          },
+          "materialId": {
+            "type": "string",
+            "description": "The id of the mapped material/product",
+            "format": "uuid",
+            "nullable": true
+          },
+          "typeName": {
+            "type": "string",
+            "description": "The type name of the element",
+            "nullable": true
+          },
+          "elementClass": {
+            "type": "string",
+            "description": "The element class of the element",
+            "nullable": true,
+            "example": "IfcWall"
+          },
+          "volume": {
+            "type": "number",
+            "description": "The volume of the element",
+            "format": "double"
+          },
+          "area": {
+            "type": "number",
+            "description": "The area of the element",
+            "format": "double"
+          },
+          "height": {
+            "type": "number",
+            "description": "The height of the element",
+            "format": "double"
+          },
+          "width": {
+            "type": "number",
+            "description": "The width of the element",
+            "format": "double"
+          },
+          "length": {
+            "type": "number",
+            "description": "The length of the element",
+            "format": "double"
+          },
+          "phaseLookup": {
+            "type": "string",
+            "description": "The building process phase lookup for the element, this value will be used to match to a phase",
+            "nullable": true
+          },
+          "classificationLookup": {
+            "type": "string",
+            "description": "The classification lookup for the element, this value will be used to match to a classification",
+            "nullable": true
+          },
+          "floor": {
+            "type": "string",
+            "description": "The floor of the element",
+            "nullable": true
+          }
+        },
+        "description": "A request for a building file element."
+      },
+      "ElementBatchResult": {
+        "type": "object",
+        "properties": {
+          "failures": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true
+          }
+        }
+      },
+      "DatabaseType": {
+        "enum": [
+          "VerifiedDatabase",
+          "Supplier",
+          "General"
+        ],
+        "type": "string",
+        "description": "The database type.",
+        "x-ms-enum": {
+          "name": "DatabaseType",
+          "modelAsString": false,
+          "values": [
+            {
+              "name": "VerifiedDatabase",
+              "value": "VerifiedDatabase"
+            },
+            {
+              "name": "Supplier",
+              "value": "Supplier"
+            },
+            {
+              "name": "General",
+              "value": "General"
+            }
+          ]
+        }
+      },
+      "ParentType": {
+        "enum": [
+          "Account",
+          "Folder",
+          "Building"
+        ],
+        "type": "string",
+        "x-ms-enum": {
+          "name": "ParentType",
+          "modelAsString": false,
+          "values": [
+            {
+              "name": "Account",
+              "value": "Account"
+            },
+            {
+              "name": "Folder",
+              "value": "Folder"
+            },
+            {
+              "name": "Building",
+              "value": "Building"
+            }
+          ]
+        }
+      },
+      "DatabaseResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "The database identifier",
+            "format": "uuid",
+            "readOnly": true,
+            "example": "3fa85f64-5717-4562-b3fc-2c963f66afa6"
+          },
+          "accountId": {
+            "type": "string",
+            "description": "The account identifier",
+            "format": "uuid",
+            "readOnly": true,
+            "example": "00000000-0000-0000-0000-000000000000"
+          },
+          "name": {
+            "$ref": "#/components/schemas/MultiLingualString"
+          },
+          "initiallySelectedForEnrichment": {
+            "type": "boolean",
+            "description": "Is the database selected by default for enrichment"
+          },
+          "isGlobalAvailable": {
+            "type": "boolean",
+            "description": "Is the database globally available (allow everybody to use the database)"
+          },
+          "readOnly": {
+            "type": "boolean",
+            "description": "Is the database readonly"
+          },
+          "databaseType": {
+            "$ref": "#/components/schemas/DatabaseType"
+          },
+          "parentId": {
+            "type": "string",
+            "description": "The database parent identifier",
+            "format": "uuid"
+          },
+          "parentType": {
+            "$ref": "#/components/schemas/ParentType"
+          },
+          "parentName": {
+            "type": "string",
+            "description": "The parent name",
+            "nullable": true,
+            "readOnly": true
+          }
+        }
+      },
+      "DatabaseRequest": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "$ref": "#/components/schemas/MultiLingualString"
+          },
+          "initiallySelectedForEnrichment": {
+            "type": "boolean",
+            "description": "Is the database selected by default for enrichment"
+          }
+        }
+      },
+      "FolderResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "The folder identifier",
+            "format": "uuid",
+            "readOnly": true,
+            "example": "3fa85f64-5717-4562-b3fc-2c963f66afa6"
+          },
+          "name": {
+            "type": "string",
+            "description": "The folder name",
+            "nullable": true,
+            "example": "Portfolio 1"
+          },
+          "description": {
+            "type": "string",
+            "description": "The folder description",
+            "nullable": true
+          },
+          "parentId": {
+            "type": "string",
+            "description": "The parent folder identifier (is a folderId or accountId)",
+            "format": "uuid",
+            "example": "3fa85f64-5717-4562-b3fc-2c963f66afa6"
+          },
+          "foldertypeId": {
+            "type": "string",
+            "description": "The foldertype identifier",
+            "format": "uuid",
+            "example": "3fa85f64-5717-4562-b3fc-2c963f66afa6"
+          }
+        }
+      },
+      "FolderRequest": {
+        "required": [
+          "foldertypeId",
+          "name",
+          "parentId"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "The folder name",
+            "nullable": true,
+            "example": "Portfolio 1"
+          },
+          "description": {
+            "type": "string",
+            "description": "The folder description",
+            "nullable": true
+          },
+          "parentId": {
+            "type": "string",
+            "description": "The parent folder identifier (is a folderId or accountId)",
+            "format": "uuid",
+            "example": "3fa85f64-5717-4562-b3fc-2c963f66afa6"
+          },
+          "foldertypeId": {
+            "type": "string",
+            "description": "The foldertype identifier",
+            "format": "uuid",
+            "example": "3fa85f64-5717-4562-b3fc-2c963f66afa6"
+          }
+        }
+      },
+      "MaterialFamilyClassification": {
+        "required": [
+          "classificationId",
+          "id"
+        ],
+        "type": "object",
+        "properties": {
+          "classificationId": {
+            "type": "string",
+            "description": "The classification identifier",
+            "nullable": true,
+            "example": "madaster"
+          },
+          "id": {
+            "type": "string",
+            "description": "The identifier",
+            "nullable": true,
+            "example": "glass"
+          }
+        }
+      },
+      "MaterialCircularInformation": {
+        "required": [
+          "efficiencyPercentageRecyclingEndOfLife",
+          "efficiencyPercentageRecyclingFeedstock",
+          "landfillPercentageEndOfLife",
+          "rapidRenewablesPercentageFeedstock",
+          "recycledPercentageEndOfLife",
+          "recycledPercentageFeedstock"
+        ],
+        "type": "object",
+        "properties": {
+          "recycledPercentageFeedstock": {
+            "maximum": 1,
+            "minimum": 0,
+            "type": "number",
+            "description": "The percentage of the material's feedstock that comes from recycled sources",
+            "format": "double",
+            "example": 0
+          },
+          "rapidRenewablesPercentageFeedstock": {
+            "maximum": 1,
+            "minimum": 0,
+            "type": "number",
+            "description": "The percentage of the material's feedstock that comes from rapidly renewable sources",
+            "format": "double",
+            "example": 0
+          },
+          "virginPercentageFeedstock": {
+            "type": "number",
+            "description": "The percentage of the material's feedstock that comes from virgin sources",
+            "format": "double",
+            "readOnly": true,
+            "example": 1
+          },
+          "recycledPercentageEndOfLife": {
+            "maximum": 1,
+            "minimum": 0,
+            "type": "number",
+            "description": "The percentage of the material that can be recycled at its end of life",
+            "format": "double",
+            "example": 0
+          },
+          "landfillPercentageEndOfLife": {
+            "maximum": 1,
+            "minimum": 0,
+            "type": "number",
+            "description": "The percentage of the material that will go to the landfill at its end of life",
+            "format": "double",
+            "example": 0
+          },
+          "incinerationPercentageEndOfLife": {
+            "type": "number",
+            "description": "The percentage of the material that will be incinerated at its end of life",
+            "format": "double",
+            "readOnly": true,
+            "example": 1
+          },
+          "efficiencyPercentageRecyclingFeedstock": {
+            "maximum": 1,
+            "minimum": 0,
+            "type": "number",
+            "description": "The efficiency of the recycling process that led to the feedstock",
+            "format": "double",
+            "example": 0.75
+          },
+          "efficiencyPercentageRecyclingEndOfLife": {
+            "maximum": 1,
+            "minimum": 0,
+            "type": "number",
+            "description": "The efficiency of the recycling process when the material reaches its end of life",
+            "format": "double",
+            "example": 0.75
+          }
+        },
+        "description": "Material circular information"
+      },
+      "MaterialResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "The material identifier",
+            "format": "uuid",
+            "readOnly": true,
+            "example": "3fa85f64-5717-4562-b3fc-2c963f66afa6"
+          },
+          "databaseId": {
+            "type": "string",
+            "description": "The database identifier",
+            "format": "uuid",
+            "readOnly": true,
+            "example": "3fa85f64-5717-4562-b3fc-2c963f66afa6"
+          },
+          "name": {
+            "$ref": "#/components/schemas/MultiLingualString"
+          },
+          "description": {
+            "$ref": "#/components/schemas/MultiLingualString"
+          },
+          "supplier": {
+            "type": "string",
+            "description": "The supplier of the material",
+            "nullable": true,
+            "example": "Manufacturer name"
+          },
+          "specificWeight": {
+            "type": "number",
+            "description": "The specific weight of the material, in kg / m3",
+            "format": "double",
+            "example": 1230
+          },
+          "lifeTime": {
+            "type": "integer",
+            "description": "The lifetime of the material, in years",
+            "format": "int32",
+            "example": 50
+          },
+          "materialFamilies": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/MaterialFamilyClassification"
+            },
+            "description": "The material families (call /api/v3.0/system/materialfamilies, to retrieve possible values)",
+            "nullable": true
+          },
+          "circular": {
+            "$ref": "#/components/schemas/MaterialCircularInformation"
+          }
+        }
+      },
+      "MaterialRequest": {
+        "required": [
+          "circular",
+          "materialFamilies",
+          "name"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "$ref": "#/components/schemas/MultiLingualString"
+          },
+          "description": {
+            "$ref": "#/components/schemas/MultiLingualString"
+          },
+          "supplier": {
+            "type": "string",
+            "description": "The supplier of the material",
+            "nullable": true,
+            "example": "Manufacturer name"
+          },
+          "specificWeight": {
+            "type": "number",
+            "description": "The specific weight of the material, in kg / m3",
+            "format": "double",
+            "example": 1230
+          },
+          "lifeTime": {
+            "type": "integer",
+            "description": "The lifetime of the material, in years",
+            "format": "int32",
+            "example": 50
+          },
+          "materialFamilies": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/MaterialFamilyClassification"
+            },
+            "description": "The material families (call /api/v3.0/system/materialfamilies, to retrieve possible values)",
+            "nullable": true
+          },
+          "circular": {
+            "$ref": "#/components/schemas/MaterialCircularInformation"
+          }
+        }
+      },
+      "FinancialSettingType": {
+        "enum": [
+          "None",
+          "Manual",
+          "Automatic"
+        ],
+        "type": "string",
+        "x-ms-enum": {
+          "name": "FinancialSettingType",
+          "modelAsString": false,
+          "values": [
+            {
+              "name": "None",
+              "value": "None"
+            },
+            {
+              "name": "Manual",
+              "value": "Manual"
+            },
+            {
+              "name": "Automatic",
+              "value": "Automatic"
+            }
+          ]
+        }
+      },
+      "MaterialFinancialSettings": {
+        "type": "object",
+        "properties": {
+          "importType": {
+            "$ref": "#/components/schemas/FinancialSettingType"
+          },
+          "priceSetId": {
+            "type": "string",
+            "description": "The identifier of the price set that supplies the financial information",
+            "nullable": true
+          },
+          "transportCosts": {
+            "type": "number",
+            "description": "The costs of transporting the material to its destination, in € / kg",
+            "format": "double"
+          },
+          "handlingFeedstockEuroKg": {
+            "type": "number",
+            "description": "The handling costs of the material, in € / kg",
+            "format": "double",
+            "nullable": true
+          },
+          "handlingFeedstockPercentage": {
+            "maximum": 1,
+            "minimum": 0,
+            "type": "number",
+            "description": "The handling costs of the material, in percentage of its value",
+            "format": "double",
+            "nullable": true
+          }
+        },
+        "description": "Financial settings for a material"
+      },
+      "Currency": {
+        "enum": [
+          "EUR",
+          "USD",
+          "GBP",
+          "CNY"
+        ],
+        "type": "string",
+        "x-ms-enum": {
+          "name": "Currency",
+          "modelAsString": false,
+          "values": [
+            {
+              "name": "EUR",
+              "value": "EUR"
+            },
+            {
+              "name": "USD",
+              "value": "USD"
+            },
+            {
+              "name": "GBP",
+              "value": "GBP"
+            },
+            {
+              "name": "CNY",
+              "value": "CNY"
+            }
+          ]
+        }
+      },
+      "PriceUnit": {
+        "enum": [
+          "mt",
+          "kg",
+          "m3",
+          "lb",
+          "toz",
+          "index"
+        ],
+        "type": "string",
+        "x-ms-enum": {
+          "name": "PriceUnit",
+          "modelAsString": false,
+          "values": [
+            {
+              "name": "mt",
+              "value": "mt"
+            },
+            {
+              "name": "kg",
+              "value": "kg"
+            },
+            {
+              "name": "m3",
+              "value": "m3"
+            },
+            {
+              "name": "lb",
+              "value": "lb"
+            },
+            {
+              "name": "toz",
+              "value": "toz"
+            },
+            {
+              "name": "index",
+              "value": "index"
+            }
+          ]
+        }
+      },
+      "MaterialFinancialValue": {
+        "required": [
+          "currency",
+          "date",
+          "unit",
+          "value"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "The value identifier",
+            "format": "uuid",
+            "readOnly": true
+          },
+          "value": {
+            "type": "number",
+            "description": "The value of the material at this given moment",
+            "format": "double"
+          },
+          "date": {
+            "type": "string",
+            "description": "The moment at which this value was taken",
+            "format": "date-time"
+          },
+          "currency": {
+            "$ref": "#/components/schemas/Currency"
+          },
+          "unit": {
+            "$ref": "#/components/schemas/PriceUnit"
+          }
+        },
+        "description": "A financial value for a material"
+      },
+      "MatchingCriterionType": {
+        "enum": [
+          "Contains",
+          "Equals",
+          "StartWith",
+          "EndsWith"
+        ],
+        "type": "string",
+        "x-ms-enum": {
+          "name": "MatchingCriterionType",
+          "modelAsString": false,
+          "values": [
+            {
+              "name": "Contains",
+              "value": "Contains"
+            },
+            {
+              "name": "Equals",
+              "value": "Equals"
+            },
+            {
+              "name": "StartWith",
+              "value": "StartWith"
+            },
+            {
+              "name": "EndsWith",
+              "value": "EndsWith"
+            }
+          ]
+        }
+      },
+      "MatchingCriterion": {
+        "required": [
+          "matchType",
+          "value"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "The match identifier",
+            "format": "uuid",
+            "readOnly": true,
+            "example": "3fa85f64-5717-4562-b3fc-2c963f66afa6"
+          },
+          "value": {
+            "type": "string",
+            "description": "The value to match",
+            "nullable": true,
+            "example": "concrete"
+          },
+          "matchType": {
+            "$ref": "#/components/schemas/MatchingCriterionType"
+          },
+          "languageCode": {
+            "type": "string",
+            "description": "The match language (allowed values: en, nl, de, fr or null)",
+            "nullable": true,
+            "example": "en"
+          }
+        }
+      },
+      "ProductType": {
+        "enum": [
+          "Volume",
+          "Quantity",
+          "Area",
+          "Length"
+        ],
+        "type": "string",
+        "x-ms-enum": {
+          "name": "ProductType",
+          "modelAsString": false,
+          "values": [
+            {
+              "name": "Volume",
+              "value": "Volume"
+            },
+            {
+              "name": "Quantity",
+              "value": "Quantity"
+            },
+            {
+              "name": "Area",
+              "value": "Area"
+            },
+            {
+              "name": "Length",
+              "value": "Length"
+            }
+          ]
+        }
+      },
+      "ProductCircularInformation": {
+        "required": [
+          "productReusedPercentageEndOfLife",
+          "productReusedPercentageFeedstock"
+        ],
+        "type": "object",
+        "properties": {
+          "efficiencyPercentageRecyclingFeedstock": {
+            "type": "number",
+            "description": "The efficiency of the recycling process that led to the feedstock",
+            "format": "double",
+            "readOnly": true
+          },
+          "efficiencyPercentageRecyclingEndOfLife": {
+            "type": "number",
+            "description": "The efficiency of the recycling process when the material reaches its end of life",
+            "format": "double",
+            "readOnly": true
+          },
+          "productReusedPercentageFeedstock": {
+            "maximum": 1,
+            "minimum": 0,
+            "type": "number",
+            "description": "The percentage of the product's feedstock that is re-used from other sources",
+            "format": "double"
+          },
+          "productRecycledPercentageFeedstock": {
+            "type": "number",
+            "description": "The percentage of the product's feedstock that comes from recycled sources",
+            "format": "double",
+            "readOnly": true
+          },
+          "productRapidRenewablesPercentageFeedstock": {
+            "type": "number",
+            "description": "The percentage of the product's feedstock that comes from rapidly renewable sources",
+            "format": "double",
+            "readOnly": true
+          },
+          "productVirginPercentageFeedstock": {
+            "type": "number",
+            "description": "The percentage of the product's feedstock that comes from virgin sources",
+            "format": "double",
+            "readOnly": true
+          },
+          "productReusedPercentageEndOfLife": {
+            "maximum": 1,
+            "minimum": 0,
+            "type": "number",
+            "description": "The percentage of the product that can be re-used at its end of life",
+            "format": "double"
+          },
+          "productRecycledPercentageEndOfLife": {
+            "type": "number",
+            "description": "The percentage of the product that can be recycled at its end of life",
+            "format": "double",
+            "readOnly": true
+          },
+          "productLandfillPercentageEndOfLife": {
+            "type": "number",
+            "description": "The percentage of the product that will go to the landfill at its end of life",
+            "format": "double",
+            "readOnly": true
+          },
+          "productIncinerationPercentageEndOfLife": {
+            "type": "number",
+            "description": "The percentage of the product that will be incinerated at its end of life",
+            "format": "double",
+            "readOnly": true
+          }
+        },
+        "description": "Circular information about a product."
+      },
+      "ElementDimensionType": {
+        "enum": [
+          "Length",
+          "Width",
+          "Height",
+          "Depth",
+          "Diameter",
+          "Radius",
+          "Thickness",
+          "Area",
+          "Volume"
+        ],
+        "type": "string",
+        "x-ms-enum": {
+          "name": "ElementDimensionType",
+          "modelAsString": false,
+          "values": [
+            {
+              "name": "Length",
+              "value": "Length"
+            },
+            {
+              "name": "Width",
+              "value": "Width"
+            },
+            {
+              "name": "Height",
+              "value": "Height"
+            },
+            {
+              "name": "Depth",
+              "value": "Depth"
+            },
+            {
+              "name": "Diameter",
+              "value": "Diameter"
+            },
+            {
+              "name": "Radius",
+              "value": "Radius"
+            },
+            {
+              "name": "Thickness",
+              "value": "Thickness"
+            },
+            {
+              "name": "Area",
+              "value": "Area"
+            },
+            {
+              "name": "Volume",
+              "value": "Volume"
+            }
+          ]
+        }
+      },
+      "ProductDimension": {
+        "type": "object",
+        "properties": {
+          "dimensionValue": {
+            "type": "number",
+            "description": "The value of this dimension",
+            "format": "double"
+          },
+          "dimensionType": {
+            "$ref": "#/components/schemas/ElementDimensionType"
+          }
+        },
+        "description": "A dimension of a product."
+      },
+      "ProductResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "The product identifier",
+            "format": "uuid",
+            "readOnly": true,
+            "example": "3fa85f64-5717-4562-b3fc-2c963f66afa6"
+          },
+          "databaseId": {
+            "type": "string",
+            "description": "The database identifier",
+            "format": "uuid",
+            "readOnly": true,
+            "example": "3fa85f64-5717-4562-b3fc-2c963f66afa6"
+          },
+          "name": {
+            "$ref": "#/components/schemas/MultiLingualString"
+          },
+          "description": {
+            "$ref": "#/components/schemas/MultiLingualString"
+          },
+          "productType": {
+            "$ref": "#/components/schemas/ProductType"
+          },
+          "supplier": {
+            "type": "string",
+            "description": "The supplier of the product",
+            "nullable": true,
+            "example": "Manufacturer name"
+          },
+          "productCode": {
+            "type": "string",
+            "description": "The product code (EAN)",
+            "nullable": true,
+            "example": "7 446040 123456"
+          },
+          "technicalLifetime": {
+            "maximum": 1000,
+            "minimum": 0,
+            "type": "integer",
+            "description": "The technical lifetime of the product, in years",
+            "format": "int32"
+          },
+          "functionalLifetime": {
+            "maximum": 1000,
+            "minimum": 0,
+            "type": "integer",
+            "description": "The functional lifetime of the product, in years",
+            "format": "int32"
+          },
+          "circular": {
+            "$ref": "#/components/schemas/ProductCircularInformation"
+          },
+          "fixedDimensions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ProductDimension"
+            },
+            "description": "Gets or sets the dimensions.",
+            "nullable": true
+          },
+          "defaultDimensions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ProductDimension"
+            },
+            "description": "Gets or sets the dimensions.",
+            "nullable": true
+          }
+        }
+      },
+      "ProductRequest": {
+        "required": [
+          "circular",
+          "name",
+          "productType"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "$ref": "#/components/schemas/MultiLingualString"
+          },
+          "description": {
+            "$ref": "#/components/schemas/MultiLingualString"
+          },
+          "productType": {
+            "$ref": "#/components/schemas/ProductType"
+          },
+          "supplier": {
+            "type": "string",
+            "description": "The supplier of the product",
+            "nullable": true,
+            "example": "Manufacturer name"
+          },
+          "productCode": {
+            "type": "string",
+            "description": "The product code (EAN)",
+            "nullable": true,
+            "example": "7 446040 123456"
+          },
+          "circular": {
+            "$ref": "#/components/schemas/ProductCircularInformation"
+          },
+          "technicalLifetime": {
+            "maximum": 1000,
+            "minimum": 0,
+            "type": "integer",
+            "description": "The technical lifetime of the product, in years",
+            "format": "int32"
+          },
+          "functionalLifetime": {
+            "maximum": 1000,
+            "minimum": 0,
+            "type": "integer",
+            "description": "The functional lifetime of the product, in years",
+            "format": "int32"
+          },
+          "fixedDimensions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ProductDimension"
+            },
+            "description": "Gets or sets the dimensions.",
+            "nullable": true
+          },
+          "defaultDimensions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ProductDimension"
+            },
+            "description": "Gets or sets the dimensions.",
+            "nullable": true
+          }
+        }
+      },
+      "ProductChildCircularInformation": {
+        "required": [
+          "inheritEfficiencyPercentages",
+          "inheritEndOfLifePercentages",
+          "inheritFeedstockPercentages"
+        ],
+        "type": "object",
+        "properties": {
+          "inheritFeedstockPercentages": {
+            "type": "boolean",
+            "description": "Whether the feedstock percentages should be inherited from the child"
+          },
+          "recycledPercentageFeedstock": {
+            "maximum": 1,
+            "minimum": 0,
+            "type": "number",
+            "description": "The percentage of the material's feedstock that comes from recycled sources",
+            "format": "double",
+            "nullable": true
+          },
+          "rapidRenewablesPercentageFeedstock": {
+            "maximum": 1,
+            "minimum": 0,
+            "type": "number",
+            "description": "The percentage of the material's feedstock that comes from rapidly renewable sources",
+            "format": "double",
+            "nullable": true
+          },
+          "inheritEndOfLifePercentages": {
+            "type": "boolean",
+            "description": "Whether the end of life percentages should be inherited from the child"
+          },
+          "recycledPercentageEndOfLife": {
+            "maximum": 1,
+            "minimum": 0,
+            "type": "number",
+            "description": "The percentage of the material that can be recycled at its end of life",
+            "format": "double",
+            "nullable": true
+          },
+          "landfillPercentageEndOfLife": {
+            "maximum": 1,
+            "minimum": 0,
+            "type": "number",
+            "description": "The percentage of the material that will go to the landfill at its end of life",
+            "format": "double",
+            "nullable": true
+          },
+          "inheritEfficiencyPercentages": {
+            "type": "boolean",
+            "description": "Whether the efficiency percentages should be inherited from the child"
+          },
+          "efficiencyPercentageRecyclingFeedstock": {
+            "maximum": 1,
+            "minimum": 0,
+            "type": "number",
+            "description": "The efficiency of the recycling process that led to the feedstock",
+            "format": "double",
+            "nullable": true
+          },
+          "efficiencyPercentageRecyclingEndOfLife": {
+            "maximum": 1,
+            "minimum": 0,
+            "type": "number",
+            "description": "The efficiency of the recycling process when the material reaches its end of life",
+            "format": "double",
+            "nullable": true
+          }
+        },
+        "description": "Circular information for a product child"
+      },
+      "ProductChild": {
+        "required": [
+          "childId",
+          "value"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "The parent-child relationship identifier",
+            "format": "uuid",
+            "readOnly": true
+          },
+          "value": {
+            "type": "number",
+            "description": "The value of this child relation, so how much of the child can be found in the parent product, with a unit depending on the relation type",
+            "format": "double"
+          },
+          "childId": {
+            "type": "string",
+            "description": "The product/material identifier of the child",
+            "format": "uuid"
+          },
+          "circular": {
+            "$ref": "#/components/schemas/ProductChildCircularInformation"
+          }
+        },
+        "description": "Specifies the child of a product (part of the Bill of Materials)"
+      },
+      "ClassificationMethod": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "The unique identifier",
+            "format": "uuid"
+          },
+          "name": {
+            "$ref": "#/components/schemas/MultiLingualString"
+          },
+          "classificationTypeId": {
+            "type": "string",
+            "description": "The identifier of the underlying classification type",
+            "format": "uuid"
+          },
+          "classificationLevelTypeId": {
+            "type": "string",
+            "description": "The identifier of the underlying classification level type",
+            "format": "uuid"
+          }
+        },
+        "description": "A classification method."
+      },
+      "MaterialFamily": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "The classification identifier",
+            "nullable": true,
+            "example": "madaster"
+          },
+          "name": {
+            "type": "string",
+            "description": "The classification name",
+            "nullable": true,
+            "example": "Madaster"
+          }
+        }
+      },
+      "MaterialPriceSet": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "nullable": true
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "sources": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true
+          }
+        },
+        "description": ""
+      },
+      "MultiLingualString": {
+        "title": "MultiLingualString",
+        "type": "object",
+        "properties": {
+          "nl": {
+            "type": "string",
+            "nullable": true
+          },
+          "en": {
+            "type": "string",
+            "nullable": true
+          },
+          "de": {
+            "type": "string",
+            "nullable": true
+          },
+          "fr": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": {
+          "type": "string"
+        },
+        "description": "A multilingual string",
+        "example": {
+          "nl": "nederlandse waarde",
+          "en": "english value"
+        }
+      },
+      "AcceptLanguage": {
+        "title": "accept-language",
+        "enum": [
+          "en",
+          "nl",
+          "fr",
+          "de"
+        ],
+        "type": "string",
+        "description": "The culture to use for the request",
+        "default": "en"
+      }
+    },
+    "securitySchemes": {
+      "ApiKeyAuth": {
+        "type": "apiKey",
+        "description": "Token Authorization",
+        "name": "X-API-Key",
+        "in": "header"
+      }
+    }
+  },
+  "security": [
+    {
+      "ApiKeyAuth": [ ]
+    }
+  ],
+  "tags": [
+    {
+      "name": "Account",
+      "description": "All actions related to the account entity."
+    },
+    {
+      "name": "Building",
+      "description": "All actions related to buildings."
+    },
+    {
+      "name": "BuildingFile",
+      "description": "All actions related to building files (ifc/excel/other)."
+    },
+    {
+      "name": "BuildingFileElement",
+      "description": "All actions related to building file elements (ifc elements)."
+    },
+    {
+      "name": "Database",
+      "description": "All actions related to material databases."
+    },
+    {
+      "name": "Folder",
+      "description": "All actions related to folders."
+    },
+    {
+      "name": "Material",
+      "description": "All actions related to the materials."
+    },
+    {
+      "name": "Product",
+      "description": "All actions related to the products."
+    },
+    {
+      "name": "SystemSettings",
+      "description": "All actions related to the system wide data."
+    }
+  ]
+}

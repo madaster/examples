@@ -1,5 +1,5 @@
 # Madaster API example - python
-In this folder you will find an example application for the Madaster API writte in python. The example uses an generated API client from the openAPI specification. The client is generated using the following command:
+In this folder you will find an example application for the Madaster API written in python. The example uses a generated API client from the openAPI specification. The client is generated using the following command:
 
 ```
 docker run --rm -v ${PWD}:/local openapitools/openapi-generator-cli generate -i https://api.madaster.com/api/v3.0/swagger.json -g python -o /local/generated --package-name madasterapi
