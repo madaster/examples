@@ -1,7 +1,7 @@
 """
-    Madaster Private API - Build: 
+    Madaster Private API - Build: 8815
 
-    Welcome to the **Madaster Private API** endpoint. This endpoint can be used to interact with the Madaster Platform and its resources. This API does not fully cover all functionality of the platform yet, please see below for the available functions and what they can be used for. For detailed information about the platform and this API, please refer to the [Madaster Documentation](https://docs.madaster.com) or the [Madaster API Documentation](https://docs.madaster.com/api).<br/><br/>To access these resources, you need an authorization token. If you do not have one yet, see the chapter about Authorization in the [API documentation](https://docs.madaster.com/api). This token should be sent as a header with the name 'X-API-Key', which will authenticate the request with the token. The documentation below specifies which requests are available and which responses they might produce.<br/><br/>This API can be reached at the endpoint: **[https://api.madaster.com/](https://api.madaster.com/)**<br/>The interactive Swagger/OpenAPI documentation can be found at: **[https://api.madaster.com/](https://api.madaster.com/)**<br/>If you prefer a static documentation: **[https://docs.madaster.com/api-docs](https://docs.madaster.com/api-docs)**  # noqa: E501
+    Welcome to the **Madaster Private API** endpoint. This endpoint can be used to interact with the Madaster Platform and its resources. This API does not fully cover all functionality of the platform yet, please see below for the available functions and what they can be used for. For detailed information about the platform and this API, please refer to the [Madaster Documentation](https://docs.madaster.com) or the [Madaster API Documentation](https://docs.madaster.com/api).<br/><br/>To access these resources, you need an authorization token. If you do not have one yet, see the chapter about Authorization in the [API documentation](https://docs.madaster.com/api). This token should be sent as a header with the name 'X-API-Key', which will authenticate the request with the token. The documentation below specifies which requests are available and which responses they might produce.<br/><br/>This API can be reached at the endpoint: **[https://api.madaster.com/](https://api.madaster.com/)**  # noqa: E501
 
     The version of the OpenAPI document: v3.0
     Contact: service@madaster.com
@@ -84,7 +84,6 @@ class BuildingRequest(ModelNormal):
             'completion_date': (datetime,),  # noqa: E501
             'building_usage': (str,),  # noqa: E501
             'gross_surface_area': (float, none_type,),  # noqa: E501
-            'classification_type': (str,),  # noqa: E501
             'material_classification_type_id': (str,),  # noqa: E501
             'cadastral_designation': (str, none_type,),  # noqa: E501
             'cadastral_area': (int,),  # noqa: E501
@@ -97,6 +96,7 @@ class BuildingRequest(ModelNormal):
             'address_zipcode': (str, none_type,),  # noqa: E501
             'address_city': (str, none_type,),  # noqa: E501
             'address_country': (str, none_type,),  # noqa: E501
+            'building_usage_other_description': (str, none_type,),  # noqa: E501
             'energy_label': (str, none_type,),  # noqa: E501
             'beng1': (float, none_type,),  # noqa: E501
             'beng2': (float, none_type,),  # noqa: E501
@@ -107,6 +107,7 @@ class BuildingRequest(ModelNormal):
             'expected_lifespan_structure': (int, none_type,),  # noqa: E501
             'expected_lifespan_skin': (int, none_type,),  # noqa: E501
             'expected_lifespan_services': (int, none_type,),  # noqa: E501
+            'expected_lifespan_surroundings': (int, none_type,),  # noqa: E501
             'expected_lifespan_space_plan': (int, none_type,),  # noqa: E501
             'expected_lifespan_stuff': (int, none_type,),  # noqa: E501
             'breeam_label': (int,),  # noqa: E501
@@ -121,6 +122,7 @@ class BuildingRequest(ModelNormal):
             'well_score_building': (int,),  # noqa: E501
             'well_score_interior': (int,),  # noqa: E501
             'well_score_core_and_shell': (int,),  # noqa: E501
+            'classification_type': (str, none_type,),  # noqa: E501
         }
 
     @cached_property
@@ -135,7 +137,6 @@ class BuildingRequest(ModelNormal):
         'completion_date': 'completionDate',  # noqa: E501
         'building_usage': 'buildingUsage',  # noqa: E501
         'gross_surface_area': 'grossSurfaceArea',  # noqa: E501
-        'classification_type': 'classificationType',  # noqa: E501
         'material_classification_type_id': 'materialClassificationTypeId',  # noqa: E501
         'cadastral_designation': 'cadastralDesignation',  # noqa: E501
         'cadastral_area': 'cadastralArea',  # noqa: E501
@@ -148,6 +149,7 @@ class BuildingRequest(ModelNormal):
         'address_zipcode': 'addressZipcode',  # noqa: E501
         'address_city': 'addressCity',  # noqa: E501
         'address_country': 'addressCountry',  # noqa: E501
+        'building_usage_other_description': 'buildingUsageOtherDescription',  # noqa: E501
         'energy_label': 'energyLabel',  # noqa: E501
         'beng1': 'beng1',  # noqa: E501
         'beng2': 'beng2',  # noqa: E501
@@ -158,6 +160,7 @@ class BuildingRequest(ModelNormal):
         'expected_lifespan_structure': 'expectedLifespanStructure',  # noqa: E501
         'expected_lifespan_skin': 'expectedLifespanSkin',  # noqa: E501
         'expected_lifespan_services': 'expectedLifespanServices',  # noqa: E501
+        'expected_lifespan_surroundings': 'expectedLifespanSurroundings',  # noqa: E501
         'expected_lifespan_space_plan': 'expectedLifespanSpacePlan',  # noqa: E501
         'expected_lifespan_stuff': 'expectedLifespanStuff',  # noqa: E501
         'breeam_label': 'breeamLabel',  # noqa: E501
@@ -172,6 +175,7 @@ class BuildingRequest(ModelNormal):
         'well_score_building': 'wellScoreBuilding',  # noqa: E501
         'well_score_interior': 'wellScoreInterior',  # noqa: E501
         'well_score_core_and_shell': 'wellScoreCoreAndShell',  # noqa: E501
+        'classification_type': 'classificationType',  # noqa: E501
     }
 
     _composed_schemas = {}
@@ -186,7 +190,7 @@ class BuildingRequest(ModelNormal):
     ])
 
     @convert_js_args_to_python_args
-    def __init__(self, folder_id, name, phase, completion_date, building_usage, gross_surface_area, classification_type, material_classification_type_id, *args, **kwargs):  # noqa: E501
+    def __init__(self, folder_id, name, phase, completion_date, building_usage, gross_surface_area, material_classification_type_id, *args, **kwargs):  # noqa: E501
         """BuildingRequest - a model defined in OpenAPI
 
         Args:
@@ -196,7 +200,6 @@ class BuildingRequest(ModelNormal):
             completion_date (datetime): The completion date of the building
             building_usage (str): The current designation of the building (call /api/v3.0/system/buildingusages, to retrieve possible values)
             gross_surface_area (float, none_type): The gross surface area of the building
-            classification_type (str): The identifier of the building classification type of the building (call /api/v3.0/system/classificationmethods, to retrieve possible values)
             material_classification_type_id (str): The identifier of the material classification type of the building (call /api/v3.0/system/materialfamilies, to retrieve possible values)
 
         Keyword Args:
@@ -241,6 +244,7 @@ class BuildingRequest(ModelNormal):
             address_zipcode (str, none_type): The zipcode of the location that the building is situated on. [optional]  # noqa: E501
             address_city (str, none_type): The city that the building is situated in. [optional]  # noqa: E501
             address_country (str, none_type): The identifier of the country that the building is situated in. [optional]  # noqa: E501
+            building_usage_other_description (str, none_type): The designation description of the building, in case buildingUsage is other.. [optional]  # noqa: E501
             energy_label (str, none_type): The current energy label of the building. [optional]  # noqa: E501
             beng1 (float, none_type): Energiebehoefte (BENG 1) - kWh/m2.jr. [optional]  # noqa: E501
             beng2 (float, none_type): Primaire fossiele energie (BENG 2) - kWh/m2.jr. [optional]  # noqa: E501
@@ -251,6 +255,7 @@ class BuildingRequest(ModelNormal):
             expected_lifespan_structure (int, none_type): The expected lifespan building for the structure brand layer. [optional]  # noqa: E501
             expected_lifespan_skin (int, none_type): The expected lifespan building for the skin brand layer. [optional]  # noqa: E501
             expected_lifespan_services (int, none_type): The expected lifespan for the services brand layer. [optional]  # noqa: E501
+            expected_lifespan_surroundings (int, none_type): The expected lifespan for the surroundings brand layer. [optional]  # noqa: E501
             expected_lifespan_space_plan (int, none_type): The expected lifespan for the space plan brand layer. [optional]  # noqa: E501
             expected_lifespan_stuff (int, none_type): The expected lifespan for the stuff brand layer. [optional]  # noqa: E501
             breeam_label (int): The BREEAM label. [optional]  # noqa: E501
@@ -265,6 +270,7 @@ class BuildingRequest(ModelNormal):
             well_score_building (int): The WELL score of the building. [optional]  # noqa: E501
             well_score_interior (int): The WELL score of the interior. [optional]  # noqa: E501
             well_score_core_and_shell (int): The WELL score of the core and shell. [optional]  # noqa: E501
+            classification_type (str, none_type): The classification is moved to buildingfile to allow multiple classifications.. [optional]  # noqa: E501
         """
 
         _check_type = kwargs.pop('_check_type', True)
@@ -296,7 +302,6 @@ class BuildingRequest(ModelNormal):
         self.completion_date = completion_date
         self.building_usage = building_usage
         self.gross_surface_area = gross_surface_area
-        self.classification_type = classification_type
         self.material_classification_type_id = material_classification_type_id
         for var_name, var_value in kwargs.items():
             if var_name not in self.attribute_map and \

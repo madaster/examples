@@ -54,7 +54,8 @@ with madasterapi.ApiClient(configuration) as api_client:
             name="Python portfolio",
             foldertype_id=fldr.id,
             parent_id=folder.parent_id,
-            description=f"API portfolio: {datetime.now()}"
+            description=f"API portfolio: {datetime.now()}",
+            owner="Folder owner"
         )
         folder = folderClient.folder_update_folder(folder.id, folder_request=req)
         print("- Updated portfolio")
@@ -66,14 +67,15 @@ with madasterapi.ApiClient(configuration) as api_client:
             name="Python portfolio",
             foldertype_id=fldr.id,
             parent_id=account.id,
-            description=""
+            description="",
+            owner="Folder owner"
         )
         folder = folderClient.folder_add_folder(folder_request=req)
         print("- Created portfolio")
 
-    # Create building (with nl-sfb classification, and Madaster material classification)
+    # Create building (with Madaster material classification)
     usages = settingsClient.system_settings_get_building_usages(accept_language=AcceptLanguage("nl"))
-    classifications = settingsClient.system_settings_get_classification_methods()
+    
     materialClassifications = settingsClient.system_settings_get_material_classifications(accept_language=AcceptLanguage("nl"))
     request = BuildingRequest(
       folder_id=folder.id,
@@ -82,17 +84,18 @@ with madasterapi.ApiClient(configuration) as api_client:
       gross_surface_area=float(120),
       building_usage=list(usages.keys())[0],
       material_classification_type_id=next(f for f in materialClassifications if f.name == "Madaster").id,
-      classification_type=next(f for f in classifications if f.name.nl == "NL-SfB").id,
       completion_date=datetime.now()
     )
     building = buildingClient.building_add_building(building_request=request)
     print("- Created building")
 
-    # Create building file
+    # Create building file (with nl-sfb classification)
+    classifications = settingsClient.system_settings_get_classification_methods()
     fileRequest = BuildingFileRequest(
         name="API ifc file",
         preferred_database_ids=["00000000-0000-0000-0000-000000000000"],
-        type=BuildingRequestFileType("Source")
+        type=BuildingRequestFileType("Source"),
+        classification_type_id=next(f for f in classifications if f.name.nl == "NL-SfB").id,
     )
     file = fileClient.building_file_add_file(building.id, building_file_request=fileRequest)
     print("  - Created file")

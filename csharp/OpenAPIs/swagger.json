@@ -1,8 +1,8 @@
 {
   "openapi": "3.0.1",
   "info": {
-    "title": "Madaster Private API - Build: 7980",
-    "description": "Welcome to the **Madaster Private API** endpoint. This endpoint can be used to interact with the Madaster Platform and its resources. This API does not fully cover all functionality of the platform yet, please see below for the available functions and what they can be used for. For detailed information about the platform and this API, please refer to the [Madaster Documentation](https://docs.madaster.com) or the [Madaster API Documentation](https://docs.madaster.com/api).<br/><br/>To access these resources, you need an authorization token. If you do not have one yet, see the chapter about Authorization in the [API documentation](https://docs.madaster.com/api). This token should be sent as a header with the name 'X-API-Key', which will authenticate the request with the token. The documentation below specifies which requests are available and which responses they might produce.<br/><br/>This API can be reached at the endpoint: **[https://api.madaster.com/](https://api.madaster.com/)**<br/>The interactive Swagger/OpenAPI documentation can be found at: **[https://api.madaster.com/](https://api.madaster.com/)**<br/>If you prefer a static documentation: **[https://docs.madaster.com/api-docs](https://docs.madaster.com/api-docs)**",
+    "title": "Madaster Private API - Build: 8814",
+    "description": "Welcome to the **Madaster Private API** endpoint. This endpoint can be used to interact with the Madaster Platform and its resources. This API does not fully cover all functionality of the platform yet, please see below for the available functions and what they can be used for. For detailed information about the platform and this API, please refer to the [Madaster Documentation](https://docs.madaster.com) or the [Madaster API Documentation](https://docs.madaster.com/api).<br/><br/>To access these resources, you need an authorization token. If you do not have one yet, see the chapter about Authorization in the [API documentation](https://docs.madaster.com/api). This token should be sent as a header with the name 'X-API-Key', which will authenticate the request with the token. The documentation below specifies which requests are available and which responses they might produce.<br/><br/>This API can be reached at the endpoint: **[https://api.madaster.com/](https://api.madaster.com/)**",
     "contact": {
       "name": "Madaster Services B.V.",
       "url": "https://www.madaster.com",
@@ -3234,7 +3234,6 @@
             "type": "string",
             "description": "The account identifier",
             "format": "uuid",
-            "readOnly": true,
             "example": "3fa85f64-5717-4562-b3fc-2c963f66afa6"
           },
           "name": {
@@ -3256,7 +3255,6 @@
             "type": "string",
             "description": "The foldertype identifier",
             "format": "uuid",
-            "readOnly": true,
             "example": "3fa85f64-5717-4562-b3fc-2c963f66afa6"
           },
           "name": {
@@ -3375,6 +3373,11 @@
             "description": "The current designation of the building",
             "nullable": true
           },
+          "buildingUsageOtherDescription": {
+            "type": "string",
+            "description": "The designation of the building, when buildingUsage is other",
+            "nullable": true
+          },
           "grossSurfaceArea": {
             "type": "number",
             "description": "The gross surface area of the building",
@@ -3427,6 +3430,11 @@
           "expectedLifespanSkin": {
             "type": "integer",
             "description": "The expected lifespan building for the skin brand layer",
+            "format": "int32"
+          },
+          "expectedLifespanSurroundings": {
+            "type": "integer",
+            "description": "The expected lifespan for the surroundings brand layer",
             "format": "int32"
           },
           "expectedLifespanServices": {
@@ -3525,7 +3533,8 @@
           "mostRecentBimInfo": {
             "type": "string",
             "description": "The time of the most recent BIM info change",
-            "format": "date-time"
+            "format": "date-time",
+            "deprecated": true
           },
           "geoLatitude": {
             "type": "number",
@@ -3544,8 +3553,9 @@
           },
           "classificationType": {
             "type": "string",
-            "description": "The identifier of the building classification type of the buildinge",
-            "format": "uuid"
+            "description": "The classification is moved to the buildingfile to allow multiple classifications per building.",
+            "format": "uuid",
+            "deprecated": true
           }
         }
       },
@@ -3583,7 +3593,6 @@
       "BuildingRequest": {
         "required": [
           "buildingUsage",
-          "classificationType",
           "completionDate",
           "folderId",
           "grossSurfaceArea",
@@ -3670,6 +3679,11 @@
             "type": "string",
             "description": "The current designation of the building (call /api/v3.0/system/buildingusages, to retrieve possible values)"
           },
+          "buildingUsageOtherDescription": {
+            "type": "string",
+            "description": "The designation description of the building, in case buildingUsage is other.",
+            "nullable": true
+          },
           "grossSurfaceArea": {
             "type": "number",
             "description": "The gross surface area of the building",
@@ -3731,6 +3745,12 @@
           "expectedLifespanServices": {
             "type": "integer",
             "description": "The expected lifespan for the services brand layer",
+            "format": "int32",
+            "nullable": true
+          },
+          "expectedLifespanSurroundings": {
+            "type": "integer",
+            "description": "The expected lifespan for the surroundings brand layer",
             "format": "int32",
             "nullable": true
           },
@@ -3813,8 +3833,10 @@
           },
           "classificationType": {
             "type": "string",
-            "description": "The identifier of the building classification type of the building (call /api/v3.0/system/classificationmethods, to retrieve possible values)",
-            "format": "uuid"
+            "description": "The classification is moved to buildingfile to allow multiple classifications.",
+            "format": "uuid",
+            "nullable": true,
+            "deprecated": true
           },
           "materialClassificationTypeId": {
             "type": "string",
@@ -4131,6 +4153,12 @@
           },
           "validation": {
             "$ref": "#/components/schemas/BuildingFileValidation"
+          },
+          "classificationTypeId": {
+            "type": "string",
+            "description": "The ifc file classification",
+            "format": "uuid",
+            "nullable": true
           }
         }
       },
@@ -4175,6 +4203,12 @@
             "description": "The name of the building file",
             "nullable": true
           },
+          "timeStamp": {
+            "type": "string",
+            "description": "The time of creation of the IFC file (from header)",
+            "format": "date-time",
+            "nullable": true
+          },
           "preferredDatabaseIds": {
             "type": "array",
             "items": {
@@ -4182,6 +4216,12 @@
               "format": "uuid"
             },
             "description": "The identifiers of the material databases to use for automatic mapping, in their preferred order",
+            "nullable": true
+          },
+          "classificationTypeId": {
+            "type": "string",
+            "description": "The ifc file classification (call /api/v3.0/system/classificationmethods, to retrieve possible values)",
+            "format": "uuid",
             "nullable": true
           }
         }
@@ -4576,14 +4616,12 @@
             "type": "string",
             "description": "The database identifier",
             "format": "uuid",
-            "readOnly": true,
             "example": "3fa85f64-5717-4562-b3fc-2c963f66afa6"
           },
           "accountId": {
             "type": "string",
             "description": "The account identifier",
             "format": "uuid",
-            "readOnly": true,
             "example": "00000000-0000-0000-0000-000000000000"
           },
           "name": {
@@ -4615,8 +4653,7 @@
           "parentName": {
             "type": "string",
             "description": "The parent name",
-            "nullable": true,
-            "readOnly": true
+            "nullable": true
           }
         }
       },
@@ -4639,7 +4676,6 @@
             "type": "string",
             "description": "The folder identifier",
             "format": "uuid",
-            "readOnly": true,
             "example": "3fa85f64-5717-4562-b3fc-2c963f66afa6"
           },
           "name": {
@@ -4697,6 +4733,12 @@
             "description": "The foldertype identifier",
             "format": "uuid",
             "example": "3fa85f64-5717-4562-b3fc-2c963f66afa6"
+          },
+          "owner": {
+            "type": "string",
+            "description": "The owner, used in the passports",
+            "nullable": true,
+            "example": "Zander Ecke"
           }
         }
       },
@@ -4804,14 +4846,12 @@
             "type": "string",
             "description": "The material identifier",
             "format": "uuid",
-            "readOnly": true,
             "example": "3fa85f64-5717-4562-b3fc-2c963f66afa6"
           },
           "databaseId": {
             "type": "string",
             "description": "The database identifier",
             "format": "uuid",
-            "readOnly": true,
             "example": "3fa85f64-5717-4562-b3fc-2c963f66afa6"
           },
           "name": {
@@ -5039,8 +5079,7 @@
           "id": {
             "type": "string",
             "description": "The value identifier",
-            "format": "uuid",
-            "readOnly": true
+            "format": "uuid"
           },
           "value": {
             "type": "number",
@@ -5103,7 +5142,6 @@
             "type": "string",
             "description": "The match identifier",
             "format": "uuid",
-            "readOnly": true,
             "example": "3fa85f64-5717-4562-b3fc-2c963f66afa6"
           },
           "value": {
@@ -5303,14 +5341,12 @@
             "type": "string",
             "description": "The product identifier",
             "format": "uuid",
-            "readOnly": true,
             "example": "3fa85f64-5717-4562-b3fc-2c963f66afa6"
           },
           "databaseId": {
             "type": "string",
             "description": "The database identifier",
             "format": "uuid",
-            "readOnly": true,
             "example": "3fa85f64-5717-4562-b3fc-2c963f66afa6"
           },
           "name": {
@@ -5514,8 +5550,7 @@
           "id": {
             "type": "string",
             "description": "The parent-child relationship identifier",
-            "format": "uuid",
-            "readOnly": true
+            "format": "uuid"
           },
           "value": {
             "type": "number",
@@ -5543,16 +5578,6 @@
           },
           "name": {
             "$ref": "#/components/schemas/MultiLingualString"
-          },
-          "classificationTypeId": {
-            "type": "string",
-            "description": "The identifier of the underlying classification type",
-            "format": "uuid"
-          },
-          "classificationLevelTypeId": {
-            "type": "string",
-            "description": "The identifier of the underlying classification level type",
-            "format": "uuid"
           }
         },
         "description": "A classification method."

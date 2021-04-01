@@ -70,7 +70,8 @@ namespace example
                 folder = await client.AddFolderAsync(new FolderRequest()
                 {
                     FoldertypeId = folderTypeId,
-                    Name = "API portfolio"
+                    Name = "API portfolio",
+                    Owner = "Owner Name"
                 });
 
                 Console.WriteLine($"- Created portfolio");
@@ -82,7 +83,8 @@ namespace example
                     FoldertypeId = folderTypeId,
                     ParentId = folder.ParentId,
                     Name = "API portfolio",
-                    Description = $"API portfolio: {DateTime.Now}"
+                    Description = $"API portfolio: {DateTime.Now}",
+                    Owner = "Owner Name"
                 });
 
                 Console.WriteLine($"- Updated portfolio");
@@ -100,7 +102,6 @@ namespace example
             var settingsClient = new SystemSettingsClient(httpClient);
 
             var usages = await settingsClient.GetBuildingUsagesAsync(AcceptLanguage.Nl);
-            var classifications = await settingsClient.GetClassificationMethodsAsync();
             var materialClassifications = await settingsClient.GetMaterialClassificationsAsync(AcceptLanguage.Nl);
 
             var building = await client.AddBuildingAsync(new BuildingRequest()
@@ -110,7 +111,6 @@ namespace example
                 Phase = BuildingPhase.New,
                 BuildingUsage = usages.First().Key,
                 MaterialClassificationTypeId = materialClassifications.First(mc => mc.Name == "Madaster").Id,
-                ClassificationType = classifications.First(c => c.Name.Nl == "NL-SfB").Id,
                 LastRenovationDate = DateTimeOffset.UtcNow,
                 CompletionDate = DateTimeOffset.UtcNow
             });
@@ -129,12 +129,16 @@ namespace example
         static async Task CreateBuildingFileAsync(HttpClient httpClient, Guid buildingId) {
             var fileClient = new BuildingFileClient(httpClient);
             var elementClient = new BuildingFileElementClient(httpClient);
+            var settingsClient = new SystemSettingsClient(httpClient);
+
+            var classifications = await settingsClient.GetClassificationMethodsAsync();
 
             var file = await fileClient.AddFileAsync(buildingId, new BuildingFileRequest()
             {
                 Name = "API ifc file",
                 Type = BuildingRequestFileType.Source,
-                PreferredDatabaseIds = new[] { Guid.Empty }
+                PreferredDatabaseIds = new[] { Guid.Empty },
+                ClassificationTypeId = classifications.First(c => c.Name.Nl == "NL-SfB").Id,
             });
 
             Console.WriteLine($"  - Created file");
