@@ -1,7 +1,7 @@
 """
-    Madaster Private API - Build: 
+    Madaster Private API - Build: 8815
 
-    Welcome to the **Madaster Private API** endpoint. This endpoint can be used to interact with the Madaster Platform and its resources. This API does not fully cover all functionality of the platform yet, please see below for the available functions and what they can be used for. For detailed information about the platform and this API, please refer to the [Madaster Documentation](https://docs.madaster.com) or the [Madaster API Documentation](https://docs.madaster.com/api).<br/><br/>To access these resources, you need an authorization token. If you do not have one yet, see the chapter about Authorization in the [API documentation](https://docs.madaster.com/api). This token should be sent as a header with the name 'X-API-Key', which will authenticate the request with the token. The documentation below specifies which requests are available and which responses they might produce.<br/><br/>This API can be reached at the endpoint: **[https://api.madaster.com/](https://api.madaster.com/)**<br/>The interactive Swagger/OpenAPI documentation can be found at: **[https://api.madaster.com/](https://api.madaster.com/)**<br/>If you prefer a static documentation: **[https://docs.madaster.com/api-docs](https://docs.madaster.com/api-docs)**  # noqa: E501
+    Welcome to the **Madaster Private API** endpoint. This endpoint can be used to interact with the Madaster Platform and its resources. This API does not fully cover all functionality of the platform yet, please see below for the available functions and what they can be used for. For detailed information about the platform and this API, please refer to the [Madaster Documentation](https://docs.madaster.com) or the [Madaster API Documentation](https://docs.madaster.com/api).<br/><br/>To access these resources, you need an authorization token. If you do not have one yet, see the chapter about Authorization in the [API documentation](https://docs.madaster.com/api). This token should be sent as a header with the name 'X-API-Key', which will authenticate the request with the token. The documentation below specifies which requests are available and which responses they might produce.<br/><br/>This API can be reached at the endpoint: **[https://api.madaster.com/](https://api.madaster.com/)**  # noqa: E501
 
     The version of the OpenAPI document: v3.0
     Contact: service@madaster.com
@@ -81,7 +81,9 @@ class BuildingFileRequest(ModelNormal):
             'type': (BuildingRequestFileType,),  # noqa: E501
             'tags': ([str], none_type,),  # noqa: E501
             'name': (str, none_type,),  # noqa: E501
+            'time_stamp': (datetime, none_type,),  # noqa: E501
             'preferred_database_ids': ([str], none_type,),  # noqa: E501
+            'classification_type_id': (str, none_type,),  # noqa: E501
         }
 
     @cached_property
@@ -93,7 +95,9 @@ class BuildingFileRequest(ModelNormal):
         'type': 'type',  # noqa: E501
         'tags': 'tags',  # noqa: E501
         'name': 'name',  # noqa: E501
+        'time_stamp': 'timeStamp',  # noqa: E501
         'preferred_database_ids': 'preferredDatabaseIds',  # noqa: E501
+        'classification_type_id': 'classificationTypeId',  # noqa: E501
     }
 
     _composed_schemas = {}
@@ -145,7 +149,9 @@ class BuildingFileRequest(ModelNormal):
             type (BuildingRequestFileType): [optional]  # noqa: E501
             tags ([str], none_type): The tags for the building file. [optional]  # noqa: E501
             name (str, none_type): The name of the building file. [optional]  # noqa: E501
+            time_stamp (datetime, none_type): The time of creation of the IFC file (from header). [optional]  # noqa: E501
             preferred_database_ids ([str], none_type): The identifiers of the material databases to use for automatic mapping, in their preferred order. [optional]  # noqa: E501
+            classification_type_id (str, none_type): The ifc file classification (call /api/v3.0/system/classificationmethods, to retrieve possible values). [optional]  # noqa: E501
         """
 
         _check_type = kwargs.pop('_check_type', True)

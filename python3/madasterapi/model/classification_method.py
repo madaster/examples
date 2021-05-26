@@ -1,7 +1,7 @@
 """
-    Madaster Private API - Build: 
+    Madaster Private API - Build: 8815
 
-    Welcome to the **Madaster Private API** endpoint. This endpoint can be used to interact with the Madaster Platform and its resources. This API does not fully cover all functionality of the platform yet, please see below for the available functions and what they can be used for. For detailed information about the platform and this API, please refer to the [Madaster Documentation](https://docs.madaster.com) or the [Madaster API Documentation](https://docs.madaster.com/api).<br/><br/>To access these resources, you need an authorization token. If you do not have one yet, see the chapter about Authorization in the [API documentation](https://docs.madaster.com/api). This token should be sent as a header with the name 'X-API-Key', which will authenticate the request with the token. The documentation below specifies which requests are available and which responses they might produce.<br/><br/>This API can be reached at the endpoint: **[https://api.madaster.com/](https://api.madaster.com/)**<br/>The interactive Swagger/OpenAPI documentation can be found at: **[https://api.madaster.com/](https://api.madaster.com/)**<br/>If you prefer a static documentation: **[https://docs.madaster.com/api-docs](https://docs.madaster.com/api-docs)**  # noqa: E501
+    Welcome to the **Madaster Private API** endpoint. This endpoint can be used to interact with the Madaster Platform and its resources. This API does not fully cover all functionality of the platform yet, please see below for the available functions and what they can be used for. For detailed information about the platform and this API, please refer to the [Madaster Documentation](https://docs.madaster.com) or the [Madaster API Documentation](https://docs.madaster.com/api).<br/><br/>To access these resources, you need an authorization token. If you do not have one yet, see the chapter about Authorization in the [API documentation](https://docs.madaster.com/api). This token should be sent as a header with the name 'X-API-Key', which will authenticate the request with the token. The documentation below specifies which requests are available and which responses they might produce.<br/><br/>This API can be reached at the endpoint: **[https://api.madaster.com/](https://api.madaster.com/)**  # noqa: E501
 
     The version of the OpenAPI document: v3.0
     Contact: service@madaster.com
@@ -80,8 +80,6 @@ class ClassificationMethod(ModelNormal):
         return {
             'id': (str,),  # noqa: E501
             'name': (MultiLingualString,),  # noqa: E501
-            'classification_type_id': (str,),  # noqa: E501
-            'classification_level_type_id': (str,),  # noqa: E501
         }
 
     @cached_property
@@ -92,8 +90,6 @@ class ClassificationMethod(ModelNormal):
     attribute_map = {
         'id': 'id',  # noqa: E501
         'name': 'name',  # noqa: E501
-        'classification_type_id': 'classificationTypeId',  # noqa: E501
-        'classification_level_type_id': 'classificationLevelTypeId',  # noqa: E501
     }
 
     _composed_schemas = {}
@@ -144,8 +140,6 @@ class ClassificationMethod(ModelNormal):
                                 _visited_composed_classes = (Animal,)
             id (str): The unique identifier. [optional]  # noqa: E501
             name (MultiLingualString): [optional]  # noqa: E501
-            classification_type_id (str): The identifier of the underlying classification type. [optional]  # noqa: E501
-            classification_level_type_id (str): The identifier of the underlying classification level type. [optional]  # noqa: E501
         """
 
         _check_type = kwargs.pop('_check_type', True)

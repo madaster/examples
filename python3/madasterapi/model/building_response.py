@@ -1,7 +1,7 @@
 """
-    Madaster Private API - Build: 
+    Madaster Private API - Build: 8815
 
-    Welcome to the **Madaster Private API** endpoint. This endpoint can be used to interact with the Madaster Platform and its resources. This API does not fully cover all functionality of the platform yet, please see below for the available functions and what they can be used for. For detailed information about the platform and this API, please refer to the [Madaster Documentation](https://docs.madaster.com) or the [Madaster API Documentation](https://docs.madaster.com/api).<br/><br/>To access these resources, you need an authorization token. If you do not have one yet, see the chapter about Authorization in the [API documentation](https://docs.madaster.com/api). This token should be sent as a header with the name 'X-API-Key', which will authenticate the request with the token. The documentation below specifies which requests are available and which responses they might produce.<br/><br/>This API can be reached at the endpoint: **[https://api.madaster.com/](https://api.madaster.com/)**<br/>The interactive Swagger/OpenAPI documentation can be found at: **[https://api.madaster.com/](https://api.madaster.com/)**<br/>If you prefer a static documentation: **[https://docs.madaster.com/api-docs](https://docs.madaster.com/api-docs)**  # noqa: E501
+    Welcome to the **Madaster Private API** endpoint. This endpoint can be used to interact with the Madaster Platform and its resources. This API does not fully cover all functionality of the platform yet, please see below for the available functions and what they can be used for. For detailed information about the platform and this API, please refer to the [Madaster Documentation](https://docs.madaster.com) or the [Madaster API Documentation](https://docs.madaster.com/api).<br/><br/>To access these resources, you need an authorization token. If you do not have one yet, see the chapter about Authorization in the [API documentation](https://docs.madaster.com/api). This token should be sent as a header with the name 'X-API-Key', which will authenticate the request with the token. The documentation below specifies which requests are available and which responses they might produce.<br/><br/>This API can be reached at the endpoint: **[https://api.madaster.com/](https://api.madaster.com/)**  # noqa: E501
 
     The version of the OpenAPI document: v3.0
     Contact: service@madaster.com
@@ -89,6 +89,7 @@ class BuildingResponse(ModelNormal):
             'address_city': (str, none_type,),  # noqa: E501
             'address_country': (str, none_type,),  # noqa: E501
             'building_usage': (str, none_type,),  # noqa: E501
+            'building_usage_other_description': (str, none_type,),  # noqa: E501
             'gross_surface_area': (float,),  # noqa: E501
             'energy_label': (str, none_type,),  # noqa: E501
             'beng1': (float, none_type,),  # noqa: E501
@@ -99,6 +100,7 @@ class BuildingResponse(ModelNormal):
             'expected_lifespan': (int,),  # noqa: E501
             'expected_lifespan_structure': (int,),  # noqa: E501
             'expected_lifespan_skin': (int,),  # noqa: E501
+            'expected_lifespan_surroundings': (int,),  # noqa: E501
             'expected_lifespan_services': (int,),  # noqa: E501
             'expected_lifespan_space_plan': (int,),  # noqa: E501
             'expected_lifespan_stuff': (int,),  # noqa: E501
@@ -146,6 +148,7 @@ class BuildingResponse(ModelNormal):
         'address_city': 'addressCity',  # noqa: E501
         'address_country': 'addressCountry',  # noqa: E501
         'building_usage': 'buildingUsage',  # noqa: E501
+        'building_usage_other_description': 'buildingUsageOtherDescription',  # noqa: E501
         'gross_surface_area': 'grossSurfaceArea',  # noqa: E501
         'energy_label': 'energyLabel',  # noqa: E501
         'beng1': 'beng1',  # noqa: E501
@@ -156,6 +159,7 @@ class BuildingResponse(ModelNormal):
         'expected_lifespan': 'expectedLifespan',  # noqa: E501
         'expected_lifespan_structure': 'expectedLifespanStructure',  # noqa: E501
         'expected_lifespan_skin': 'expectedLifespanSkin',  # noqa: E501
+        'expected_lifespan_surroundings': 'expectedLifespanSurroundings',  # noqa: E501
         'expected_lifespan_services': 'expectedLifespanServices',  # noqa: E501
         'expected_lifespan_space_plan': 'expectedLifespanSpacePlan',  # noqa: E501
         'expected_lifespan_stuff': 'expectedLifespanStuff',  # noqa: E501
@@ -243,6 +247,7 @@ class BuildingResponse(ModelNormal):
             address_city (str, none_type): The city that the building is situated in. [optional]  # noqa: E501
             address_country (str, none_type): The identifier of the country that the building is situated in. [optional]  # noqa: E501
             building_usage (str, none_type): The current designation of the building. [optional]  # noqa: E501
+            building_usage_other_description (str, none_type): The designation of the building, when buildingUsage is other. [optional]  # noqa: E501
             gross_surface_area (float): The gross surface area of the building. [optional]  # noqa: E501
             energy_label (str, none_type): The current energy label of the building. [optional]  # noqa: E501
             beng1 (float, none_type): Energiebehoefte (BENG 1) - kWh/m2.jr. [optional]  # noqa: E501
@@ -253,6 +258,7 @@ class BuildingResponse(ModelNormal):
             expected_lifespan (int): The expected lifespan for the building. [optional]  # noqa: E501
             expected_lifespan_structure (int): The expected lifespan building for the structure brand layer. [optional]  # noqa: E501
             expected_lifespan_skin (int): The expected lifespan building for the skin brand layer. [optional]  # noqa: E501
+            expected_lifespan_surroundings (int): The expected lifespan for the surroundings brand layer. [optional]  # noqa: E501
             expected_lifespan_services (int): The expected lifespan for the services brand layer. [optional]  # noqa: E501
             expected_lifespan_space_plan (int): The expected lifespan for the space plan brand layer. [optional]  # noqa: E501
             expected_lifespan_stuff (int): The expected lifespan for the stuff brand layer. [optional]  # noqa: E501
@@ -275,7 +281,7 @@ class BuildingResponse(ModelNormal):
             geo_latitude (float): The geo latitude of the building. [optional]  # noqa: E501
             geo_longtitude (float): The geo longtitude of the building. [optional]  # noqa: E501
             phase_type (str): The identifier of the phase type of the buildinge. [optional]  # noqa: E501
-            classification_type (str): The identifier of the building classification type of the buildinge. [optional]  # noqa: E501
+            classification_type (str): The classification is moved to the buildingfile to allow multiple classifications per building.. [optional]  # noqa: E501
         """
 
         _check_type = kwargs.pop('_check_type', True)
