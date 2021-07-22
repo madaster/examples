@@ -19,7 +19,9 @@ namespace example
                 httpClient.DefaultRequestHeaders.Add("X-API-Key", token);
 
                 await CallAccountAsync(httpClient);
-                
+
+                var productId = await GetOrCreateProductAsync(httpClient);
+
                 var folderTypeId = await GetFolderTypeIdAsync(httpClient);
                 if (folderTypeId == null)
                 {
@@ -30,7 +32,7 @@ namespace example
 
                 var buildingId = await CreateBuildingAsync(httpClient, folderId);
 
-                await CreateBuildingFileAsync(httpClient, buildingId);
+                await CreateBuildingFileAsync(httpClient, buildingId, productId);
 
                 await CreateMaterialPassportAsync(httpClient, buildingId);
             }
@@ -44,6 +46,51 @@ namespace example
             var client = new AccountClient(httpClient);
             var account = await client.GetAccountAsync();
             Console.WriteLine($"Current account: {account.Name}");
+        }
+
+
+        /// <summary>
+        /// Call the database
+        /// </summary>
+        /// <param name="httpClient"></param>
+        /// <returns></returns>
+        private static async Task<Guid> GetOrCreateProductAsync(HttpClient httpClient)
+        {
+            var dbClient = new DatabaseClient(httpClient);
+            var productClient = new ProductClient(httpClient);
+
+            var databases = await dbClient.GetDatabasesAsync(AcceptLanguage.Nl);
+            
+            // try to find a database in the account, create if not found
+            var db = databases.FirstOrDefault(d => d.Name.Nl == "Example database");
+            if (db == null) {
+                db = await dbClient.CreateDatabaseAsync(new DatabaseRequest() { Name = new MultiLingualString() { Nl = "Example database" }, InitiallySelectedForEnrichment = true });
+            }
+
+            // try to find a product in the database, create if not found
+            var products = await productClient.GetProductsAsync(db.Id);
+            var product = products.FirstOrDefault(p => p.Name.Nl == "Beglazing_meervoudig");
+            if (product == null) 
+            {
+                product = await productClient.AddProductAsync(db.Id, new ProductRequest() {
+                    Name= new MultiLingualString() { Nl = "Beglazing_meervoudig" },
+                    ProductType = ProductType.Volume,
+                    FunctionalLifetime = 100,
+                    TechnicalLifetime = 100
+                });
+
+                // Add the search criterea, for matching within the ifc files
+                await productClient.AddMatchAsync(db.Id, product.Id, new MatchingCriterion() { LanguageCode = null, MatchType = MatchingCriterionType.Contains, Value = "Beglazing_meervoudig" });
+                await productClient.AddMatchAsync(db.Id, product.Id, new MatchingCriterion() { LanguageCode = null, MatchType = MatchingCriterionType.Contains, Value = "Dubbelglas" });
+                await productClient.AddMatchAsync(db.Id, product.Id, new MatchingCriterion() { LanguageCode = null, MatchType = MatchingCriterionType.Contains, Value = "Tripleglas" });
+                await productClient.AddMatchAsync(db.Id, product.Id, new MatchingCriterion() { LanguageCode = null, MatchType = MatchingCriterionType.Contains, Value = "Isolatieglas" });
+
+                // Add the product decomposition, the material IDs are used from the standard Madaster database. You could use a material client to search for them.
+                await productClient.AddChildAsync(db.Id, product.Id, new ProductChild() { ChildId = Guid.Parse("b499c354-fa05-4fc5-8ee4-8df89d09da4a"), Value = 0.6, Circular = new ProductChildCircularInformation() { InheritEfficiencyPercentages = true, InheritEndOfLifePercentages = true, InheritFeedstockPercentages = true } });
+                await productClient.AddChildAsync(db.Id, product.Id, new ProductChild() { ChildId = Guid.Parse("e8f9eb37-4cf0-4f75-809a-1a2a2de6825d"), Value = 0.4, Circular = new ProductChildCircularInformation() { InheritEfficiencyPercentages = true, InheritEndOfLifePercentages = true, InheritFeedstockPercentages = true } });
+            }
+
+            return product.Id;
         }
 
         /// <summary>
@@ -126,7 +173,7 @@ namespace example
         /// - creates a new IFC element.
         /// - start refinement (material matching)
         /// </summary>
-        static async Task CreateBuildingFileAsync(HttpClient httpClient, Guid buildingId) {
+        static async Task CreateBuildingFileAsync(HttpClient httpClient, Guid buildingId, Guid productId) {
             var fileClient = new BuildingFileClient(httpClient);
             var elementClient = new BuildingFileElementClient(httpClient);
             var settingsClient = new SystemSettingsClient(httpClient);
@@ -149,13 +196,14 @@ namespace example
             await elementClient.AddElementAsync(buildingId, file.Id, new BuildingFileElementRequest()
             {
                 Id = "ifcelement1",
-                Name = "My steel wall",
-                MaterialName = "staal",
+                Name = "Window",
+                MaterialName = "Dubbelglas",
+                MaterialId = productId,
                 PhaseLookup = "casco",
                 Volume = 10,
                 ClassificationLookup = "21.22",
-                ElementClass = "ifcwall",
-                TypeName = "walltype 123"
+                ElementClass = "ifcwindow",
+                TypeName = "windowtype 123"
             });
             Console.WriteLine($"   - Created ifc element");
 
