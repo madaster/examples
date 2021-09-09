@@ -8,11 +8,11 @@ namespace example
 {
     class Program
     {
-        const string environmentUrl = "https://api.accept.madaster.com";
+        const string environmentUrl = "https://api.madaster.com";
 
-        const string token = "db07c0fcbfdc4d3190564aa54e54ff86"; //"-- REPLACE ME --";
+        const string token = "-- REPLACE ME --";
 
-        const string buildingId = "3734c65b-653b-487b-86f3-55970332d5eb"; //"-- REPLACE ME --";
+        const string buildingId = "-- REPLACE ME --";
 
         static async Task Main(string[] args)
         {
