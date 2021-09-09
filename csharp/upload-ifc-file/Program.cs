@@ -67,8 +67,7 @@ namespace example
             await fileClient.UploadFileAsync(file.BuildingId, file.Id, "small.ifc", stream);
             Console.Write($"  - File uploaded");
 
-
-            // After the file is uploaded, the Madaster platform start importing the file. 
+            // After the file is uploaded, the Madaster platform starts importing the file. 
             // Using a poll mechanism we can determine if this process is finished.
             BuildingFileStatuses status = BuildingFileStatuses.Creating;
 
