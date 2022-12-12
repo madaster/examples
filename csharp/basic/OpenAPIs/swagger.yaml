@@ -1,0 +1,3323 @@
+openapi: 3.0.1
+info:
+  title: 'Madaster Private API - Build: 17265'
+  description: 'Welcome to the **Madaster Private API** endpoint. This endpoint can be used to interact with the Madaster Platform and its resources. This API does not fully cover all functionality of the platform yet, please see below for the available functions and what they can be used for. For detailed information about the platform and this API, please refer to the [Madaster Documentation](https://docs.madaster.com) or the [Madaster API Documentation](https://docs.madaster.com/nl/en/api.html).<br /><br />To access these resources, you need an authorization token. If you do not have one yet, see the chapter about Authorization in the [API documentation](https://docs.madaster.com/nl/en/api.html). This token should be sent as a header with the name ''X-API-Key'', which will authenticate the request with the token. The documentation below specifies which requests are available and which responses they might produce.<br /><br />This API can be reached at the endpoint: **[https://api.madaster.com/](https://api.madaster.com/)**'
+  contact:
+    name: Madaster Services B.V.
+    url: https://www.madaster.com
+    email: service@madaster.com
+  version: v4.0
+paths:
+  '/api/v4.0/commodity/{id}':
+    get:
+      tags:
+        - Commodity
+      summary: Find commodity by ID.
+      description: ''
+      operationId: Commodity_GetCommodityById
+      parameters:
+        - name: id
+          in: path
+          description: The commodity identifier
+          required: true
+          schema:
+            type: string
+            format: uuid
+          example: 6e943637-0163-4e94-8c17-f0dd7ee4eed5
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: '#/components/schemas/CommodityBase'
+                  - $ref: '#/components/schemas/Material'
+                  - $ref: '#/components/schemas/Product'
+                description: The base model for Material and Product (contains the shared fields between Material and Product)
+              examples:
+                material:
+                  summary: Material
+                  value: '{"commodityType":"Material","density":700,"lifespan":999,"materialFamilies":{"madaster":"wood","madasterv2":"i2"},"circularity":{"feedstock":{"renewables":0,"renewablesSustainablyProduced":0,"rapidRenewables":0,"rapidRenewablesSustainablyProduced":0,"recycled":0,"recyclingEfficiency":0.75},"scarcity":{"physicalScarce":0,"socialEconomicScarce":0},"output":{"availableForRecycle":0,"recyclingEfficiency":0.75,"landfill":0}},"id":"6e943637-0163-4e94-8c17-f0dd7ee4eed5","databaseId":"3c8a8adf-b94b-4754-b1de-ec9dd336a7e0","externalId":"M987654","names":{"nl":"Loofhout - essen","de":"Eschenholz","en":"Ash wood","fr":"Fr\u00EAne","nb":"Asketre"},"descriptions":{},"isActive":true}'
+                volume:
+                  summary: Volume product
+                  value: '{"commodityType":"Product","functionalUnit":"Volume","defaultFunctionalUnitAmount":1,"productCode":"9820001000","GTIN":"4712662086590","manufacturer":{"name":"Madaster Production Company","street":"Amersfoortsestraatweg 117","zipCode":"1251 AV","city":"Laren","country":"The Netherlands","website":"https://madaster.nl"},"productionSite":{"name":"Madaster Production Site","street":"Amersfoortsestraatweg 117","zipCode":"1251 AV","city":"Laren","country":"The Netherlands","website":"https://madaster.com"},"lifespan":999,"density":700,"doNotUseBillOfMaterials":true,"calculateEnvironmentValuesFromBillOfMaterials":false,"circularity":{"feedstock":{"reused":0,"renewables":0,"renewablesSustainablyProduced":0,"rapidRenewables":0,"rapidRenewablesSustainablyProduced":0,"recycled":0,"recyclingEfficiency":0.75},"scarcity":{"physicalScarce":0,"socialEconomicScarce":0},"detachability":{"connectionType":"Unknown","connectionTypeDetail":"Unknown","accessibility":"Unknown","intersection":"Unknown","productEdge":"Unknown"},"output":{"availableForReuse":0,"availableForRecycle":0,"recyclingEfficiency":0.75,"landfill":0}},"id":"6e943637-0163-4e94-8c17-f0dd7ee4eed5","databaseId":"3c8a8adf-b94b-4754-b1de-ec9dd336a7e0","externalId":"P1234567","names":{"nl":"Volume product","de":"Volumenprodukt","en":"Volume product","fr":"Produit volumique","nb":"Volum produkt"},"descriptions":{},"isActive":true}'
+                area:
+                  summary: Area product
+                  value: '{"commodityType":"Product","functionalUnit":"Area","defaultFunctionalUnitAmount":1,"fixedHeight":1,"productCode":"9820001000","GTIN":"4712662086590","manufacturer":{"name":"Madaster Production Company","street":"Amersfoortsestraatweg 117","zipCode":"1251 AV","city":"Laren","country":"The Netherlands","website":"https://madaster.nl"},"productionSite":{"name":"Madaster Production Site","street":"Amersfoortsestraatweg 117","zipCode":"1251 AV","city":"Laren","country":"The Netherlands","website":"https://madaster.com"},"lifespan":999,"density":2500,"doNotUseBillOfMaterials":true,"calculateEnvironmentValuesFromBillOfMaterials":false,"circularity":{"feedstock":{"reused":0,"renewables":0,"renewablesSustainablyProduced":0,"rapidRenewables":0,"rapidRenewablesSustainablyProduced":0,"recycled":0,"recyclingEfficiency":0.75},"scarcity":{"physicalScarce":0,"socialEconomicScarce":0},"detachability":{"connectionType":"Unknown","connectionTypeDetail":"Unknown","accessibility":"Unknown","intersection":"Unknown","productEdge":"Unknown"},"output":{"availableForReuse":0,"availableForRecycle":0,"recyclingEfficiency":0.75,"landfill":0}},"id":"6e943637-0163-4e94-8c17-f0dd7ee4eed5","databaseId":"3c8a8adf-b94b-4754-b1de-ec9dd336a7e0","externalId":"P1234567","names":{"nl":"Oppervlakte product","de":"Gebietsprodukt","en":"Area product","fr":"Produit de zone","nb":"Omr\u00E5de produkt"},"descriptions":{},"isActive":true}'
+                length:
+                  summary: Length product
+                  value: '{"commodityType":"Product","functionalUnit":"Length","defaultFunctionalUnitAmount":1,"fixedArea":0.11,"productCode":"70005818","GTIN":"9010459186744","manufacturer":{"name":"Pipelife"},"lifespan":50,"density":1400,"doNotUseBillOfMaterials":true,"calculateEnvironmentValuesFromBillOfMaterials":false,"circularity":{"feedstock":{"reused":0,"renewables":0,"renewablesSustainablyProduced":0,"rapidRenewables":0,"rapidRenewablesSustainablyProduced":0,"recycled":0,"recyclingEfficiency":0.75},"scarcity":{"physicalScarce":0,"socialEconomicScarce":0},"detachability":{"connectionType":"Unknown","connectionTypeDetail":"Unknown","accessibility":"Unknown","intersection":"Unknown","productEdge":"Unknown"},"output":{"availableForReuse":0,"availableForRecycle":0,"recyclingEfficiency":0.75,"landfill":0}},"id":"6e943637-0163-4e94-8c17-f0dd7ee4eed5","databaseId":"3c8a8adf-b94b-4754-b1de-ec9dd336a7e0","names":{"nl":"110 / 3.2-6M PVC KABELLEIDING SN8 PIJP","en":"110 / 3.2-6M PVC CABLE PIPE SN8 PIPE","nb":"110/3,2-6M PVC KABELR\u00D8R SN8 R\u00D8"},"descriptions":{},"isActive":true}'
+                quantity:
+                  summary: Quantity product
+                  value: '{"commodityType":"Product","functionalUnit":"Quantity","defaultFunctionalUnitAmount":1,"productCode":"KFN 7714 F","GTIN":"4712662086590","manufacturer":{"name":"Miele","GLN":"11622150"},"lifespan":10,"weight":67.7,"url":"https://www.miele.nl/e/integreerbare-koel-diepvriescombinatie-kfn-7714-f-11622150-p","doNotUseBillOfMaterials":true,"calculateEnvironmentValuesFromBillOfMaterials":false,"circularity":{"feedstock":{"reused":0,"renewables":0,"renewablesSustainablyProduced":0,"rapidRenewables":0,"rapidRenewablesSustainablyProduced":0,"recycled":0,"recyclingEfficiency":0.75},"scarcity":{"physicalScarce":0,"socialEconomicScarce":0},"detachability":{"connectionType":"Unknown","connectionTypeDetail":"Unknown","accessibility":"Unknown","intersection":"Unknown","productEdge":"Unknown"},"output":{"availableForReuse":0,"availableForRecycle":0,"recyclingEfficiency":0.75,"landfill":0}},"id":"6e943637-0163-4e94-8c17-f0dd7ee4eed5","databaseId":"3c8a8adf-b94b-4754-b1de-ec9dd336a7e0","externalId":"F6154D09FD0B1EDC8AEE5F73D9F18B46","names":{"nl":"Koelkast","de":"K\u00FChlschrank","en":"Refrigerator","fr":"R\u00E9frig\u00E9rateur","nb":"Kj\u00F8leskap"},"descriptions":{},"isActive":true}'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+    delete:
+      tags:
+        - Commodity
+      summary: Delete a commodity.
+      description: 'This call can be used to delete a commodity from Madaster, will throw a exception with status 412 when the commodity is in use.'
+      operationId: Commodity_DeleteCommodity
+      parameters:
+        - name: id
+          in: path
+          description: The commodity identifier
+          required: true
+          schema:
+            type: string
+            format: uuid
+          example: 6e943637-0163-4e94-8c17-f0dd7ee4eed5
+      responses:
+        '202':
+          description: Accepted
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '412':
+          description: Client Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+  '/api/v4.0/commodity/{databaseId}/external/{externalId}':
+    get:
+      tags:
+        - Commodity
+      summary: Find commodity by ExternalID.
+      description: ''
+      operationId: Commodity_GetCommodityByExternalId
+      parameters:
+        - name: databaseId
+          in: path
+          description: The database identifier
+          required: true
+          schema:
+            type: string
+            format: uuid
+          example: 3c8a8adf-b94b-4754-b1de-ec9dd336a7e0
+        - name: externalId
+          in: path
+          description: The external reference identifier
+          required: true
+          schema:
+            type: string
+          example: REF-12345
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: '#/components/schemas/CommodityBase'
+                  - $ref: '#/components/schemas/Material'
+                  - $ref: '#/components/schemas/Product'
+                description: The base model for Material and Product (contains the shared fields between Material and Product)
+              examples:
+                material:
+                  summary: Material
+                  value: '{"commodityType":"Material","density":700,"lifespan":999,"materialFamilies":{"madaster":"wood","madasterv2":"i2"},"circularity":{"feedstock":{"renewables":0,"renewablesSustainablyProduced":0,"rapidRenewables":0,"rapidRenewablesSustainablyProduced":0,"recycled":0,"recyclingEfficiency":0.75},"scarcity":{"physicalScarce":0,"socialEconomicScarce":0},"output":{"availableForRecycle":0,"recyclingEfficiency":0.75,"landfill":0}},"id":"6e943637-0163-4e94-8c17-f0dd7ee4eed5","databaseId":"3c8a8adf-b94b-4754-b1de-ec9dd336a7e0","externalId":"M987654","names":{"nl":"Loofhout - essen","de":"Eschenholz","en":"Ash wood","fr":"Fr\u00EAne","nb":"Asketre"},"descriptions":{},"isActive":true}'
+                volume:
+                  summary: Volume product
+                  value: '{"commodityType":"Product","functionalUnit":"Volume","defaultFunctionalUnitAmount":1,"productCode":"9820001000","GTIN":"4712662086590","manufacturer":{"name":"Madaster Production Company","street":"Amersfoortsestraatweg 117","zipCode":"1251 AV","city":"Laren","country":"The Netherlands","website":"https://madaster.nl"},"productionSite":{"name":"Madaster Production Site","street":"Amersfoortsestraatweg 117","zipCode":"1251 AV","city":"Laren","country":"The Netherlands","website":"https://madaster.com"},"lifespan":999,"density":700,"doNotUseBillOfMaterials":true,"calculateEnvironmentValuesFromBillOfMaterials":false,"circularity":{"feedstock":{"reused":0,"renewables":0,"renewablesSustainablyProduced":0,"rapidRenewables":0,"rapidRenewablesSustainablyProduced":0,"recycled":0,"recyclingEfficiency":0.75},"scarcity":{"physicalScarce":0,"socialEconomicScarce":0},"detachability":{"connectionType":"Unknown","connectionTypeDetail":"Unknown","accessibility":"Unknown","intersection":"Unknown","productEdge":"Unknown"},"output":{"availableForReuse":0,"availableForRecycle":0,"recyclingEfficiency":0.75,"landfill":0}},"id":"6e943637-0163-4e94-8c17-f0dd7ee4eed5","databaseId":"3c8a8adf-b94b-4754-b1de-ec9dd336a7e0","externalId":"P1234567","names":{"nl":"Volume product","de":"Volumenprodukt","en":"Volume product","fr":"Produit volumique","nb":"Volum produkt"},"descriptions":{},"isActive":true}'
+                area:
+                  summary: Area product
+                  value: '{"commodityType":"Product","functionalUnit":"Area","defaultFunctionalUnitAmount":1,"fixedHeight":1,"productCode":"9820001000","GTIN":"4712662086590","manufacturer":{"name":"Madaster Production Company","street":"Amersfoortsestraatweg 117","zipCode":"1251 AV","city":"Laren","country":"The Netherlands","website":"https://madaster.nl"},"productionSite":{"name":"Madaster Production Site","street":"Amersfoortsestraatweg 117","zipCode":"1251 AV","city":"Laren","country":"The Netherlands","website":"https://madaster.com"},"lifespan":999,"density":2500,"doNotUseBillOfMaterials":true,"calculateEnvironmentValuesFromBillOfMaterials":false,"circularity":{"feedstock":{"reused":0,"renewables":0,"renewablesSustainablyProduced":0,"rapidRenewables":0,"rapidRenewablesSustainablyProduced":0,"recycled":0,"recyclingEfficiency":0.75},"scarcity":{"physicalScarce":0,"socialEconomicScarce":0},"detachability":{"connectionType":"Unknown","connectionTypeDetail":"Unknown","accessibility":"Unknown","intersection":"Unknown","productEdge":"Unknown"},"output":{"availableForReuse":0,"availableForRecycle":0,"recyclingEfficiency":0.75,"landfill":0}},"id":"6e943637-0163-4e94-8c17-f0dd7ee4eed5","databaseId":"3c8a8adf-b94b-4754-b1de-ec9dd336a7e0","externalId":"P1234567","names":{"nl":"Oppervlakte product","de":"Gebietsprodukt","en":"Area product","fr":"Produit de zone","nb":"Omr\u00E5de produkt"},"descriptions":{},"isActive":true}'
+                length:
+                  summary: Length product
+                  value: '{"commodityType":"Product","functionalUnit":"Length","defaultFunctionalUnitAmount":1,"fixedArea":0.11,"productCode":"70005818","GTIN":"9010459186744","manufacturer":{"name":"Pipelife"},"lifespan":50,"density":1400,"doNotUseBillOfMaterials":true,"calculateEnvironmentValuesFromBillOfMaterials":false,"circularity":{"feedstock":{"reused":0,"renewables":0,"renewablesSustainablyProduced":0,"rapidRenewables":0,"rapidRenewablesSustainablyProduced":0,"recycled":0,"recyclingEfficiency":0.75},"scarcity":{"physicalScarce":0,"socialEconomicScarce":0},"detachability":{"connectionType":"Unknown","connectionTypeDetail":"Unknown","accessibility":"Unknown","intersection":"Unknown","productEdge":"Unknown"},"output":{"availableForReuse":0,"availableForRecycle":0,"recyclingEfficiency":0.75,"landfill":0}},"id":"6e943637-0163-4e94-8c17-f0dd7ee4eed5","databaseId":"3c8a8adf-b94b-4754-b1de-ec9dd336a7e0","names":{"nl":"110 / 3.2-6M PVC KABELLEIDING SN8 PIJP","en":"110 / 3.2-6M PVC CABLE PIPE SN8 PIPE","nb":"110/3,2-6M PVC KABELR\u00D8R SN8 R\u00D8"},"descriptions":{},"isActive":true}'
+                quantity:
+                  summary: Quantity product
+                  value: '{"commodityType":"Product","functionalUnit":"Quantity","defaultFunctionalUnitAmount":1,"productCode":"KFN 7714 F","GTIN":"4712662086590","manufacturer":{"name":"Miele","GLN":"11622150"},"lifespan":10,"weight":67.7,"url":"https://www.miele.nl/e/integreerbare-koel-diepvriescombinatie-kfn-7714-f-11622150-p","doNotUseBillOfMaterials":true,"calculateEnvironmentValuesFromBillOfMaterials":false,"circularity":{"feedstock":{"reused":0,"renewables":0,"renewablesSustainablyProduced":0,"rapidRenewables":0,"rapidRenewablesSustainablyProduced":0,"recycled":0,"recyclingEfficiency":0.75},"scarcity":{"physicalScarce":0,"socialEconomicScarce":0},"detachability":{"connectionType":"Unknown","connectionTypeDetail":"Unknown","accessibility":"Unknown","intersection":"Unknown","productEdge":"Unknown"},"output":{"availableForReuse":0,"availableForRecycle":0,"recyclingEfficiency":0.75,"landfill":0}},"id":"6e943637-0163-4e94-8c17-f0dd7ee4eed5","databaseId":"3c8a8adf-b94b-4754-b1de-ec9dd336a7e0","externalId":"F6154D09FD0B1EDC8AEE5F73D9F18B46","names":{"nl":"Koelkast","de":"K\u00FChlschrank","en":"Refrigerator","fr":"R\u00E9frig\u00E9rateur","nb":"Kj\u00F8leskap"},"descriptions":{},"isActive":true}'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+  /api/v4.0/commodity:
+    post:
+      tags:
+        - Commodity
+      summary: Creates a new commodity in the specified database.
+      description: This call can be used to create a new commodity in Madaster.
+      operationId: Commodity_CreateCommodity
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              oneOf:
+                - $ref: '#/components/schemas/CommodityBase'
+                - $ref: '#/components/schemas/Material'
+                - $ref: '#/components/schemas/Product'
+              description: The base model for Material and Product (contains the shared fields between Material and Product)
+            examples:
+              material:
+                summary: Material
+                value: '{"commodityType":"Material","density":700,"lifespan":999,"materialFamilies":{"madaster":"wood","madasterv2":"i2"},"circularity":{"feedstock":{"renewables":0,"renewablesSustainablyProduced":0,"rapidRenewables":0,"rapidRenewablesSustainablyProduced":0,"recycled":0,"recyclingEfficiency":0.75},"scarcity":{"physicalScarce":0,"socialEconomicScarce":0},"output":{"availableForRecycle":0,"recyclingEfficiency":0.75,"landfill":0}},"id":"6e943637-0163-4e94-8c17-f0dd7ee4eed5","databaseId":"3c8a8adf-b94b-4754-b1de-ec9dd336a7e0","externalId":"M987654","names":{"nl":"Loofhout - essen","de":"Eschenholz","en":"Ash wood","fr":"Fr\u00EAne","nb":"Asketre"},"descriptions":{},"isActive":true}'
+              volume:
+                summary: Volume product
+                value: '{"commodityType":"Product","functionalUnit":"Volume","defaultFunctionalUnitAmount":1,"productCode":"9820001000","GTIN":"4712662086590","manufacturer":{"name":"Madaster Production Company","street":"Amersfoortsestraatweg 117","zipCode":"1251 AV","city":"Laren","country":"The Netherlands","website":"https://madaster.nl"},"productionSite":{"name":"Madaster Production Site","street":"Amersfoortsestraatweg 117","zipCode":"1251 AV","city":"Laren","country":"The Netherlands","website":"https://madaster.com"},"lifespan":999,"density":700,"doNotUseBillOfMaterials":true,"calculateEnvironmentValuesFromBillOfMaterials":false,"circularity":{"feedstock":{"reused":0,"renewables":0,"renewablesSustainablyProduced":0,"rapidRenewables":0,"rapidRenewablesSustainablyProduced":0,"recycled":0,"recyclingEfficiency":0.75},"scarcity":{"physicalScarce":0,"socialEconomicScarce":0},"detachability":{"connectionType":"Unknown","connectionTypeDetail":"Unknown","accessibility":"Unknown","intersection":"Unknown","productEdge":"Unknown"},"output":{"availableForReuse":0,"availableForRecycle":0,"recyclingEfficiency":0.75,"landfill":0}},"id":"6e943637-0163-4e94-8c17-f0dd7ee4eed5","databaseId":"3c8a8adf-b94b-4754-b1de-ec9dd336a7e0","externalId":"P1234567","names":{"nl":"Volume product","de":"Volumenprodukt","en":"Volume product","fr":"Produit volumique","nb":"Volum produkt"},"descriptions":{},"isActive":true}'
+              area:
+                summary: Area product
+                value: '{"commodityType":"Product","functionalUnit":"Area","defaultFunctionalUnitAmount":1,"fixedHeight":1,"productCode":"9820001000","GTIN":"4712662086590","manufacturer":{"name":"Madaster Production Company","street":"Amersfoortsestraatweg 117","zipCode":"1251 AV","city":"Laren","country":"The Netherlands","website":"https://madaster.nl"},"productionSite":{"name":"Madaster Production Site","street":"Amersfoortsestraatweg 117","zipCode":"1251 AV","city":"Laren","country":"The Netherlands","website":"https://madaster.com"},"lifespan":999,"density":2500,"doNotUseBillOfMaterials":true,"calculateEnvironmentValuesFromBillOfMaterials":false,"circularity":{"feedstock":{"reused":0,"renewables":0,"renewablesSustainablyProduced":0,"rapidRenewables":0,"rapidRenewablesSustainablyProduced":0,"recycled":0,"recyclingEfficiency":0.75},"scarcity":{"physicalScarce":0,"socialEconomicScarce":0},"detachability":{"connectionType":"Unknown","connectionTypeDetail":"Unknown","accessibility":"Unknown","intersection":"Unknown","productEdge":"Unknown"},"output":{"availableForReuse":0,"availableForRecycle":0,"recyclingEfficiency":0.75,"landfill":0}},"id":"6e943637-0163-4e94-8c17-f0dd7ee4eed5","databaseId":"3c8a8adf-b94b-4754-b1de-ec9dd336a7e0","externalId":"P1234567","names":{"nl":"Oppervlakte product","de":"Gebietsprodukt","en":"Area product","fr":"Produit de zone","nb":"Omr\u00E5de produkt"},"descriptions":{},"isActive":true}'
+              length:
+                summary: Length product
+                value: '{"commodityType":"Product","functionalUnit":"Length","defaultFunctionalUnitAmount":1,"fixedArea":0.11,"productCode":"70005818","GTIN":"9010459186744","manufacturer":{"name":"Pipelife"},"lifespan":50,"density":1400,"doNotUseBillOfMaterials":true,"calculateEnvironmentValuesFromBillOfMaterials":false,"circularity":{"feedstock":{"reused":0,"renewables":0,"renewablesSustainablyProduced":0,"rapidRenewables":0,"rapidRenewablesSustainablyProduced":0,"recycled":0,"recyclingEfficiency":0.75},"scarcity":{"physicalScarce":0,"socialEconomicScarce":0},"detachability":{"connectionType":"Unknown","connectionTypeDetail":"Unknown","accessibility":"Unknown","intersection":"Unknown","productEdge":"Unknown"},"output":{"availableForReuse":0,"availableForRecycle":0,"recyclingEfficiency":0.75,"landfill":0}},"id":"6e943637-0163-4e94-8c17-f0dd7ee4eed5","databaseId":"3c8a8adf-b94b-4754-b1de-ec9dd336a7e0","names":{"nl":"110 / 3.2-6M PVC KABELLEIDING SN8 PIJP","en":"110 / 3.2-6M PVC CABLE PIPE SN8 PIPE","nb":"110/3,2-6M PVC KABELR\u00D8R SN8 R\u00D8"},"descriptions":{},"isActive":true}'
+              quantity:
+                summary: Quantity product
+                value: '{"commodityType":"Product","functionalUnit":"Quantity","defaultFunctionalUnitAmount":1,"productCode":"KFN 7714 F","GTIN":"4712662086590","manufacturer":{"name":"Miele","GLN":"11622150"},"lifespan":10,"weight":67.7,"url":"https://www.miele.nl/e/integreerbare-koel-diepvriescombinatie-kfn-7714-f-11622150-p","doNotUseBillOfMaterials":true,"calculateEnvironmentValuesFromBillOfMaterials":false,"circularity":{"feedstock":{"reused":0,"renewables":0,"renewablesSustainablyProduced":0,"rapidRenewables":0,"rapidRenewablesSustainablyProduced":0,"recycled":0,"recyclingEfficiency":0.75},"scarcity":{"physicalScarce":0,"socialEconomicScarce":0},"detachability":{"connectionType":"Unknown","connectionTypeDetail":"Unknown","accessibility":"Unknown","intersection":"Unknown","productEdge":"Unknown"},"output":{"availableForReuse":0,"availableForRecycle":0,"recyclingEfficiency":0.75,"landfill":0}},"id":"6e943637-0163-4e94-8c17-f0dd7ee4eed5","databaseId":"3c8a8adf-b94b-4754-b1de-ec9dd336a7e0","externalId":"F6154D09FD0B1EDC8AEE5F73D9F18B46","names":{"nl":"Koelkast","de":"K\u00FChlschrank","en":"Refrigerator","fr":"R\u00E9frig\u00E9rateur","nb":"Kj\u00F8leskap"},"descriptions":{},"isActive":true}'
+          text/json:
+            schema:
+              oneOf:
+                - $ref: '#/components/schemas/CommodityBase'
+                - $ref: '#/components/schemas/Material'
+                - $ref: '#/components/schemas/Product'
+              description: The base model for Material and Product (contains the shared fields between Material and Product)
+          application/*+json:
+            schema:
+              oneOf:
+                - $ref: '#/components/schemas/CommodityBase'
+                - $ref: '#/components/schemas/Material'
+                - $ref: '#/components/schemas/Product'
+              description: The base model for Material and Product (contains the shared fields between Material and Product)
+        required: true
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: '#/components/schemas/CommodityBase'
+                  - $ref: '#/components/schemas/Material'
+                  - $ref: '#/components/schemas/Product'
+                description: The base model for Material and Product (contains the shared fields between Material and Product)
+              examples:
+                material:
+                  summary: Material
+                  value: '{"commodityType":"Material","density":700,"lifespan":999,"materialFamilies":{"madaster":"wood","madasterv2":"i2"},"circularity":{"feedstock":{"renewables":0,"renewablesSustainablyProduced":0,"rapidRenewables":0,"rapidRenewablesSustainablyProduced":0,"recycled":0,"recyclingEfficiency":0.75},"scarcity":{"physicalScarce":0,"socialEconomicScarce":0},"output":{"availableForRecycle":0,"recyclingEfficiency":0.75,"landfill":0}},"id":"6e943637-0163-4e94-8c17-f0dd7ee4eed5","databaseId":"3c8a8adf-b94b-4754-b1de-ec9dd336a7e0","externalId":"M987654","names":{"nl":"Loofhout - essen","de":"Eschenholz","en":"Ash wood","fr":"Fr\u00EAne","nb":"Asketre"},"descriptions":{},"isActive":true}'
+                volume:
+                  summary: Volume product
+                  value: '{"commodityType":"Product","functionalUnit":"Volume","defaultFunctionalUnitAmount":1,"productCode":"9820001000","GTIN":"4712662086590","manufacturer":{"name":"Madaster Production Company","street":"Amersfoortsestraatweg 117","zipCode":"1251 AV","city":"Laren","country":"The Netherlands","website":"https://madaster.nl"},"productionSite":{"name":"Madaster Production Site","street":"Amersfoortsestraatweg 117","zipCode":"1251 AV","city":"Laren","country":"The Netherlands","website":"https://madaster.com"},"lifespan":999,"density":700,"doNotUseBillOfMaterials":true,"calculateEnvironmentValuesFromBillOfMaterials":false,"circularity":{"feedstock":{"reused":0,"renewables":0,"renewablesSustainablyProduced":0,"rapidRenewables":0,"rapidRenewablesSustainablyProduced":0,"recycled":0,"recyclingEfficiency":0.75},"scarcity":{"physicalScarce":0,"socialEconomicScarce":0},"detachability":{"connectionType":"Unknown","connectionTypeDetail":"Unknown","accessibility":"Unknown","intersection":"Unknown","productEdge":"Unknown"},"output":{"availableForReuse":0,"availableForRecycle":0,"recyclingEfficiency":0.75,"landfill":0}},"id":"6e943637-0163-4e94-8c17-f0dd7ee4eed5","databaseId":"3c8a8adf-b94b-4754-b1de-ec9dd336a7e0","externalId":"P1234567","names":{"nl":"Volume product","de":"Volumenprodukt","en":"Volume product","fr":"Produit volumique","nb":"Volum produkt"},"descriptions":{},"isActive":true}'
+                area:
+                  summary: Area product
+                  value: '{"commodityType":"Product","functionalUnit":"Area","defaultFunctionalUnitAmount":1,"fixedHeight":1,"productCode":"9820001000","GTIN":"4712662086590","manufacturer":{"name":"Madaster Production Company","street":"Amersfoortsestraatweg 117","zipCode":"1251 AV","city":"Laren","country":"The Netherlands","website":"https://madaster.nl"},"productionSite":{"name":"Madaster Production Site","street":"Amersfoortsestraatweg 117","zipCode":"1251 AV","city":"Laren","country":"The Netherlands","website":"https://madaster.com"},"lifespan":999,"density":2500,"doNotUseBillOfMaterials":true,"calculateEnvironmentValuesFromBillOfMaterials":false,"circularity":{"feedstock":{"reused":0,"renewables":0,"renewablesSustainablyProduced":0,"rapidRenewables":0,"rapidRenewablesSustainablyProduced":0,"recycled":0,"recyclingEfficiency":0.75},"scarcity":{"physicalScarce":0,"socialEconomicScarce":0},"detachability":{"connectionType":"Unknown","connectionTypeDetail":"Unknown","accessibility":"Unknown","intersection":"Unknown","productEdge":"Unknown"},"output":{"availableForReuse":0,"availableForRecycle":0,"recyclingEfficiency":0.75,"landfill":0}},"id":"6e943637-0163-4e94-8c17-f0dd7ee4eed5","databaseId":"3c8a8adf-b94b-4754-b1de-ec9dd336a7e0","externalId":"P1234567","names":{"nl":"Oppervlakte product","de":"Gebietsprodukt","en":"Area product","fr":"Produit de zone","nb":"Omr\u00E5de produkt"},"descriptions":{},"isActive":true}'
+                length:
+                  summary: Length product
+                  value: '{"commodityType":"Product","functionalUnit":"Length","defaultFunctionalUnitAmount":1,"fixedArea":0.11,"productCode":"70005818","GTIN":"9010459186744","manufacturer":{"name":"Pipelife"},"lifespan":50,"density":1400,"doNotUseBillOfMaterials":true,"calculateEnvironmentValuesFromBillOfMaterials":false,"circularity":{"feedstock":{"reused":0,"renewables":0,"renewablesSustainablyProduced":0,"rapidRenewables":0,"rapidRenewablesSustainablyProduced":0,"recycled":0,"recyclingEfficiency":0.75},"scarcity":{"physicalScarce":0,"socialEconomicScarce":0},"detachability":{"connectionType":"Unknown","connectionTypeDetail":"Unknown","accessibility":"Unknown","intersection":"Unknown","productEdge":"Unknown"},"output":{"availableForReuse":0,"availableForRecycle":0,"recyclingEfficiency":0.75,"landfill":0}},"id":"6e943637-0163-4e94-8c17-f0dd7ee4eed5","databaseId":"3c8a8adf-b94b-4754-b1de-ec9dd336a7e0","names":{"nl":"110 / 3.2-6M PVC KABELLEIDING SN8 PIJP","en":"110 / 3.2-6M PVC CABLE PIPE SN8 PIPE","nb":"110/3,2-6M PVC KABELR\u00D8R SN8 R\u00D8"},"descriptions":{},"isActive":true}'
+                quantity:
+                  summary: Quantity product
+                  value: '{"commodityType":"Product","functionalUnit":"Quantity","defaultFunctionalUnitAmount":1,"productCode":"KFN 7714 F","GTIN":"4712662086590","manufacturer":{"name":"Miele","GLN":"11622150"},"lifespan":10,"weight":67.7,"url":"https://www.miele.nl/e/integreerbare-koel-diepvriescombinatie-kfn-7714-f-11622150-p","doNotUseBillOfMaterials":true,"calculateEnvironmentValuesFromBillOfMaterials":false,"circularity":{"feedstock":{"reused":0,"renewables":0,"renewablesSustainablyProduced":0,"rapidRenewables":0,"rapidRenewablesSustainablyProduced":0,"recycled":0,"recyclingEfficiency":0.75},"scarcity":{"physicalScarce":0,"socialEconomicScarce":0},"detachability":{"connectionType":"Unknown","connectionTypeDetail":"Unknown","accessibility":"Unknown","intersection":"Unknown","productEdge":"Unknown"},"output":{"availableForReuse":0,"availableForRecycle":0,"recyclingEfficiency":0.75,"landfill":0}},"id":"6e943637-0163-4e94-8c17-f0dd7ee4eed5","databaseId":"3c8a8adf-b94b-4754-b1de-ec9dd336a7e0","externalId":"F6154D09FD0B1EDC8AEE5F73D9F18B46","names":{"nl":"Koelkast","de":"K\u00FChlschrank","en":"Refrigerator","fr":"R\u00E9frig\u00E9rateur","nb":"Kj\u00F8leskap"},"descriptions":{},"isActive":true}'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+    put:
+      tags:
+        - Commodity
+      summary: Update a commodity.
+      description: This call can be used to completely update (not a patch) a commodity in Madaster.
+      operationId: Commodity_UpdateCommodity
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              oneOf:
+                - $ref: '#/components/schemas/CommodityBase'
+                - $ref: '#/components/schemas/Material'
+                - $ref: '#/components/schemas/Product'
+              description: The base model for Material and Product (contains the shared fields between Material and Product)
+            examples:
+              material:
+                summary: Material
+                value: '{"commodityType":"Material","density":700,"lifespan":999,"materialFamilies":{"madaster":"wood","madasterv2":"i2"},"circularity":{"feedstock":{"renewables":0,"renewablesSustainablyProduced":0,"rapidRenewables":0,"rapidRenewablesSustainablyProduced":0,"recycled":0,"recyclingEfficiency":0.75},"scarcity":{"physicalScarce":0,"socialEconomicScarce":0},"output":{"availableForRecycle":0,"recyclingEfficiency":0.75,"landfill":0}},"id":"6e943637-0163-4e94-8c17-f0dd7ee4eed5","databaseId":"3c8a8adf-b94b-4754-b1de-ec9dd336a7e0","externalId":"M987654","names":{"nl":"Loofhout - essen","de":"Eschenholz","en":"Ash wood","fr":"Fr\u00EAne","nb":"Asketre"},"descriptions":{},"isActive":true}'
+              volume:
+                summary: Volume product
+                value: '{"commodityType":"Product","functionalUnit":"Volume","defaultFunctionalUnitAmount":1,"productCode":"9820001000","GTIN":"4712662086590","manufacturer":{"name":"Madaster Production Company","street":"Amersfoortsestraatweg 117","zipCode":"1251 AV","city":"Laren","country":"The Netherlands","website":"https://madaster.nl"},"productionSite":{"name":"Madaster Production Site","street":"Amersfoortsestraatweg 117","zipCode":"1251 AV","city":"Laren","country":"The Netherlands","website":"https://madaster.com"},"lifespan":999,"density":700,"doNotUseBillOfMaterials":true,"calculateEnvironmentValuesFromBillOfMaterials":false,"circularity":{"feedstock":{"reused":0,"renewables":0,"renewablesSustainablyProduced":0,"rapidRenewables":0,"rapidRenewablesSustainablyProduced":0,"recycled":0,"recyclingEfficiency":0.75},"scarcity":{"physicalScarce":0,"socialEconomicScarce":0},"detachability":{"connectionType":"Unknown","connectionTypeDetail":"Unknown","accessibility":"Unknown","intersection":"Unknown","productEdge":"Unknown"},"output":{"availableForReuse":0,"availableForRecycle":0,"recyclingEfficiency":0.75,"landfill":0}},"id":"6e943637-0163-4e94-8c17-f0dd7ee4eed5","databaseId":"3c8a8adf-b94b-4754-b1de-ec9dd336a7e0","externalId":"P1234567","names":{"nl":"Volume product","de":"Volumenprodukt","en":"Volume product","fr":"Produit volumique","nb":"Volum produkt"},"descriptions":{},"isActive":true}'
+              area:
+                summary: Area product
+                value: '{"commodityType":"Product","functionalUnit":"Area","defaultFunctionalUnitAmount":1,"fixedHeight":1,"productCode":"9820001000","GTIN":"4712662086590","manufacturer":{"name":"Madaster Production Company","street":"Amersfoortsestraatweg 117","zipCode":"1251 AV","city":"Laren","country":"The Netherlands","website":"https://madaster.nl"},"productionSite":{"name":"Madaster Production Site","street":"Amersfoortsestraatweg 117","zipCode":"1251 AV","city":"Laren","country":"The Netherlands","website":"https://madaster.com"},"lifespan":999,"density":2500,"doNotUseBillOfMaterials":true,"calculateEnvironmentValuesFromBillOfMaterials":false,"circularity":{"feedstock":{"reused":0,"renewables":0,"renewablesSustainablyProduced":0,"rapidRenewables":0,"rapidRenewablesSustainablyProduced":0,"recycled":0,"recyclingEfficiency":0.75},"scarcity":{"physicalScarce":0,"socialEconomicScarce":0},"detachability":{"connectionType":"Unknown","connectionTypeDetail":"Unknown","accessibility":"Unknown","intersection":"Unknown","productEdge":"Unknown"},"output":{"availableForReuse":0,"availableForRecycle":0,"recyclingEfficiency":0.75,"landfill":0}},"id":"6e943637-0163-4e94-8c17-f0dd7ee4eed5","databaseId":"3c8a8adf-b94b-4754-b1de-ec9dd336a7e0","externalId":"P1234567","names":{"nl":"Oppervlakte product","de":"Gebietsprodukt","en":"Area product","fr":"Produit de zone","nb":"Omr\u00E5de produkt"},"descriptions":{},"isActive":true}'
+              length:
+                summary: Length product
+                value: '{"commodityType":"Product","functionalUnit":"Length","defaultFunctionalUnitAmount":1,"fixedArea":0.11,"productCode":"70005818","GTIN":"9010459186744","manufacturer":{"name":"Pipelife"},"lifespan":50,"density":1400,"doNotUseBillOfMaterials":true,"calculateEnvironmentValuesFromBillOfMaterials":false,"circularity":{"feedstock":{"reused":0,"renewables":0,"renewablesSustainablyProduced":0,"rapidRenewables":0,"rapidRenewablesSustainablyProduced":0,"recycled":0,"recyclingEfficiency":0.75},"scarcity":{"physicalScarce":0,"socialEconomicScarce":0},"detachability":{"connectionType":"Unknown","connectionTypeDetail":"Unknown","accessibility":"Unknown","intersection":"Unknown","productEdge":"Unknown"},"output":{"availableForReuse":0,"availableForRecycle":0,"recyclingEfficiency":0.75,"landfill":0}},"id":"6e943637-0163-4e94-8c17-f0dd7ee4eed5","databaseId":"3c8a8adf-b94b-4754-b1de-ec9dd336a7e0","names":{"nl":"110 / 3.2-6M PVC KABELLEIDING SN8 PIJP","en":"110 / 3.2-6M PVC CABLE PIPE SN8 PIPE","nb":"110/3,2-6M PVC KABELR\u00D8R SN8 R\u00D8"},"descriptions":{},"isActive":true}'
+              quantity:
+                summary: Quantity product
+                value: '{"commodityType":"Product","functionalUnit":"Quantity","defaultFunctionalUnitAmount":1,"productCode":"KFN 7714 F","GTIN":"4712662086590","manufacturer":{"name":"Miele","GLN":"11622150"},"lifespan":10,"weight":67.7,"url":"https://www.miele.nl/e/integreerbare-koel-diepvriescombinatie-kfn-7714-f-11622150-p","doNotUseBillOfMaterials":true,"calculateEnvironmentValuesFromBillOfMaterials":false,"circularity":{"feedstock":{"reused":0,"renewables":0,"renewablesSustainablyProduced":0,"rapidRenewables":0,"rapidRenewablesSustainablyProduced":0,"recycled":0,"recyclingEfficiency":0.75},"scarcity":{"physicalScarce":0,"socialEconomicScarce":0},"detachability":{"connectionType":"Unknown","connectionTypeDetail":"Unknown","accessibility":"Unknown","intersection":"Unknown","productEdge":"Unknown"},"output":{"availableForReuse":0,"availableForRecycle":0,"recyclingEfficiency":0.75,"landfill":0}},"id":"6e943637-0163-4e94-8c17-f0dd7ee4eed5","databaseId":"3c8a8adf-b94b-4754-b1de-ec9dd336a7e0","externalId":"F6154D09FD0B1EDC8AEE5F73D9F18B46","names":{"nl":"Koelkast","de":"K\u00FChlschrank","en":"Refrigerator","fr":"R\u00E9frig\u00E9rateur","nb":"Kj\u00F8leskap"},"descriptions":{},"isActive":true}'
+          text/json:
+            schema:
+              oneOf:
+                - $ref: '#/components/schemas/CommodityBase'
+                - $ref: '#/components/schemas/Material'
+                - $ref: '#/components/schemas/Product'
+              description: The base model for Material and Product (contains the shared fields between Material and Product)
+          application/*+json:
+            schema:
+              oneOf:
+                - $ref: '#/components/schemas/CommodityBase'
+                - $ref: '#/components/schemas/Material'
+                - $ref: '#/components/schemas/Product'
+              description: The base model for Material and Product (contains the shared fields between Material and Product)
+        required: true
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: '#/components/schemas/CommodityBase'
+                  - $ref: '#/components/schemas/Material'
+                  - $ref: '#/components/schemas/Product'
+                description: The base model for Material and Product (contains the shared fields between Material and Product)
+              examples:
+                material:
+                  summary: Material
+                  value: '{"commodityType":"Material","density":700,"lifespan":999,"materialFamilies":{"madaster":"wood","madasterv2":"i2"},"circularity":{"feedstock":{"renewables":0,"renewablesSustainablyProduced":0,"rapidRenewables":0,"rapidRenewablesSustainablyProduced":0,"recycled":0,"recyclingEfficiency":0.75},"scarcity":{"physicalScarce":0,"socialEconomicScarce":0},"output":{"availableForRecycle":0,"recyclingEfficiency":0.75,"landfill":0}},"id":"6e943637-0163-4e94-8c17-f0dd7ee4eed5","databaseId":"3c8a8adf-b94b-4754-b1de-ec9dd336a7e0","externalId":"M987654","names":{"nl":"Loofhout - essen","de":"Eschenholz","en":"Ash wood","fr":"Fr\u00EAne","nb":"Asketre"},"descriptions":{},"isActive":true}'
+                volume:
+                  summary: Volume product
+                  value: '{"commodityType":"Product","functionalUnit":"Volume","defaultFunctionalUnitAmount":1,"productCode":"9820001000","GTIN":"4712662086590","manufacturer":{"name":"Madaster Production Company","street":"Amersfoortsestraatweg 117","zipCode":"1251 AV","city":"Laren","country":"The Netherlands","website":"https://madaster.nl"},"productionSite":{"name":"Madaster Production Site","street":"Amersfoortsestraatweg 117","zipCode":"1251 AV","city":"Laren","country":"The Netherlands","website":"https://madaster.com"},"lifespan":999,"density":700,"doNotUseBillOfMaterials":true,"calculateEnvironmentValuesFromBillOfMaterials":false,"circularity":{"feedstock":{"reused":0,"renewables":0,"renewablesSustainablyProduced":0,"rapidRenewables":0,"rapidRenewablesSustainablyProduced":0,"recycled":0,"recyclingEfficiency":0.75},"scarcity":{"physicalScarce":0,"socialEconomicScarce":0},"detachability":{"connectionType":"Unknown","connectionTypeDetail":"Unknown","accessibility":"Unknown","intersection":"Unknown","productEdge":"Unknown"},"output":{"availableForReuse":0,"availableForRecycle":0,"recyclingEfficiency":0.75,"landfill":0}},"id":"6e943637-0163-4e94-8c17-f0dd7ee4eed5","databaseId":"3c8a8adf-b94b-4754-b1de-ec9dd336a7e0","externalId":"P1234567","names":{"nl":"Volume product","de":"Volumenprodukt","en":"Volume product","fr":"Produit volumique","nb":"Volum produkt"},"descriptions":{},"isActive":true}'
+                area:
+                  summary: Area product
+                  value: '{"commodityType":"Product","functionalUnit":"Area","defaultFunctionalUnitAmount":1,"fixedHeight":1,"productCode":"9820001000","GTIN":"4712662086590","manufacturer":{"name":"Madaster Production Company","street":"Amersfoortsestraatweg 117","zipCode":"1251 AV","city":"Laren","country":"The Netherlands","website":"https://madaster.nl"},"productionSite":{"name":"Madaster Production Site","street":"Amersfoortsestraatweg 117","zipCode":"1251 AV","city":"Laren","country":"The Netherlands","website":"https://madaster.com"},"lifespan":999,"density":2500,"doNotUseBillOfMaterials":true,"calculateEnvironmentValuesFromBillOfMaterials":false,"circularity":{"feedstock":{"reused":0,"renewables":0,"renewablesSustainablyProduced":0,"rapidRenewables":0,"rapidRenewablesSustainablyProduced":0,"recycled":0,"recyclingEfficiency":0.75},"scarcity":{"physicalScarce":0,"socialEconomicScarce":0},"detachability":{"connectionType":"Unknown","connectionTypeDetail":"Unknown","accessibility":"Unknown","intersection":"Unknown","productEdge":"Unknown"},"output":{"availableForReuse":0,"availableForRecycle":0,"recyclingEfficiency":0.75,"landfill":0}},"id":"6e943637-0163-4e94-8c17-f0dd7ee4eed5","databaseId":"3c8a8adf-b94b-4754-b1de-ec9dd336a7e0","externalId":"P1234567","names":{"nl":"Oppervlakte product","de":"Gebietsprodukt","en":"Area product","fr":"Produit de zone","nb":"Omr\u00E5de produkt"},"descriptions":{},"isActive":true}'
+                length:
+                  summary: Length product
+                  value: '{"commodityType":"Product","functionalUnit":"Length","defaultFunctionalUnitAmount":1,"fixedArea":0.11,"productCode":"70005818","GTIN":"9010459186744","manufacturer":{"name":"Pipelife"},"lifespan":50,"density":1400,"doNotUseBillOfMaterials":true,"calculateEnvironmentValuesFromBillOfMaterials":false,"circularity":{"feedstock":{"reused":0,"renewables":0,"renewablesSustainablyProduced":0,"rapidRenewables":0,"rapidRenewablesSustainablyProduced":0,"recycled":0,"recyclingEfficiency":0.75},"scarcity":{"physicalScarce":0,"socialEconomicScarce":0},"detachability":{"connectionType":"Unknown","connectionTypeDetail":"Unknown","accessibility":"Unknown","intersection":"Unknown","productEdge":"Unknown"},"output":{"availableForReuse":0,"availableForRecycle":0,"recyclingEfficiency":0.75,"landfill":0}},"id":"6e943637-0163-4e94-8c17-f0dd7ee4eed5","databaseId":"3c8a8adf-b94b-4754-b1de-ec9dd336a7e0","names":{"nl":"110 / 3.2-6M PVC KABELLEIDING SN8 PIJP","en":"110 / 3.2-6M PVC CABLE PIPE SN8 PIPE","nb":"110/3,2-6M PVC KABELR\u00D8R SN8 R\u00D8"},"descriptions":{},"isActive":true}'
+                quantity:
+                  summary: Quantity product
+                  value: '{"commodityType":"Product","functionalUnit":"Quantity","defaultFunctionalUnitAmount":1,"productCode":"KFN 7714 F","GTIN":"4712662086590","manufacturer":{"name":"Miele","GLN":"11622150"},"lifespan":10,"weight":67.7,"url":"https://www.miele.nl/e/integreerbare-koel-diepvriescombinatie-kfn-7714-f-11622150-p","doNotUseBillOfMaterials":true,"calculateEnvironmentValuesFromBillOfMaterials":false,"circularity":{"feedstock":{"reused":0,"renewables":0,"renewablesSustainablyProduced":0,"rapidRenewables":0,"rapidRenewablesSustainablyProduced":0,"recycled":0,"recyclingEfficiency":0.75},"scarcity":{"physicalScarce":0,"socialEconomicScarce":0},"detachability":{"connectionType":"Unknown","connectionTypeDetail":"Unknown","accessibility":"Unknown","intersection":"Unknown","productEdge":"Unknown"},"output":{"availableForReuse":0,"availableForRecycle":0,"recyclingEfficiency":0.75,"landfill":0}},"id":"6e943637-0163-4e94-8c17-f0dd7ee4eed5","databaseId":"3c8a8adf-b94b-4754-b1de-ec9dd336a7e0","externalId":"F6154D09FD0B1EDC8AEE5F73D9F18B46","names":{"nl":"Koelkast","de":"K\u00FChlschrank","en":"Refrigerator","fr":"R\u00E9frig\u00E9rateur","nb":"Kj\u00F8leskap"},"descriptions":{},"isActive":true}'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+  '/api/v4.0/commodity/{id}/version':
+    post:
+      tags:
+        - Commodity
+      summary: Create a new version
+      description: Creates a new version of commodity (the old version is marked as inactive)
+      operationId: Commodity_CreateCommodityVersion
+      parameters:
+        - name: id
+          in: path
+          description: The commodity identifier
+          required: true
+          schema:
+            type: string
+            format: uuid
+          example: 6e943637-0163-4e94-8c17-f0dd7ee4eed5
+      responses:
+        '202':
+          description: Accepted
+          content:
+            application/json:
+              schema:
+                type: string
+                format: uuid
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+  '/api/v4.0/commodity/{id}/children':
+    get:
+      tags:
+        - Commodity
+      summary: Get the Bill of Materials (children) for a product.
+      description: 'Get the Bill of Materials for a product, when called for a material will throw an error.'
+      operationId: Commodity_GetProductChildren
+      parameters:
+        - name: id
+          in: path
+          description: The commodity identifier
+          required: true
+          schema:
+            type: string
+            format: uuid
+          example: 6e943637-0163-4e94-8c17-f0dd7ee4eed5
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  oneOf:
+                    - $ref: '#/components/schemas/BaseChildReference'
+                    - $ref: '#/components/schemas/MaterialChildReference'
+                    - $ref: '#/components/schemas/ProductChildReference'
+                  description: The base model for ProductChildReference and MaterialChildReference.
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+  '/api/v4.0/commodity/{id}/children/quantity':
+    post:
+      tags:
+        - Commodity
+      summary: Add a quantity product to the Bill of Materials.
+      description: 'This call can be used to add a quantity product to the Bill of Materials of a product, in the body to specify which product and the quantity that should be added.'
+      operationId: Commodity_AddProductChildByQuantity
+      parameters:
+        - name: id
+          in: path
+          description: The commodity identifier
+          required: true
+          schema:
+            type: string
+            format: uuid
+          example: 6e943637-0163-4e94-8c17-f0dd7ee4eed5
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              required:
+                - commodityId
+                - quantity
+              allOf:
+                - $ref: '#/components/schemas/AddProductChildRequest'
+              description: Used to add a commodity to the Bill of Materials of a commodity.
+          text/json:
+            schema:
+              required:
+                - commodityId
+                - quantity
+              allOf:
+                - $ref: '#/components/schemas/AddProductChildRequest'
+              description: Used to add a commodity to the Bill of Materials of a commodity.
+          application/*+json:
+            schema:
+              required:
+                - commodityId
+                - quantity
+              allOf:
+                - $ref: '#/components/schemas/AddProductChildRequest'
+              description: Used to add a commodity to the Bill of Materials of a commodity.
+        required: true
+      responses:
+        '202':
+          description: Accepted
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '412':
+          description: Client Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+  '/api/v4.0/commodity/{id}/children/weight':
+    post:
+      tags:
+        - Commodity
+      summary: Add a commodity by weight to the Bill of Materials.
+      description: 'This call can be used to add a commodity to the Bill of Materials of a product, in the body to specify which product and the quantity in kilogram (kg) that should be added.'
+      operationId: Commodity_AddProductChildByWeight
+      parameters:
+        - name: id
+          in: path
+          description: The commodity identifier
+          required: true
+          schema:
+            type: string
+            format: uuid
+          example: 6e943637-0163-4e94-8c17-f0dd7ee4eed5
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              required:
+                - commodityId
+                - quantity
+              allOf:
+                - $ref: '#/components/schemas/AddProductChildRequest'
+              description: Used to add a commodity to the Bill of Materials of a commodity.
+          text/json:
+            schema:
+              required:
+                - commodityId
+                - quantity
+              allOf:
+                - $ref: '#/components/schemas/AddProductChildRequest'
+              description: Used to add a commodity to the Bill of Materials of a commodity.
+          application/*+json:
+            schema:
+              required:
+                - commodityId
+                - quantity
+              allOf:
+                - $ref: '#/components/schemas/AddProductChildRequest'
+              description: Used to add a commodity to the Bill of Materials of a commodity.
+        required: true
+      responses:
+        '202':
+          description: Accepted
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '412':
+          description: Client Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+  '/api/v4.0/commodity/{id}/children/unit':
+    post:
+      tags:
+        - Commodity
+      summary: Add a commodity to the Bill of Materials.
+      description: 'This call can be used to add a commodity to the Bill of Materials of a product, in the body to specify which product and the quantity in functional units (m3, m2 or m) that should be added.'
+      operationId: Commodity_AddProductChildPerFunctionalUnit
+      parameters:
+        - name: id
+          in: path
+          description: The commodity identifier
+          required: true
+          schema:
+            type: string
+            format: uuid
+          example: 6e943637-0163-4e94-8c17-f0dd7ee4eed5
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              required:
+                - commodityId
+                - quantity
+              allOf:
+                - $ref: '#/components/schemas/AddProductChildRequest'
+              description: Used to add a commodity to the Bill of Materials of a commodity.
+          text/json:
+            schema:
+              required:
+                - commodityId
+                - quantity
+              allOf:
+                - $ref: '#/components/schemas/AddProductChildRequest'
+              description: Used to add a commodity to the Bill of Materials of a commodity.
+          application/*+json:
+            schema:
+              required:
+                - commodityId
+                - quantity
+              allOf:
+                - $ref: '#/components/schemas/AddProductChildRequest'
+              description: Used to add a commodity to the Bill of Materials of a commodity.
+        required: true
+      responses:
+        '202':
+          description: Accepted
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '412':
+          description: Client Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+  '/api/v4.0/commodity/{id}/children/{childId}':
+    delete:
+      tags:
+        - Commodity
+      summary: Deletes a commodity from the Bill of Materials of a product.
+      description: This call can be used to remove a commodity to the Bill of Materials of a product.
+      operationId: Commodity_DeleteProductChild
+      parameters:
+        - name: id
+          in: path
+          description: The commodity identifier
+          required: true
+          schema:
+            type: string
+            format: uuid
+          example: 6e943637-0163-4e94-8c17-f0dd7ee4eed5
+        - name: childId
+          in: path
+          description: 'The child identifier, this value can be found in the response from the GetProductChildren call.'
+          required: true
+          schema:
+            type: string
+            format: uuid
+          example: 0fac6b91-36f3-4f8e-99ee-c36003ecefe1
+      responses:
+        '202':
+          description: Accepted
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+  '/api/v4.0/commodity/{id}/lca':
+    get:
+      tags:
+        - Commodity
+      summary: Gets the Life Cycle Assessments (LCA) from a commodity.
+      description: ''
+      operationId: Commodity_GetLifeCycleAssessments
+      parameters:
+        - name: id
+          in: path
+          description: The commodity identifier
+          required: true
+          schema:
+            type: string
+            format: uuid
+          example: 6e943637-0163-4e94-8c17-f0dd7ee4eed5
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/LifeCycleAssessment'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+    post:
+      tags:
+        - Commodity
+      summary: Adds a Life Cycle Assessment (LCA) to a commodity.
+      description: ''
+      operationId: Commodity_CreateLifeCycleAssessment
+      parameters:
+        - name: id
+          in: path
+          description: The commodity identifier
+          required: true
+          schema:
+            type: string
+            format: uuid
+          example: 6e943637-0163-4e94-8c17-f0dd7ee4eed5
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              required:
+                - isoCode
+              allOf:
+                - $ref: '#/components/schemas/LifeCycleAssessment'
+              description: Life Cycle Assessment (LCA) model
+          text/json:
+            schema:
+              required:
+                - isoCode
+              allOf:
+                - $ref: '#/components/schemas/LifeCycleAssessment'
+              description: Life Cycle Assessment (LCA) model
+          application/*+json:
+            schema:
+              required:
+                - isoCode
+              allOf:
+                - $ref: '#/components/schemas/LifeCycleAssessment'
+              description: Life Cycle Assessment (LCA) model
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LifeCycleAssessment'
+        '409':
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+    put:
+      tags:
+        - Commodity
+      summary: Update the Life Cycle Assessment (LCA) from a commodity.
+      description: ''
+      operationId: Commodity_UpdateLifeCycleAssessments
+      parameters:
+        - name: id
+          in: path
+          description: The commodity identifier
+          required: true
+          schema:
+            type: string
+            format: uuid
+          example: 6e943637-0163-4e94-8c17-f0dd7ee4eed5
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              required:
+                - isoCode
+              allOf:
+                - $ref: '#/components/schemas/LifeCycleAssessment'
+              description: Life Cycle Assessment (LCA) model
+          text/json:
+            schema:
+              required:
+                - isoCode
+              allOf:
+                - $ref: '#/components/schemas/LifeCycleAssessment'
+              description: Life Cycle Assessment (LCA) model
+          application/*+json:
+            schema:
+              required:
+                - isoCode
+              allOf:
+                - $ref: '#/components/schemas/LifeCycleAssessment'
+              description: Life Cycle Assessment (LCA) model
+      responses:
+        '202':
+          description: Accepted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LifeCycleAssessment'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+  '/api/v4.0/commodity/{id}/lca/{isoCode}':
+    get:
+      tags:
+        - Commodity
+      summary: Gets the Life Cycle Assessment (LCA) for a country from a commodity.
+      description: ''
+      operationId: Commodity_GetLifeCycleAssessmentByIsocode
+      parameters:
+        - name: id
+          in: path
+          description: The commodity identifier
+          required: true
+          schema:
+            type: string
+            format: uuid
+          example: 6e943637-0163-4e94-8c17-f0dd7ee4eed5
+        - name: isoCode
+          in: path
+          description: The 2 letter iso code for a country.
+          required: true
+          schema:
+            maxLength: 2
+            minLength: 2
+            pattern: '^[a-z]*$'
+            type: string
+          example: nl
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LifeCycleAssessment'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+    delete:
+      tags:
+        - Commodity
+      summary: Deletes a Life Cycle Assessment (LCA) from a commodity.
+      description: ''
+      operationId: Commodity_DeleteLifeCycleAssessment
+      parameters:
+        - name: id
+          in: path
+          description: The commodity identifier
+          required: true
+          schema:
+            type: string
+            format: uuid
+          example: 6e943637-0163-4e94-8c17-f0dd7ee4eed5
+        - name: isoCode
+          in: path
+          description: The 2 letter iso code for a country.
+          required: true
+          schema:
+            maxLength: 2
+            minLength: 2
+            pattern: '^[a-z]*$'
+            type: string
+          example: nl
+      responses:
+        '202':
+          description: Accepted
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+  '/api/v4.0/commodity/{id}/files':
+    get:
+      tags:
+        - Commodity
+      summary: Gets the files for a commodity.
+      description: ''
+      operationId: Commodity_GetFiles
+      parameters:
+        - name: id
+          in: path
+          description: The commodity identifier
+          required: true
+          schema:
+            type: string
+            format: uuid
+          example: 6e943637-0163-4e94-8c17-f0dd7ee4eed5
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/FileInfo'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+    post:
+      tags:
+        - Commodity
+      summary: Adds a link to an external file to a commodity.
+      description: ''
+      operationId: Commodity_CreateExternalFile
+      parameters:
+        - name: id
+          in: path
+          description: The commodity identifier
+          required: true
+          schema:
+            type: string
+            format: uuid
+          example: 6e943637-0163-4e94-8c17-f0dd7ee4eed5
+      requestBody:
+        content:
+          application/json:
+            schema:
+              required:
+                - fileName
+                - folderId
+                - url
+              allOf:
+                - $ref: '#/components/schemas/FileInfo'
+              description: The file information model
+          text/json:
+            schema:
+              required:
+                - fileName
+                - folderId
+                - url
+              allOf:
+                - $ref: '#/components/schemas/FileInfo'
+              description: The file information model
+          application/*+json:
+            schema:
+              required:
+                - fileName
+                - folderId
+                - url
+              allOf:
+                - $ref: '#/components/schemas/FileInfo'
+              description: The file information model
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FileInfo'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+    put:
+      tags:
+        - Commodity
+      summary: Update a file from a commodity.
+      description: ''
+      operationId: Commodity_UpdateFile
+      parameters:
+        - name: id
+          in: path
+          description: The commodity identifier
+          required: true
+          schema:
+            type: string
+            format: uuid
+          example: 6e943637-0163-4e94-8c17-f0dd7ee4eed5
+      requestBody:
+        content:
+          application/json:
+            schema:
+              required:
+                - fileName
+                - folderId
+                - url
+              allOf:
+                - $ref: '#/components/schemas/FileInfo'
+              description: The file information model
+          text/json:
+            schema:
+              required:
+                - fileName
+                - folderId
+                - url
+              allOf:
+                - $ref: '#/components/schemas/FileInfo'
+              description: The file information model
+          application/*+json:
+            schema:
+              required:
+                - fileName
+                - folderId
+                - url
+              allOf:
+                - $ref: '#/components/schemas/FileInfo'
+              description: The file information model
+      responses:
+        '202':
+          description: Accepted
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+  '/api/v4.0/commodity/{id}/files/upload':
+    post:
+      tags:
+        - Commodity
+      summary: ''
+      description: ''
+      operationId: Commodity_UploadFile
+      parameters:
+        - name: id
+          in: path
+          description: The commodity identifier
+          required: true
+          schema:
+            type: string
+            format: uuid
+          example: 6e943637-0163-4e94-8c17-f0dd7ee4eed5
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+            encoding:
+              file:
+                style: form
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FileInfo'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+  '/api/v4.0/commodity/{id}/files/{fileId}':
+    delete:
+      tags:
+        - Commodity
+      summary: Deletes a file from a commodity.
+      description: ''
+      operationId: Commodity_DeleteFile
+      parameters:
+        - name: id
+          in: path
+          description: The commodity identifier
+          required: true
+          schema:
+            type: string
+            format: uuid
+          example: 6e943637-0163-4e94-8c17-f0dd7ee4eed5
+        - name: fileId
+          in: path
+          description: The file identifier.
+          required: true
+          schema:
+            type: string
+            format: uuid
+          example: 20061758-5028-491b-b9cf-053137bbef3d
+      responses:
+        '202':
+          description: Accepted
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+  '/api/v4.0/commodity/{id}/financial':
+    get:
+      tags:
+        - Commodity
+      summary: Gets thefinancial settings from a commodity.
+      description: ''
+      operationId: Commodity_GetFinancialSettings
+      parameters:
+        - name: id
+          in: path
+          description: The commodity identifier
+          required: true
+          schema:
+            type: string
+            format: uuid
+          example: 6e943637-0163-4e94-8c17-f0dd7ee4eed5
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/FinancialSetting'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+    post:
+      tags:
+        - Commodity
+      summary: Adds a financial setting to a commodity.
+      description: ''
+      operationId: Commodity_CreateFinancialSetting
+      parameters:
+        - name: id
+          in: path
+          description: The commodity identifier
+          required: true
+          schema:
+            type: string
+            format: uuid
+          example: 6e943637-0163-4e94-8c17-f0dd7ee4eed5
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              required:
+                - isoCode
+                - mode
+              allOf:
+                - $ref: '#/components/schemas/FinancialSetting'
+              description: The financial settings model
+          text/json:
+            schema:
+              required:
+                - isoCode
+                - mode
+              allOf:
+                - $ref: '#/components/schemas/FinancialSetting'
+              description: The financial settings model
+          application/*+json:
+            schema:
+              required:
+                - isoCode
+                - mode
+              allOf:
+                - $ref: '#/components/schemas/FinancialSetting'
+              description: The financial settings model
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FinancialSetting'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '409':
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+    put:
+      tags:
+        - Commodity
+      summary: Updates a financial setting from a commodity.
+      description: ''
+      operationId: Commodity_UpdateFinancialSettings
+      parameters:
+        - name: id
+          in: path
+          description: The commodity identifier
+          required: true
+          schema:
+            type: string
+            format: uuid
+          example: 6e943637-0163-4e94-8c17-f0dd7ee4eed5
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              required:
+                - isoCode
+                - mode
+              allOf:
+                - $ref: '#/components/schemas/FinancialSetting'
+              description: The financial settings model
+          text/json:
+            schema:
+              required:
+                - isoCode
+                - mode
+              allOf:
+                - $ref: '#/components/schemas/FinancialSetting'
+              description: The financial settings model
+          application/*+json:
+            schema:
+              required:
+                - isoCode
+                - mode
+              allOf:
+                - $ref: '#/components/schemas/FinancialSetting'
+              description: The financial settings model
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FinancialSetting'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+  '/api/v4.0/commodity/{id}/financial/{isoCode}':
+    delete:
+      tags:
+        - Commodity
+      summary: Deletes a financial setting from a commodity.
+      description: ''
+      operationId: Commodity_DeleteFinancialSetting
+      parameters:
+        - name: id
+          in: path
+          description: The commodity identifier
+          required: true
+          schema:
+            type: string
+            format: uuid
+          example: 6e943637-0163-4e94-8c17-f0dd7ee4eed5
+        - name: isoCode
+          in: path
+          description: The 2 letter iso code for a country.
+          required: true
+          schema:
+            maxLength: 2
+            minLength: 2
+            pattern: '^[a-z]*$'
+            type: string
+          example: nl
+      responses:
+        '202':
+          description: Accepted
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '412':
+          description: Client Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+  '/api/v4.0/commodity/{id}/images/{name}':
+    delete:
+      tags:
+        - Commodity
+      summary: Deletes a commodity image.
+      description: ''
+      operationId: Commodity_DeleteImage
+      parameters:
+        - name: id
+          in: path
+          description: The commodity identifier
+          required: true
+          schema:
+            type: string
+            format: uuid
+          example: 6e943637-0163-4e94-8c17-f0dd7ee4eed5
+        - name: name
+          in: path
+          description: The name of the image to delete
+          required: true
+          schema:
+            type: string
+          example: image.png
+      responses:
+        '202':
+          description: Accepted
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+  '/api/v4.0/commodity/{id}/images':
+    post:
+      tags:
+        - Commodity
+      summary: Adds a commodity image.
+      description: ''
+      operationId: Commodity_UploadImage
+      parameters:
+        - name: id
+          in: path
+          description: The commodity identifier
+          required: true
+          schema:
+            type: string
+            format: uuid
+          example: 6e943637-0163-4e94-8c17-f0dd7ee4eed5
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                image:
+                  type: string
+                  format: binary
+            encoding:
+              image:
+                style: form
+      responses:
+        '202':
+          description: Accepted
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '409':
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+  '/api/v4.0/commodity/{id}/matches':
+    get:
+      tags:
+        - Commodity
+      summary: Gets the matching terms for a commodity.
+      description: ''
+      operationId: Commodity_GetMatches
+      parameters:
+        - name: id
+          in: path
+          description: The commodity identifier
+          required: true
+          schema:
+            type: string
+            format: uuid
+          example: 6e943637-0163-4e94-8c17-f0dd7ee4eed5
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/MatchingTerm'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+    post:
+      tags:
+        - Commodity
+      summary: Adds a matching term to a commodity.
+      description: ''
+      operationId: Commodity_CreateMatch
+      parameters:
+        - name: id
+          in: path
+          description: The commodity identifier
+          required: true
+          schema:
+            type: string
+            format: uuid
+          example: 6e943637-0163-4e94-8c17-f0dd7ee4eed5
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: '#/components/schemas/MatchingTerm'
+              description: 'This model describes a matching term, used to match a value from an IFC document to a specific commodity.'
+          text/json:
+            schema:
+              allOf:
+                - $ref: '#/components/schemas/MatchingTerm'
+              description: 'This model describes a matching term, used to match a value from an IFC document to a specific commodity.'
+          application/*+json:
+            schema:
+              allOf:
+                - $ref: '#/components/schemas/MatchingTerm'
+              description: 'This model describes a matching term, used to match a value from an IFC document to a specific commodity.'
+        required: true
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MatchingTerm'
+        '409':
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+    put:
+      tags:
+        - Commodity
+      summary: Updates a matching term.
+      description: ''
+      operationId: Commodity_UpdateMatch
+      parameters:
+        - name: id
+          in: path
+          description: The commodity identifier
+          required: true
+          schema:
+            type: string
+            format: uuid
+          example: 6e943637-0163-4e94-8c17-f0dd7ee4eed5
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: '#/components/schemas/MatchingTerm'
+              description: 'This model describes a matching term, used to match a value from an IFC document to a specific commodity.'
+          text/json:
+            schema:
+              allOf:
+                - $ref: '#/components/schemas/MatchingTerm'
+              description: 'This model describes a matching term, used to match a value from an IFC document to a specific commodity.'
+          application/*+json:
+            schema:
+              allOf:
+                - $ref: '#/components/schemas/MatchingTerm'
+              description: 'This model describes a matching term, used to match a value from an IFC document to a specific commodity.'
+        required: true
+      responses:
+        '202':
+          description: Accepted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MatchingTerm'
+        '409':
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+  '/api/v4.0/commodity/{id}/matches/{matchId}':
+    get:
+      tags:
+        - Commodity
+      summary: Find a matching term by ID.
+      description: ''
+      operationId: Commodity_GetMatchById
+      parameters:
+        - name: id
+          in: path
+          description: The commodity identifier
+          required: true
+          schema:
+            type: string
+            format: uuid
+          example: 6e943637-0163-4e94-8c17-f0dd7ee4eed5
+        - name: matchId
+          in: path
+          description: The matching identifier
+          required: true
+          schema:
+            type: string
+            format: uuid
+          example: 726d7bf5-9e25-4cc7-a0d8-4032553e1178
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MatchingTerm'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+    delete:
+      tags:
+        - Commodity
+      summary: Deletes a matching term.
+      description: ''
+      operationId: Commodity_DeleteMatch
+      parameters:
+        - name: id
+          in: path
+          description: The commodity identifier
+          required: true
+          schema:
+            type: string
+            format: uuid
+          example: 6e943637-0163-4e94-8c17-f0dd7ee4eed5
+        - name: matchId
+          in: path
+          description: The matching identifier
+          required: true
+          schema:
+            type: string
+            format: uuid
+          example: 726d7bf5-9e25-4cc7-a0d8-4032553e1178
+      responses:
+        '204':
+          description: No Content
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+  /api/v4.0/database:
+    get:
+      tags:
+        - Database
+      summary: Gets all available databases.
+      description: 'Gets the all the databases that the current token has access to, this _includes_ all public available databases.'
+      operationId: Database_GetDatabases
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Database'
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+    post:
+      tags:
+        - Database
+      summary: Creates a new database.
+      description: ''
+      operationId: Database_CreateDatabase
+      requestBody:
+        content:
+          application/json:
+            schema:
+              required:
+                - names
+              allOf:
+                - $ref: '#/components/schemas/Database'
+              description: This model describes a database.
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Database'
+        '409':
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+    put:
+      tags:
+        - Database
+      summary: Updates a database.
+      description: ''
+      operationId: Database_UpdateDatabase
+      requestBody:
+        content:
+          application/json:
+            schema:
+              required:
+                - names
+              allOf:
+                - $ref: '#/components/schemas/Database'
+              description: This model describes a database.
+      responses:
+        '202':
+          description: Accepted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Database'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+  '/api/v4.0/database/{id}':
+    get:
+      tags:
+        - Database
+      summary: Find database by ID.
+      description: ''
+      operationId: Database_GetDatabaseById
+      parameters:
+        - name: id
+          in: path
+          description: The database identifier
+          required: true
+          schema:
+            type: string
+            format: uuid
+          example: 3c8a8adf-b94b-4754-b1de-ec9dd336a7e0
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Database'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+    delete:
+      tags:
+        - Database
+      summary: Delete a database.
+      description: ''
+      operationId: Database_DeleteDatabase
+      parameters:
+        - name: id
+          in: path
+          description: The database identifier
+          required: true
+          schema:
+            type: string
+            format: uuid
+          example: 3c8a8adf-b94b-4754-b1de-ec9dd336a7e0
+      responses:
+        '204':
+          description: No Content
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+  '/api/v4.0/database/external/{externalId}':
+    get:
+      tags:
+        - Database
+      summary: Find database by ExternalID.
+      description: ''
+      operationId: Database_GetDatabaseByExternalId
+      parameters:
+        - name: externalId
+          in: path
+          description: The external reference identifier
+          required: true
+          schema:
+            type: string
+          example: REF-12345
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Database'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+  '/api/v4.0/database/{id}/commodities':
+    get:
+      tags:
+        - Database
+      summary: Gets all commodities from a database.
+      description: ''
+      operationId: Database_GetCommodities
+      parameters:
+        - name: id
+          in: path
+          description: The database identifier
+          required: true
+          schema:
+            type: string
+            format: uuid
+          example: 3c8a8adf-b94b-4754-b1de-ec9dd336a7e0
+        - name: includeInactive
+          in: query
+          description: Include inactive commodities
+          schema:
+            type: boolean
+            default: false
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CommodityInfo'
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+  '/api/v4.0/database/{id}/folderstructure':
+    get:
+      tags:
+        - Database
+      summary: Gets the dossier folder structure for a database.
+      description: 'When creating/uploading a file, you can specifiy in which folder the file should be stored. This call can be used to retrieve the folder structure for a database, the structure can be different per database (depending on the country)'
+      operationId: Database_GetDatabaseFolderStructure
+      parameters:
+        - name: id
+          in: path
+          description: The database identifier
+          required: true
+          schema:
+            type: string
+            format: uuid
+          example: 3c8a8adf-b94b-4754-b1de-ec9dd336a7e0
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FolderInfo'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+  '/api/v4.0/database/{id}/compliances':
+    get:
+      tags:
+        - Database
+      summary: Gets the Life Cycle Assessment (LCA) compliances for a database.
+      description: Depending on the ruleset / country combination different compliances can be used
+      operationId: Database_GetDatabaseLCAcompliances
+      parameters:
+        - name: id
+          in: path
+          description: The database identifier
+          required: true
+          schema:
+            type: string
+            format: uuid
+          example: 3c8a8adf-b94b-4754-b1de-ec9dd336a7e0
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ComplianceInformation'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+  '/api/v4.0/database/{id}/materialfamilies':
+    get:
+      tags:
+        - Database
+      summary: Gets the materials families with all possible values for this database
+      description: ''
+      operationId: Database_GetMaterialClassifications
+      parameters:
+        - name: id
+          in: path
+          description: The database identifier
+          required: true
+          schema:
+            type: string
+            format: uuid
+          example: 3c8a8adf-b94b-4754-b1de-ec9dd336a7e0
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/MaterialFamily'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+  /api/v4.0/system/pricesets:
+    get:
+      tags:
+        - SystemSettings
+      summary: Gets the available financial price sets.
+      description: ''
+      operationId: SystemSettings_GetMaterialPriceSets
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PriceSet'
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+components:
+  schemas:
+    Accessibility:
+      enum:
+        - Unknown
+        - NotAccessible
+        - PartialWithDamage
+        - PartialWithRepairableDamage
+        - PartialNoDamage
+        - Accessible
+      type: string
+    AddProductChildRequest:
+      required:
+        - commodityId
+        - quantity
+      type: object
+      properties:
+        commodityId:
+          type: string
+          description: The commodity identifier to add to the Bill of Materials
+          format: uuid
+          example: ec67e60e-67bb-4a6a-9354-fc47a0a72b60
+        quantity:
+          type: number
+          description: 'The quantity to add, depending on the call this quantity is in #, m3, m2 or m.'
+          format: double
+          example: '1'
+      additionalProperties: false
+      description: Used to add a commodity to the Bill of Materials of a commodity.
+    BaseChildReference:
+      required:
+        - commodityType
+      type: object
+      properties:
+        commodityType:
+          type: string
+          description: Describes the commodity type (Product or Material)
+          readOnly: true
+          example: Product
+        id:
+          type: string
+          description: The Bill of Material child identifier
+          format: uuid
+        commodityId:
+          type: string
+          description: The commodity identifier
+          format: uuid
+          example: 6e943637-0163-4e94-8c17-f0dd7ee4eed5
+        names:
+          $ref: '#/components/schemas/LocalizedString'
+        quantity:
+          type: number
+          description: The quantity of the commodity in the Bill of Materials of a product.
+          format: double
+        quantityType:
+          type: string
+          description: 'The quantity type (#, m3, m2 or m)'
+          nullable: true
+        weight:
+          type: number
+          description: The weight of the commodity in the Bill of Materials of a product.
+          format: double
+        weightPercentage:
+          type: number
+          description: The percentage of the commodity in the Bill of Materials of a product (calculated to the total weight).
+          format: double
+      additionalProperties: false
+      description: The base model for ProductChildReference and MaterialChildReference.
+      discriminator:
+        propertyName: commodityType
+        mapping:
+          Material: '#/components/schemas/MaterialChildReference'
+          Product: '#/components/schemas/ProductChildReference'
+      x-abstract: true
+    Circularity:
+      type: object
+      properties:
+        feedstock:
+          allOf:
+            - $ref: '#/components/schemas/Feedstock'
+          description: Input
+        scarcity:
+          allOf:
+            - $ref: '#/components/schemas/Scarcity'
+          description: Scarcity
+        output:
+          allOf:
+            - $ref: '#/components/schemas/Output'
+          description: Output
+      additionalProperties: false
+      description: Environment
+    CommodityBase:
+      required:
+        - commodityType
+      type: object
+      properties:
+        commodityType:
+          type: string
+          description: Describes the commodity type (Product or Material)
+          example: Product
+        id:
+          type: string
+          description: The commodity identifier
+          format: uuid
+          example: 6e943637-0163-4e94-8c17-f0dd7ee4eed5
+        databaseId:
+          type: string
+          description: The database identifier
+          format: uuid
+          example: 3c8a8adf-b94b-4754-b1de-ec9dd336a7e0
+        externalId:
+          type: string
+          description: 'Optional: external refence identifier. _Doesn''t support updates!_'
+          nullable: true
+          example: REF-12345
+        names:
+          $ref: '#/components/schemas/LocalizedString'
+        descriptions:
+          $ref: '#/components/schemas/LocalizedString'
+        images:
+          type: array
+          items:
+            $ref: '#/components/schemas/ImageInfo'
+          description: A list of images associated to this commodity
+          nullable: true
+          readOnly: true
+        isActive:
+          type: boolean
+          description: Indicates whether the commodity can be used for mapping to an IFC element
+          example: 'true'
+        inUse:
+          type: boolean
+          description: Indicates whether the commodity is mapped to an IFC element
+          nullable: true
+          readOnly: true
+          example: 'true'
+        availableIn:
+          type: array
+          items:
+            type: string
+          description: Overrides the countries where this commodity is available (default is the countries from the database).
+          nullable: true
+      additionalProperties: false
+      description: The base model for Material and Product (contains the shared fields between Material and Product)
+      discriminator:
+        propertyName: commodityType
+        mapping:
+          Material: '#/components/schemas/Material'
+          Product: '#/components/schemas/Product'
+      x-abstract: true
+    CommodityInfo:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The commodity identifier
+          format: uuid
+          example: 6e943637-0163-4e94-8c17-f0dd7ee4eed5
+        names:
+          $ref: '#/components/schemas/LocalizedString'
+        commodityType:
+          type: string
+          description: Describes the commodity type (Product or Material)
+          example: Product
+        externalId:
+          type: string
+          description: 'Optional: external refence identifier. _Doesn''t support updates!_'
+          nullable: true
+          example: REF-12345
+        isActive:
+          type: boolean
+          description: Indicates whether the commodity can be used for mapping to an IFC element
+          example: 'true'
+      additionalProperties: false
+      description: This model describes a simplified view of a commodity.
+    Company:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Name
+          nullable: true
+        street:
+          type: string
+          description: Street
+          nullable: true
+        zipCode:
+          type: string
+          description: Zip code
+          nullable: true
+        city:
+          type: string
+          description: City
+          nullable: true
+        country:
+          type: string
+          description: Country
+          nullable: true
+        GLN:
+          type: string
+          description: GLN
+          nullable: true
+        website:
+          type: string
+          description: Website
+          nullable: true
+      additionalProperties: false
+      description: The model describes a company or production site.
+    ComplianceInformation:
+      type: object
+      properties:
+        ruleSet:
+          type: string
+          description: The name of the LCA ruleset
+          nullable: true
+          example: EN 15804:2012-04+A1 2013
+        compliances:
+          type: object
+          additionalProperties:
+            type: string
+            nullable: true
+          description: A dictionary containing the compliances and the country combination
+          nullable: true
+      additionalProperties: false
+      description: The LCA compliance information model
+    ConnectionType:
+      enum:
+        - Unknown
+        - HardChemicalConnection
+        - SoftChemicalConnection
+        - DirectConnection
+        - AddedConnectionConnection
+        - DryConnection
+      type: string
+    ConnectionTypeDetail:
+      enum:
+        - Unknown
+        - BoltAndNut
+        - Spring
+        - Corner
+        - Screw
+        - None
+        - Click
+        - Velcro
+        - Magnetic
+        - Glue
+        - Dump
+        - Weld
+        - Concrete
+        - ChemicalAnchor
+        - Sealant
+        - Foam
+        - Peg
+        - Nail
+      type: string
+    Database:
+      required:
+        - names
+      type: object
+      properties:
+        id:
+          type: string
+          description: The database identifier
+          format: uuid
+          example: 3c8a8adf-b94b-4754-b1de-ec9dd336a7e0
+        names:
+          $ref: '#/components/schemas/LocalizedString'
+        description:
+          $ref: '#/components/schemas/LocalizedString'
+        license:
+          $ref: '#/components/schemas/LocalizedString'
+        initiallySelectedForEnrichment:
+          type: boolean
+          description: Is the database selected by default for enrichment
+          example: 'true'
+        availableInCountries:
+          type: array
+          items:
+            type: string
+          description: 'A array of isocodes where the database can be used. _only to be used by special accounts, otherwise you get an error_'
+          nullable: true
+        isAvailableForEverybody:
+          type: boolean
+          description: 'Indicates if the database is available to all users in the AvailbleInCountries list. _only to be used by special accounts, otherwise you get an error_'
+          nullable: true
+          example: 'false'
+        externalId:
+          type: string
+          description: 'Optional: external refence identifier. _Doesn''t support updates!_'
+          nullable: true
+          example: REF-12345
+        readOnly:
+          type: boolean
+          description: Indicates whether the token has rights to mutate commodities
+          nullable: true
+          readOnly: true
+          example: 'true'
+        owner:
+          type: string
+          description: The database owner
+          nullable: true
+          readOnly: true
+      additionalProperties: false
+      description: This model describes a database.
+    Detachability:
+      type: object
+      properties:
+        connectionType:
+          allOf:
+            - $ref: '#/components/schemas/ConnectionType'
+          description: Connection type
+        connectionTypeDetail:
+          allOf:
+            - $ref: '#/components/schemas/ConnectionTypeDetail'
+          description: Connection detail
+        accessibility:
+          allOf:
+            - $ref: '#/components/schemas/Accessibility'
+          description: Connection accessibility
+        intersection:
+          allOf:
+            - $ref: '#/components/schemas/Intersection'
+          description: Intersections
+        productEdge:
+          allOf:
+            - $ref: '#/components/schemas/ProductEdge'
+          description: Product edges
+        index:
+          type: number
+          description: Detachability index
+          format: double
+          nullable: true
+          readOnly: true
+      additionalProperties: false
+      description: Detachability
+    EN15804_2012_04_A1_2013:
+      type: object
+      properties:
+        globalWarmingPotential:
+          title: Embodied Carbon (GWP)
+          type: number
+          description: Embodied Carbon (GWP) (*kg CO2e*)
+          format: double
+          nullable: true
+        ozoneDeplationPotential:
+          title: Ozone Deplation Potential (ODP)
+          type: number
+          description: Ozone Deplation Potential (ODP) (*kg CFC11e*)
+          format: double
+          nullable: true
+        photoChemicalOxydantFormation:
+          title: Photo Chemical Oxydant Formation (POCP)
+          type: number
+          description: Photo Chemical Oxydant Formation (POCP) (*kg C2H4e*)
+          format: double
+          nullable: true
+        acidificationPotentialOfLandAndWater:
+          title: Acidification potential of land and water (AP)
+          type: number
+          description: Acidification potential of land and water (AP) (*kg SO2e*)
+          format: double
+          nullable: true
+        eutrophicationPotential:
+          title: Eutrophication potential (EP)
+          type: number
+          description: Eutrophication potential (EP) (*kg (PO4)&sup3;e*)
+          format: double
+          nullable: true
+        abioticDeplationNonFossile:
+          title: Abiotic Depletion Non Fossil (ADPE)
+          type: number
+          description: Abiotic Depletion Non Fossil (ADPE) (*kg Sbe*)
+          format: double
+          nullable: true
+        abioticDeplationFossile:
+          title: Abiotic Depletion Fossil (ADPF)
+          type: number
+          description: Abiotic Depletion Fossil (ADPF) (*MJ*)
+          format: double
+          nullable: true
+        humanToxicityPotential:
+          title: Human toxicity potential (HTP)
+          type: number
+          description: 'Human toxicity potential (HTP) (*kg 1,4-Dichlorobenzene*)'
+          format: double
+          nullable: true
+        freshwaterAquaticEcotoxicityPotential:
+          title: Freshwater aquatic ecotoxicity potential (FAETP)
+          type: number
+          description: 'Freshwater aquatic ecotoxicity potential (FAETP) (*kg 1,4-Dichlorobenzene*)'
+          format: double
+          nullable: true
+        marinewaterAquaticEcotoxicityPotential:
+          title: Marinewater aquatic ecotoxicity potential (MAETP)
+          type: number
+          description: 'Marinewater aquatic ecotoxicity potential (MAETP) (*kg 1,4-Dichlorobenzene*)'
+          format: double
+          nullable: true
+        terrestrialEcotoxicityPotential:
+          title: Terrestrial ecotoxicity potential (TETP)
+          type: number
+          description: 'Terrestrial ecotoxicity potential (TETP) (*kg 1,4-Dichlorobenzene*)'
+          format: double
+          nullable: true
+      additionalProperties: false
+      description: LCA ruleset EN 15804:2012-04+A1 2013
+    EN15804_2012_A2_2019:
+      type: object
+      properties:
+        globalWarmingPotentialTotal:
+          title: Embodied Carbon (GWP-total)
+          type: number
+          description: Embodied Carbon (GWP-total) (*kg CO2e*)
+          format: double
+          nullable: true
+        globalWarmingPotentialFossil:
+          title: Global Warming Potential Fossil (GWP-fossil)
+          type: number
+          description: Global Warming Potential Fossil (GWP-fossil) (*kg CO2e*)
+          format: double
+          nullable: true
+        globalWarmingPotentialBiogenic:
+          title: Global Warming Potential Biogenic (GWP-biogenic)
+          type: number
+          description: Global Warming Potential Biogenic (GWP-biogenic) (*kg CO2e*)
+          format: double
+          nullable: true
+        globalWarmingPotentialLuluc:
+          title: Global Warming Potential Land use and Land use change (GWP-luluc)
+          type: number
+          description: Global Warming Potential Land use and Land use change (GWP-luluc) (*kg CO2e*)
+          format: double
+          nullable: true
+        ozoneDeplationPotential:
+          title: Ozone Deplation Potential (ODP)
+          type: number
+          description: Ozone Deplation Potential (ODP) (*kg CFC11e*)
+          format: double
+          nullable: true
+        acidificationPotentialAccumulatedExceedance:
+          title: Acidification Potential Accumulated Exceedance (AP)
+          type: number
+          description: Acidification Potential Accumulated Exceedance (AP) (*mol H+e*)
+          format: double
+          nullable: true
+        eutrophicationPotentialFreshWater:
+          title: Eutrophication Potential Fresh Water (EP-F)
+          type: number
+          description: Eutrophication Potential Fresh Water (EP-F) (*kg PO4e*)
+          format: double
+          nullable: true
+        eutrophicationPotentialMarineWater:
+          title: Eutrophication Potential Marine Water (EP-M)
+          type: number
+          description: Eutrophication Potential Marine Water (EP-M) (*kg Ne*)
+          format: double
+          nullable: true
+        eutrophicationTerrestrial:
+          title: Eutrophication potential terrestrial (EP-T)
+          type: number
+          description: Eutrophication potential terrestrial (EP-T) (*mol Ne*)
+          format: double
+          nullable: true
+        photoOxidantCreationPotential:
+          title: Photo Oxidant Creation Potential (POCP)
+          type: number
+          description: Photo Oxidant Creation Potential (POCP) (*kg NMVOCe*)
+          format: double
+          nullable: true
+        abioticDeplationNonFossile:
+          title: Abiotic Depletion Non Fossil (ADPE)
+          type: number
+          description: Abiotic Depletion Non Fossil (ADPE) (*kg Sbe*)
+          format: double
+          nullable: true
+        abioticDeplationFossile:
+          title: Abiotic Depletion Fossil (ADPF)
+          type: number
+          description: Abiotic Depletion Fossil (ADPF) (*MJ*)
+          format: double
+          nullable: true
+        waterUseDeprivationPotential:
+          title: Water Use Deprivation Potential (WDP)
+          type: number
+          description: Water Use Deprivation Potential (WDP) (*m&sup3;e depr.*)
+          format: double
+          nullable: true
+        potentialIncidenceOfDiseaseDueToPMEmissions:
+          title: Potential Incidence of disease due to PM emissions
+          type: number
+          description: Potential Incidence of disease due to PM emissions
+          format: double
+          nullable: true
+        potentialHumanExposureEfficiencyRelativeToU235:
+          title: Potential Human Exposure Efficiency relative to U235
+          type: number
+          description: Potential Human Exposure Efficiency relative to U235 (*kBq U235 eq*)
+          format: double
+          nullable: true
+        ecoTox:
+          title: Potential Comparative Toxic Unit for ecosystems (ETP-fw)
+          type: number
+          description: Potential Comparative Toxic Unit for ecosystems (ETP-fw) (*CTU-e*)
+          format: double
+          nullable: true
+        humanToxCancer:
+          title: Potential comparative toxic unit for humans - cancerogenic
+          type: number
+          description: Potential comparative toxic unit for humans - cancerogenic (*CTU-h*)
+          format: double
+          nullable: true
+        humanToxNonCancer:
+          title: Potential comparative toxic unit for humans - not\ncancerogenic
+          type: number
+          description: Potential comparative toxic unit for humans - not\ncancerogenic (*CTU-h*)
+          format: double
+          nullable: true
+        potentialSoilQualityIndex:
+          title: Potential soil quality index
+          type: number
+          description: Potential soil quality index
+          format: double
+          nullable: true
+      additionalProperties: false
+      description: LCA ruleset EN 15804:2012+A2:2019
+    Feedstock:
+      type: object
+      properties:
+        renewables:
+          type: number
+          description: Renewables
+          format: double
+        renewablesSustainablyProduced:
+          type: number
+          description: Renewable feedstock Sustainably Produced
+          format: double
+        rapidRenewables:
+          type: number
+          description: Rapid Renewables
+          format: double
+        rapidRenewablesSustainablyProduced:
+          type: number
+          description: Rapid renewables sustainably produced
+          format: double
+        notRenewables:
+          type: number
+          description: Not Renewables
+          format: double
+          nullable: true
+          readOnly: true
+        recycled:
+          type: number
+          description: Recycled
+          format: double
+        recyclingEfficiency:
+          type: number
+          description: Recycling Efficiency
+          format: double
+        totalPrimary:
+          type: number
+          description: Primary Feedstock
+          format: double
+          nullable: true
+          readOnly: true
+        totalSecondary:
+          type: number
+          description: Secondary
+          format: double
+          nullable: true
+          readOnly: true
+      additionalProperties: false
+      description: Input
+    FileInfo:
+      required:
+        - fileName
+        - folderId
+        - url
+      type: object
+      properties:
+        id:
+          type: string
+          description: The file identifier
+          format: uuid
+          readOnly: true
+          example: 12111899-ae14-43c8-b7f5-dd22b0cf4b59
+        fileName:
+          type: string
+          description: The file name
+          nullable: true
+          example: productinformation.pdf
+        folderId:
+          type: string
+          description: The folder identifier.
+          format: uuid
+        folderNames:
+          allOf:
+            - $ref: '#/components/schemas/LocalizedString'
+          readOnly: true
+        tags:
+          type: array
+          items:
+            type: string
+          description: The tags associated to the file
+          nullable: true
+        url:
+          type: string
+          description: The URL to download the file
+          format: uri
+          nullable: true
+          example: https://assets.madaster.com/files/productinformation.pdf
+        externalId:
+          type: string
+          description: 'Optional: externe Referenzkennung. _Unterstützt keine Updates!_'
+          nullable: true
+          example: REF-12345
+      additionalProperties: false
+      description: The file information model
+    FinancialMode:
+      enum:
+        - Fallback
+        - Manual
+        - PriceSet
+      type: string
+      description: "The financial mode enum.:\n  * `Fallback` - Default: Materials fallback to a default price set based on the classification\n  * `Manual` - Manual price set\n  * `PriceSet` - Use the specified price set"
+    FinancialSetting:
+      required:
+        - isoCode
+        - mode
+      type: object
+      properties:
+        isoCode:
+          type: string
+          description: The 2 letter iso code for a country.
+          example: nl
+        mode:
+          allOf:
+            - $ref: '#/components/schemas/FinancialMode'
+          description: The financial mode enum.
+        priceSet:
+          type: string
+          description: The price set identifier (Use the GetMaterialPriceSets operation to get the possible values)
+          nullable: true
+          example: GOLD_LBMA
+        transportCostsCurrencyPerKilo:
+          type: number
+          description: The transport costs in euro/kg
+          format: double
+        handlingFeedstockPercentage:
+          type: number
+          description: The feedstock handling costs in % of price.
+          format: double
+        handlingFeedstockCurrencyPerKilo:
+          type: number
+          description: The feedstock handling costs in euro/kg.
+          format: double
+      additionalProperties: false
+      description: The financial settings model
+    FolderInfo:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The folder identifier
+          format: uuid
+          example: 17c35a2a-9259-4612-adfd-dd234c0ac7fd
+        folderNames:
+          $ref: '#/components/schemas/LocalizedString'
+        children:
+          type: array
+          items:
+            $ref: '#/components/schemas/FolderInfo'
+          description: The children of this folder
+          nullable: true
+      additionalProperties: false
+      description: The folder structure model
+    FunctionalUnit:
+      enum:
+        - Volume
+        - Quantity
+        - Area
+        - Length
+      type: string
+      description: "This enumeration describes the possible values for the product functional unit:\n  * `Volume` - A product where scaling is performed based on the volume\n  * `Quantity` - A quantity based product, no scaling is being applied\n  * `Area` - A product where scaling is performed based on the area\n  * `Length` - A product where scaling is performed based on the length"
+    ImageInfo:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The image (file)name
+          nullable: true
+          readOnly: true
+          example: logo.png
+        url:
+          type: string
+          description: The url for image _(the url is only valid for 1 hour)_
+          format: uri
+          nullable: true
+          readOnly: true
+          example: https://assets.madaster.com/images/logo.png
+      additionalProperties: false
+      description: Contains the information about an image.
+    Intersection:
+      enum:
+        - Unknown
+        - Complete
+        - Incidental
+        - None
+      type: string
+    LcaPhase:
+      enum:
+        - NotSpecified
+        - A1_A3
+        - A4
+        - A5
+        - B1
+        - B2
+        - B3
+        - B5
+        - B6
+        - B7
+        - C1
+        - C2
+        - C3
+        - C4
+        - D
+      type: string
+      description: "The Life Cycle Assessment phases enum:\n  * `NotSpecified` - Unspecified phase\n  * `A1_A3` - A1-A3: Production\n  * `A4` - A4: Transport\n  * `A5` - A5: Installation\n  * `B1` - B1: Use/application\n  * `B2` - B2: Maintenance\n  * `B3` - B3: Repair\n  * `B5` - B5: Refurbishment\n  * `B6` - B6: Operational energy use\n  * `B7` - B7: Operational water use\n  * `C1` - C1: De-construction\n  * `C2` - C2: Transport\n  * `C3` - C3: Waste processing\n  * `C4` - C4: Disposal\n  * `D` - D: Recycling Potential"
+    LifeCycleAssessment:
+      required:
+        - isoCode
+      type: object
+      properties:
+        isoCode:
+          type: string
+          description: The 2 letter iso code for a country.
+          example: nl
+        owner:
+          type: string
+          description: Dataset owner
+          nullable: true
+        referenceYear:
+          type: integer
+          description: Reference year
+          format: int32
+          nullable: true
+        validUntilYear:
+          type: integer
+          description: Dataset valid until year
+          format: int32
+          nullable: true
+        datasetType:
+          type: string
+          description: Dataset type
+          nullable: true
+        environmentalCostIndicator:
+          type: number
+          description: Environmental Cost Indicator
+          format: double
+          nullable: true
+        UUID:
+          type: string
+          description: External UUID
+          nullable: true
+        registrationNumber:
+          type: string
+          description: External regsitrationnumber
+          nullable: true
+        version:
+          type: string
+          description: External version description
+          nullable: true
+        compliance:
+          type: array
+          items:
+            type: string
+          description: Compliance (Environmental product declaration)
+          nullable: true
+        phases:
+          type: array
+          items:
+            $ref: '#/components/schemas/LifeCycleAssessmentPhase'
+          description: Describes the environmental impact per phase
+          nullable: true
+      additionalProperties: false
+      description: Life Cycle Assessment (LCA) model
+    LifeCycleAssessmentPhase:
+      required:
+        - phaseId
+      type: object
+      properties:
+        phaseId:
+          allOf:
+            - $ref: '#/components/schemas/LcaPhase'
+          description: The phase identifier
+          example: A1_A3
+        EN15804_2012_04_A1_2013:
+          allOf:
+            - $ref: '#/components/schemas/EN15804_2012_04_A1_2013'
+          description: LCA ruleset EN 15804:2012-04+A1 2013
+          nullable: true
+        EN15804_2012_A2_2019:
+          allOf:
+            - $ref: '#/components/schemas/EN15804_2012_A2_2019'
+          description: LCA ruleset EN 15804:2012+A2:2019
+          nullable: true
+      additionalProperties: false
+      description: Model to describe the LCA values for a specific phase
+    LocalizedString:
+      title: LocalizedString
+      type: object
+      properties:
+        nl:
+          type: string
+          nullable: true
+        en:
+          type: string
+          nullable: true
+        de:
+          type: string
+          nullable: true
+        fr:
+          type: string
+          nullable: true
+        nb:
+          type: string
+          nullable: true
+      additionalProperties:
+        type: string
+      description: Contains the value of a string in multiple languages. The _iv_ can be used to specify a language invariant value
+      example:
+        nl: nederlandse naam
+        en: english name
+        de: deutscher name
+    MatchingTerm:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The matching identifier
+          format: uuid
+          readOnly: true
+          example: 726d7bf5-9e25-4cc7-a0d8-4032553e1178
+        value:
+          type: string
+          description: The match value
+          nullable: true
+          example: concrete
+        matchType:
+          allOf:
+            - $ref: '#/components/schemas/MatchingTermType'
+          description: The match type
+          example: Contains
+        language:
+          type: string
+          description: 'The match language (allowed values: en, nl, de, fr, nb or null)'
+          nullable: true
+          example: nl
+        matchOnTypeName:
+          type: boolean
+          description: Match also against the ifc typeName
+          nullable: true
+      additionalProperties: false
+      description: 'This model describes a matching term, used to match a value from an IFC document to a specific commodity.'
+    MatchingTermType:
+      enum:
+        - EqualsCaseSensitive
+        - Equals
+        - Startwith
+        - ContainsExactWord
+        - ContainsCaseSensitive
+        - Contains
+        - Endswith
+      type: string
+      description: "This enumeration describes the possible options for matching a value:\n  * `EqualsCaseSensitive` - Case sensitive equals comparison\n  * `Equals` - Equals comparison\n  * `Startwith` - Starts with comparison\n  * `ContainsExactWord` - Contains the exact word\n  * `ContainsCaseSensitive` - Case sensitive contains comparison\n  * `Contains` - Contains comparison\n  * `Endswith` - Ends with comparison"
+    Material:
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/CommodityBase'
+      properties:
+        density:
+          type: number
+          description: The material density in kg/m3
+          format: double
+          nullable: true
+          example: '1725'
+        lifespan:
+          type: integer
+          description: The technical lifespan (in years)
+          format: int32
+          nullable: true
+          example: '25'
+        supplier:
+          type: string
+          description: The name of the supplier
+          nullable: true
+          example: Tata Steel
+        materialFamilies:
+          type: object
+          additionalProperties:
+            type: string
+            nullable: true
+          description: The material families this material belongs to. Use the GetMaterialClassifications operation to retrieve the possible values.
+          example: {"madasterv2": "h3"}
+        circularity:
+          allOf:
+            - $ref: '#/components/schemas/Circularity'
+          description: The material circularity information
+          nullable: true
+      additionalProperties: false
+      description: Describes the material model
+    MaterialChildReference:
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/BaseChildReference'
+      additionalProperties: false
+      description: Describes a material in the bill of materials of a product
+    MaterialFamily:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The material family identifier
+          example: madasterv2
+        names:
+          $ref: '#/components/schemas/LocalizedString'
+        values:
+          type: array
+          items:
+            $ref: '#/components/schemas/MaterialFamilyValue'
+          description: The possible values for the family
+      additionalProperties: false
+      description: The material family model
+    MaterialFamilyValue:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The family value identifier
+          example: stone
+        names:
+          $ref: '#/components/schemas/LocalizedString'
+      additionalProperties: false
+      description: The material family value model
+    Output:
+      type: object
+      properties:
+        availableForRecycle:
+          type: number
+          description: Available for recycle
+          format: double
+        recyclingEfficiency:
+          type: number
+          description: 'Recycling efficiency '
+          format: double
+        landfill:
+          type: number
+          description: Landfill
+          format: double
+        incineration:
+          type: number
+          description: Incineration
+          format: double
+          nullable: true
+          readOnly: true
+      additionalProperties: false
+      description: Output
+    PriceSet:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The price set identifier
+          readOnly: true
+          example: GOLD_LBMA
+        names:
+          allOf:
+            - $ref: '#/components/schemas/LocalizedString'
+          readOnly: true
+        description:
+          allOf:
+            - $ref: '#/components/schemas/LocalizedString'
+          readOnly: true
+        obsolete:
+          type: boolean
+          description: A value indicating whether the price set is deprecated
+          readOnly: true
+          example: 'false'
+        sources:
+          type: array
+          items:
+            type: string
+          description: The sources for this price set (for example London Metal Exchange LME)
+          readOnly: true
+        transportCostsCurrencyPerKilo:
+          type: number
+          description: The transport costs in euro/kg
+          format: double
+        handlingFeedstockPercentage:
+          type: number
+          description: The feedstock handling costs in % of price.
+          format: double
+        handlingFeedstockCurrencyPerKilo:
+          type: number
+          description: The feedstock handling costs in euro/kg.
+          format: double
+      additionalProperties: false
+      description: The price set model
+    ProblemDetails:
+      type: object
+      properties:
+        type:
+          type: string
+          nullable: true
+        title:
+          type: string
+          nullable: true
+        status:
+          type: integer
+          format: int32
+          nullable: true
+        detail:
+          type: string
+          nullable: true
+        instance:
+          type: string
+          nullable: true
+      additionalProperties: { }
+    Product:
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/CommodityBase'
+      properties:
+        functionalUnit:
+          allOf:
+            - $ref: '#/components/schemas/FunctionalUnit'
+          description: Defines the type of product
+          example: Volume
+        defaultFunctionalUnitAmount:
+          type: number
+          description: 'Describes the default functional unit value. For a quantity/volume product, this describes the default volume (m3), for area product the default area (m2) and length product the default length (m)'
+          format: double
+          nullable: true
+          example: '1'
+        fixedHeight:
+          type: number
+          description: This value describes the fixed height (m) of an area product
+          format: double
+          nullable: true
+          example: '1'
+        fixedArea:
+          type: number
+          description: This values describes the fixed area (m2) of a length product
+          format: double
+          nullable: true
+          example: '1'
+        productCode:
+          type: string
+          description: The product code
+          nullable: true
+          example: 1SDA067123R1
+        GTIN:
+          type: string
+          description: The GTIN code
+          nullable: true
+          example: '08015644010201'
+        manufacturer:
+          allOf:
+            - $ref: '#/components/schemas/Company'
+          description: The manufacturer
+          nullable: true
+        productionSite:
+          allOf:
+            - $ref: '#/components/schemas/Company'
+          description: The production site
+          nullable: true
+        lifespan:
+          type: integer
+          description: The functional lifespan (in years)
+          format: int32
+          nullable: true
+          example: '32'
+        density:
+          type: number
+          description: 'The product density in kg/[functional unit]. **This field is required when creating or updating a volume/area/length product and DonNotUseBillOfMaterials = true **'
+          format: double
+          nullable: true
+        weight:
+          type: number
+          description: The weight in kg for a quantity product. **This field is required when creating or updating a quantity product and DonNotUseBillOfMaterials = true**
+          format: double
+          nullable: true
+        url:
+          type: string
+          description: External information URL
+          format: uri
+          nullable: true
+          example: https://www.abbconnect.nl/Details/Index.aspx/325971
+        doNotUseBillOfMaterials:
+          type: boolean
+          description: 'A value indicating that the Bill of Materials is not used, this means that certain values become required (density, materialfamilies)'
+          example: 'false'
+        calculateEnvironmentValuesFromBillOfMaterials:
+          type: boolean
+          description: A value indicating whether the environmental values (LCA) are specified or calculated bases on the bill of materials
+          example: 'false'
+        circularity:
+          allOf:
+            - $ref: '#/components/schemas/ProductCircularity'
+          description: The product circularity information
+          nullable: true
+        materialFamilies:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProductFamily'
+          description: This value allows you to specify the material family decomposition for the product when the bill of materials is not used.
+          nullable: true
+      additionalProperties: false
+      description: This model describes a product
+    ProductChildReference:
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/BaseChildReference'
+      properties:
+        functionalUnit:
+          allOf:
+            - $ref: '#/components/schemas/FunctionalUnit'
+          description: Defines the type of product
+          example: Volume
+      additionalProperties: false
+      description: Describes a product in the bill of materials of a product
+    ProductCircularity:
+      type: object
+      properties:
+        feedstock:
+          allOf:
+            - $ref: '#/components/schemas/ProductFeedstock'
+          description: Input
+        scarcity:
+          allOf:
+            - $ref: '#/components/schemas/Scarcity'
+          description: Scarcity
+        detachability:
+          allOf:
+            - $ref: '#/components/schemas/Detachability'
+          description: Detachability
+        output:
+          allOf:
+            - $ref: '#/components/schemas/ProductOutput'
+          description: Output
+      additionalProperties: false
+      description: Environment
+    ProductEdge:
+      enum:
+        - Unknown
+        - Closed
+        - Overlapping
+        - Open
+      type: string
+    ProductFamily:
+      required:
+        - familyId
+        - values
+      type: object
+      properties:
+        familyId:
+          type: string
+          description: The material family identifier
+          example: madasterv2
+        values:
+          type: object
+          additionalProperties:
+            type: number
+            format: double
+          description: The family composition
+          example: {"q2": 0.88, "h2": 0.12}
+      additionalProperties: false
+      description: 'The product family model, used to device a product into material families when no bill of material is used.'
+    ProductFeedstock:
+      type: object
+      properties:
+        renewables:
+          type: number
+          description: Renewables
+          format: double
+        renewablesSustainablyProduced:
+          type: number
+          description: Renewable feedstock Sustainably Produced
+          format: double
+        rapidRenewables:
+          type: number
+          description: Rapid Renewables
+          format: double
+        rapidRenewablesSustainablyProduced:
+          type: number
+          description: Rapid renewables sustainably produced
+          format: double
+        notRenewables:
+          type: number
+          description: Not Renewables
+          format: double
+          nullable: true
+          readOnly: true
+        recycled:
+          type: number
+          description: Recycled
+          format: double
+        recyclingEfficiency:
+          type: number
+          description: Recycling Efficiency
+          format: double
+        totalPrimary:
+          type: number
+          description: Primary Feedstock
+          format: double
+          nullable: true
+          readOnly: true
+        totalSecondary:
+          type: number
+          description: Secondary
+          format: double
+          nullable: true
+          readOnly: true
+        reused:
+          type: number
+          description: Reused
+          format: double
+      additionalProperties: false
+      description: Input
+    ProductOutput:
+      type: object
+      properties:
+        availableForRecycle:
+          type: number
+          description: Available for recycle
+          format: double
+        recyclingEfficiency:
+          type: number
+          description: 'Recycling efficiency '
+          format: double
+        landfill:
+          type: number
+          description: Landfill
+          format: double
+        incineration:
+          type: number
+          description: Incineration
+          format: double
+          nullable: true
+          readOnly: true
+        availableForReuse:
+          type: number
+          description: Available for reuse
+          format: double
+      additionalProperties: false
+      description: Output
+    Scarcity:
+      type: object
+      properties:
+        physicalScarce:
+          type: number
+          description: Physically scarce
+          format: double
+        socialEconomicScarce:
+          type: number
+          description: Socioeconomic scarce
+          format: double
+      additionalProperties: false
+      description: Scarcity
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      description: Token Authorization
+      name: X-API-Key
+      in: header
+security:
+  - ApiKeyAuth: [ ]
+tags:
+  - name: Commodity
+    description: All commodity (product & material) related actions.
+  - name: Database
+    description: All database related actions.
+  - name: SystemSettings
+    description: All system related actions.

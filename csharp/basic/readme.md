@@ -21,3 +21,6 @@ This example executes the following steps:
 2. Download this example repo
 4. Update the API token in ```Program.cs```
 5. Run the example
+
+## Updates:
+- dec 2022: updated example, uses API v4 to create database and product.

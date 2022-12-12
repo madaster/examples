@@ -2,7 +2,9 @@
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
-using example.client;
+using Example.Client.V3;
+using Example.Client.V4;
+using Example.Client.Shared;
 
 namespace example
 {
@@ -48,7 +50,6 @@ namespace example
             Console.WriteLine($"Current account: {account.Name}");
         }
 
-
         /// <summary>
         /// Call the database
         /// </summary>
@@ -57,37 +58,61 @@ namespace example
         private static async Task<Guid> GetOrCreateProductAsync(HttpClient httpClient)
         {
             var dbClient = new DatabaseClient(httpClient);
-            var productClient = new ProductClient(httpClient);
+            var commodityClient = new CommodityClient(httpClient);
 
-            var databases = await dbClient.GetDatabasesAsync(AcceptLanguage.Nl);
-            
             // try to find a database in the account, create if not found
-            var db = databases.FirstOrDefault(d => d.Name.Nl == "Example database");
-            if (db == null) {
-                db = await dbClient.CreateDatabaseAsync(new DatabaseRequest() { Name = new MultiLingualString() { Nl = "Example database" }, InitiallySelectedForEnrichment = true });
-            }
-
-            // try to find a product in the database, create if not found
-            var products = await productClient.GetProductsAsync(db.Id);
-            var product = products.FirstOrDefault(p => p.Name.Nl == "Beglazing_meervoudig");
-            if (product == null) 
+            Database db;
+            try
             {
-                product = await productClient.AddProductAsync(db.Id, new ProductRequest() {
-                    Name= new MultiLingualString() { Nl = "Beglazing_meervoudig" },
-                    ProductType = ProductType.Volume,
-                    FunctionalLifetime = 100,
-                    TechnicalLifetime = 100
+                db = await dbClient.GetDatabaseByExternalIdAsync("DB-12345");
+            }
+            catch (ApiException ex)
+            {
+                if (ex.StatusCode != 404) throw;
+
+                db = await dbClient.CreateDatabaseAsync(new()
+                {
+                    ExternalId = "DB-12345",
+                    Names = new() { 
+                        Nl = "Mijn database",
+                        En = "My database"
+                    },
+                    InitiallySelectedForEnrichment = true,
+                });
+            }
+            
+            // try to find a product in the database, create if not found
+            CommodityBase product;
+            try
+            {
+                product = await commodityClient.GetCommodityByExternalIdAsync(db.Id, "ABC-123");
+            }
+            catch (ApiException ex)
+            {
+                if (ex.StatusCode != 404) throw;
+
+                product = await commodityClient.CreateCommodityAsync(new Product()
+                {
+                    ExternalId = "ABC-123",
+                    Names = new() { Nl = "Beglazing_meervoudig" },
+                    FunctionalUnit = FunctionalUnit.Volume,
+                    Lifespan = 100,
+                    DefaultFunctionalUnitAmount = 1,
+                    DoNotUseBillOfMaterials = false,
+                    CalculateEnvironmentValuesFromBillOfMaterials = true,
+                    DatabaseId = db.Id,
+                    IsActive = true
                 });
 
                 // Add the search criterea, for matching within the ifc files
-                await productClient.AddMatchAsync(db.Id, product.Id, new MatchingCriterion() { LanguageCode = null, MatchType = MatchingCriterionType.Contains, Value = "Beglazing_meervoudig" });
-                await productClient.AddMatchAsync(db.Id, product.Id, new MatchingCriterion() { LanguageCode = null, MatchType = MatchingCriterionType.Contains, Value = "Dubbelglas" });
-                await productClient.AddMatchAsync(db.Id, product.Id, new MatchingCriterion() { LanguageCode = null, MatchType = MatchingCriterionType.Contains, Value = "Tripleglas" });
-                await productClient.AddMatchAsync(db.Id, product.Id, new MatchingCriterion() { LanguageCode = null, MatchType = MatchingCriterionType.Contains, Value = "Isolatieglas" });
+                await commodityClient.CreateMatchAsync(product.Id, new() { Language = null, MatchType = MatchingTermType.Contains, Value = "Beglazing_meervoudig" });
+                await commodityClient.CreateMatchAsync(product.Id, new() { Language = null, MatchType = MatchingTermType.Contains, Value = "Dubbelglas" });
+                await commodityClient.CreateMatchAsync(product.Id, new() { Language = null, MatchType = MatchingTermType.Contains, Value = "Tripleglas" });
+                await commodityClient.CreateMatchAsync(product.Id, new() { Language = null, MatchType = MatchingTermType.Contains, Value = "Isolatieglas" });
 
                 // Add the product decomposition, the material IDs are used from the standard Madaster database. You could use a material client to search for them.
-                await productClient.AddChildAsync(db.Id, product.Id, new ProductChild() { ChildId = Guid.Parse("b499c354-fa05-4fc5-8ee4-8df89d09da4a"), Value = 0.6, Circular = new ProductChildCircularInformation() { InheritEfficiencyPercentages = true, InheritEndOfLifePercentages = true, InheritFeedstockPercentages = true } });
-                await productClient.AddChildAsync(db.Id, product.Id, new ProductChild() { ChildId = Guid.Parse("e8f9eb37-4cf0-4f75-809a-1a2a2de6825d"), Value = 0.4, Circular = new ProductChildCircularInformation() { InheritEfficiencyPercentages = true, InheritEndOfLifePercentages = true, InheritFeedstockPercentages = true } });
+                await commodityClient.AddProductChildByWeightAsync(product.Id, new() { CommodityId = Guid.Parse("b499c354-fa05-4fc5-8ee4-8df89d09da4a"), Quantity = 100 });
+                await commodityClient.AddProductChildByWeightAsync(product.Id, new() { CommodityId = Guid.Parse("fafe6a22-b9c0-4062-a7bb-0c8ffce68cb2"), Quantity = 50 });
             }
 
             return product.Id;
@@ -146,7 +171,7 @@ namespace example
         static async Task<Guid> CreateBuildingAsync(HttpClient httpClient, Guid folderId)
         {
             var client = new BuildingClient(httpClient);
-            var settingsClient = new SystemSettingsClient(httpClient);
+            var settingsClient = new Example.Client.V3.SystemSettingsClient(httpClient);
 
             var usages = await settingsClient.GetBuildingUsagesAsync(AcceptLanguage.Nl);
             var materialClassifications = await settingsClient.GetMaterialClassificationsAsync(AcceptLanguage.Nl);
@@ -158,7 +183,6 @@ namespace example
                 Phase = BuildingPhase.New,
                 BuildingUsage = usages.First().Key,
                 MaterialClassificationTypeId = materialClassifications.First(mc => mc.Name == "Madaster").Id,
-                LastRenovationDate = DateTimeOffset.UtcNow,
                 CompletionDate = DateTimeOffset.UtcNow
             });
 
@@ -176,7 +200,7 @@ namespace example
         static async Task CreateBuildingFileAsync(HttpClient httpClient, Guid buildingId, Guid productId) {
             var fileClient = new BuildingFileClient(httpClient);
             var elementClient = new BuildingFileElementClient(httpClient);
-            var settingsClient = new SystemSettingsClient(httpClient);
+            var settingsClient = new Example.Client.V3.SystemSettingsClient(httpClient);
 
             var classifications = await settingsClient.GetClassificationMethodsAsync();
 
@@ -185,7 +209,7 @@ namespace example
                 Name = "API ifc file",
                 Type = BuildingRequestFileType.Source,
                 PreferredDatabaseIds = new[] { Guid.Empty },
-                ClassificationTypeId = classifications.First(c => c.Name.Nl == "NL-SfB").Id,
+                ClassificationTypeId = classifications.First(c => c.Name.AdditionalProperties["iv"].Equals("NL-SfB")).Id,
             });
 
             Console.WriteLine($"  - Created file");
