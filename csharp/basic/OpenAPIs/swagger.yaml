@@ -1,6 +1,6 @@
 openapi: 3.0.1
 info:
-  title: 'Madaster Private API - Build: 17265'
+  title: 'Madaster Private API - Build: 18991'
   description: 'Welcome to the **Madaster Private API** endpoint. This endpoint can be used to interact with the Madaster Platform and its resources. This API does not fully cover all functionality of the platform yet, please see below for the available functions and what they can be used for. For detailed information about the platform and this API, please refer to the [Madaster Documentation](https://docs.madaster.com) or the [Madaster API Documentation](https://docs.madaster.com/nl/en/api.html).<br /><br />To access these resources, you need an authorization token. If you do not have one yet, see the chapter about Authorization in the [API documentation](https://docs.madaster.com/nl/en/api.html). This token should be sent as a header with the name ''X-API-Key'', which will authenticate the request with the token. The documentation below specifies which requests are available and which responses they might produce.<br /><br />This API can be reached at the endpoint: **[https://api.madaster.com/](https://api.madaster.com/)**'
   contact:
     name: Madaster Services B.V.
@@ -2442,6 +2442,108 @@ components:
           description: 'Terrestrial ecotoxicity potential (TETP) (*kg 1,4-Dichlorobenzene*)'
           format: double
           nullable: true
+        pere:
+          title: Use of renewable primary energy (PERE)
+          type: number
+          description: Use of renewable primary energy (PERE) (*MJ*)
+          format: double
+          nullable: true
+        perm:
+          title: Use of renewable primary energy resources used as raw materials (PERM)
+          type: number
+          description: Use of renewable primary energy resources used as raw materials (PERM) (*MJ*)
+          format: double
+          nullable: true
+        pert:
+          title: Total use of renewable primary energy resources (PERT)
+          type: number
+          description: Total use of renewable primary energy resources (PERT) (*MJ*)
+          format: double
+          nullable: true
+        penre:
+          title: Use of non renewable primary energy (PENRE)
+          type: number
+          description: Use of non renewable primary energy (PENRE) (*MJ*)
+          format: double
+          nullable: true
+        penrm:
+          title: Use of non renewable primary energy resources used as raw materials (PENRM)
+          type: number
+          description: Use of non renewable primary energy resources used as raw materials (PENRM) (*MJ*)
+          format: double
+          nullable: true
+        penrt:
+          title: Total use of non renewable primary energy resource (PENRT)
+          type: number
+          description: Total use of non renewable primary energy resource (PENRT) (*MJ*)
+          format: double
+          nullable: true
+        sm:
+          title: Use of secondary material (SM)
+          type: number
+          description: Use of secondary material (SM) (*kg*)
+          format: double
+          nullable: true
+        rsf:
+          title: Use of renewable secondary fuels (RSF)
+          type: number
+          description: Use of renewable secondary fuels (RSF) (*MJ*)
+          format: double
+          nullable: true
+        nrsf:
+          title: Use of non renewable secondary fuels (NRSF)
+          type: number
+          description: Use of non renewable secondary fuels (NRSF) (*MJ*)
+          format: double
+          nullable: true
+        fw:
+          title: Use of net fresh water (FW)
+          type: number
+          description: Use of net fresh water (FW) (*m3*)
+          format: double
+          nullable: true
+        hwd:
+          title: Hazardous waste disposed (HWD)
+          type: number
+          description: Hazardous waste disposed (HWD) (*kg*)
+          format: double
+          nullable: true
+        nhwd:
+          title: Non hazardous waste dispose (NHWD)
+          type: number
+          description: Non hazardous waste dispose (NHWD) (*kg*)
+          format: double
+          nullable: true
+        rwd:
+          title: Radioactive waste disposed (RWD)
+          type: number
+          description: Radioactive waste disposed (RWD) (*kg*)
+          format: double
+          nullable: true
+        mfr:
+          title: Materials for recycling (MFR)
+          type: number
+          description: Materials for recycling (MFR) (*kg*)
+          format: double
+          nullable: true
+        mer:
+          title: Materials for energy recovery (MER)
+          type: number
+          description: Materials for energy recovery (MER) (*MJ*)
+          format: double
+          nullable: true
+        eee:
+          title: Exported electrical energy (EEE)
+          type: number
+          description: Exported electrical energy (EEE) (*MJ*)
+          format: double
+          nullable: true
+        ete:
+          title: Exported thermal energy (EET)
+          type: number
+          description: Exported thermal energy (EET) (*MJ*)
+          format: double
+          nullable: true
       additionalProperties: false
       description: LCA ruleset EN 15804:2012-04+A1 2013
     EN15804_2012_A2_2019:
@@ -2559,6 +2661,108 @@ components:
           title: Potential soil quality index
           type: number
           description: Potential soil quality index
+          format: double
+          nullable: true
+        pere:
+          title: Use of renewable primary energy (PERE)
+          type: number
+          description: Use of renewable primary energy (PERE) (*MJ*)
+          format: double
+          nullable: true
+        perm:
+          title: Use of renewable primary energy resources used as raw materials (PERM)
+          type: number
+          description: Use of renewable primary energy resources used as raw materials (PERM) (*MJ*)
+          format: double
+          nullable: true
+        pert:
+          title: Total use of renewable primary energy resources (PERT)
+          type: number
+          description: Total use of renewable primary energy resources (PERT) (*MJ*)
+          format: double
+          nullable: true
+        penre:
+          title: Use of non renewable primary energy (PENRE)
+          type: number
+          description: Use of non renewable primary energy (PENRE) (*MJ*)
+          format: double
+          nullable: true
+        penrm:
+          title: Use of non renewable primary energy resources used as raw materials (PENRM)
+          type: number
+          description: Use of non renewable primary energy resources used as raw materials (PENRM) (*MJ*)
+          format: double
+          nullable: true
+        penrt:
+          title: Total use of non renewable primary energy resource (PENRT)
+          type: number
+          description: Total use of non renewable primary energy resource (PENRT) (*MJ*)
+          format: double
+          nullable: true
+        sm:
+          title: Use of secondary material (SM)
+          type: number
+          description: Use of secondary material (SM) (*kg*)
+          format: double
+          nullable: true
+        rsf:
+          title: Use of renewable secondary fuels (RSF)
+          type: number
+          description: Use of renewable secondary fuels (RSF) (*MJ*)
+          format: double
+          nullable: true
+        nrsf:
+          title: Use of non renewable secondary fuels (NRSF)
+          type: number
+          description: Use of non renewable secondary fuels (NRSF) (*MJ*)
+          format: double
+          nullable: true
+        fw:
+          title: Use of net fresh water (FW)
+          type: number
+          description: Use of net fresh water (FW) (*m3*)
+          format: double
+          nullable: true
+        hwd:
+          title: Hazardous waste disposed (HWD)
+          type: number
+          description: Hazardous waste disposed (HWD) (*kg*)
+          format: double
+          nullable: true
+        nhwd:
+          title: Non hazardous waste dispose (NHWD)
+          type: number
+          description: Non hazardous waste dispose (NHWD) (*kg*)
+          format: double
+          nullable: true
+        rwd:
+          title: Radioactive waste disposed (RWD)
+          type: number
+          description: Radioactive waste disposed (RWD) (*kg*)
+          format: double
+          nullable: true
+        mfr:
+          title: Materials for recycling (MFR)
+          type: number
+          description: Materials for recycling (MFR) (*kg*)
+          format: double
+          nullable: true
+        mer:
+          title: Materials for energy recovery (MER)
+          type: number
+          description: Materials for energy recovery (MER) (*MJ*)
+          format: double
+          nullable: true
+        eee:
+          title: Exported electrical energy (EEE)
+          type: number
+          description: Exported electrical energy (EEE) (*MJ*)
+          format: double
+          nullable: true
+        ete:
+          title: Exported thermal energy (EET)
+          type: number
+          description: Exported thermal energy (EET) (*MJ*)
           format: double
           nullable: true
       additionalProperties: false
@@ -2794,7 +2998,7 @@ components:
           nullable: true
         environmentalCostIndicator:
           type: number
-          description: Environmental Cost Indicator
+          description: ENV_ECI
           format: double
           nullable: true
         UUID:

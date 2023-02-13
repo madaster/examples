@@ -1,7 +1,7 @@
 {
   "openapi": "3.0.1",
   "info": {
-    "title": "Madaster Private API - Build: 17296",
+    "title": "Madaster Private API - Build: 18991",
     "description": "Welcome to the **Madaster Private API** endpoint. This endpoint can be used to interact with the Madaster Platform and its resources. This API does not fully cover all functionality of the platform yet, please see below for the available functions and what they can be used for. For detailed information about the platform and this API, please refer to the [Madaster Documentation](https://docs.madaster.com) or the [Madaster API Documentation](https://docs.madaster.com/nl/en/api.html).<br/><br/>To access these resources, you need an authorization token. If you do not have one yet, see the chapter about Authorization in the [API documentation](https://docs.madaster.com/nl/en/api.html). This token should be sent as a header with the name 'X-API-Key', which will authenticate the request with the token. The documentation below specifies which requests are available and which responses they might produce.<br/><br/>This API can be reached at the endpoint: **[https://api.madaster.com/](https://api.madaster.com/)**",
     "contact": {
       "name": "Madaster Services B.V.",
@@ -355,7 +355,8 @@
               }
             }
           }
-        }
+        },
+        "deprecated": true
       }
     },
     "/api/v3.0/building/{id}/exportexcelpassport": {
@@ -392,6 +393,104 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/BuildingFileResponse"
+                }
+              }
+            }
+          }
+        },
+        "deprecated": true
+      }
+    },
+    "/api/v3.0/building/{id}/passport": {
+      "post": {
+        "tags": [
+          "Building"
+        ],
+        "summary": "Schedules the generation of a building passport with the provided preset",
+        "operationId": "Building_CreatePassport",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The building identifier",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PassportRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PassportRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/PassportRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "202": {
+            "description": "The passport was accepted for generation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BuildingFileResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v3.0/building/{id}/passportpresets/{passportType}": {
+      "get": {
+        "tags": [
+          "Building"
+        ],
+        "summary": "Retrieves the possible presets for a passport",
+        "operationId": "Building_GetPassportPresets",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The building identifier",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "passportType",
+            "in": "path",
+            "description": "The passport type",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/PassportType"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The possible presets for the specified passport type.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/PassportPreset"
+                  }
                 }
               }
             }
@@ -1598,7 +1697,8 @@
           "en",
           "nl",
           "fr",
-          "de"
+          "de",
+          "nb"
         ],
         "type": "string",
         "description": "The culture to use for the request",
@@ -2447,6 +2547,44 @@
             "minLength": 1,
             "type": "string",
             "description": "The identifier of the material classification type of the building (call /api/v3.0/system/materialfamilies, to retrieve possible values)"
+          },
+          "designStage": {
+            "$ref": "#/components/schemas/DesignStage"
+          },
+          "preparedBy": {
+            "type": "string",
+            "description": "Who prepared this building",
+            "nullable": true
+          },
+          "ownerName": {
+            "type": "string",
+            "description": "The owner name",
+            "nullable": true
+          },
+          "ownerAddressLine1": {
+            "type": "string",
+            "description": "The owner address line 1",
+            "nullable": true
+          },
+          "ownerAddressLine2": {
+            "type": "string",
+            "description": "The owner address line 2",
+            "nullable": true
+          },
+          "ownerZipcode": {
+            "type": "string",
+            "description": "The owner zipcode",
+            "nullable": true
+          },
+          "ownerCity": {
+            "type": "string",
+            "description": "The owner city",
+            "nullable": true
+          },
+          "ownerCountryId": {
+            "type": "string",
+            "description": "The owner country id",
+            "nullable": true
           }
         }
       },
@@ -2553,6 +2691,47 @@
             "type": "string",
             "description": "The identifier of the country that the building is situated in",
             "nullable": true
+          },
+          "preparedBy": {
+            "type": "string",
+            "description": "Who prepared this building",
+            "nullable": true
+          },
+          "ownerName": {
+            "type": "string",
+            "description": "The owner name",
+            "nullable": true
+          },
+          "ownerAddressLine1": {
+            "type": "string",
+            "description": "The owner address line 1",
+            "nullable": true
+          },
+          "ownerAddressLine2": {
+            "type": "string",
+            "description": "The owner address line 2",
+            "nullable": true
+          },
+          "ownerZipcode": {
+            "type": "string",
+            "description": "The owner zipcode",
+            "nullable": true
+          },
+          "ownerCity": {
+            "type": "string",
+            "description": "The owner city",
+            "nullable": true
+          },
+          "ownerCountryId": {
+            "type": "string",
+            "description": "The owner country id",
+            "nullable": true
+          },
+          "ownerCountry": {
+            "type": "string",
+            "description": "The owner country",
+            "nullable": true,
+            "readOnly": true
           },
           "buildingUsage": {
             "type": "string",
@@ -2748,6 +2927,9 @@
             "minLength": 1,
             "type": "string",
             "description": "The identifier of the material classification type of the building (call /api/v3.0/system/materialfamilies, to retrieve possible values)"
+          },
+          "designStage": {
+            "$ref": "#/components/schemas/DesignStage"
           }
         }
       },
@@ -2845,6 +3027,52 @@
           }
         },
         "description": "A classification method."
+      },
+      "DesignStage": {
+        "enum": [
+          "Unknown",
+          "ConceptDesign",
+          "SchematicDesign",
+          "DetailedDesign",
+          "ConstructionDocumentation",
+          "FabricationAndAssembly",
+          "AsBuilt"
+        ],
+        "type": "string",
+        "x-ms-enum": {
+          "name": "DesignStage",
+          "modelAsString": false,
+          "values": [
+            {
+              "name": "Unknown",
+              "value": "Unknown"
+            },
+            {
+              "name": "ConceptDesign",
+              "value": "ConceptDesign"
+            },
+            {
+              "name": "SchematicDesign",
+              "value": "SchematicDesign"
+            },
+            {
+              "name": "DetailedDesign",
+              "value": "DetailedDesign"
+            },
+            {
+              "name": "ConstructionDocumentation",
+              "value": "ConstructionDocumentation"
+            },
+            {
+              "name": "FabricationAndAssembly",
+              "value": "FabricationAndAssembly"
+            },
+            {
+              "name": "AsBuilt",
+              "value": "AsBuilt"
+            }
+          ]
+        }
       },
       "ElementBatchResult": {
         "type": "object",
@@ -3104,6 +3332,67 @@
         "example": {
           "nl": "nederlandse waarde",
           "en": "english value"
+        }
+      },
+      "PassportPreset": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "The id of the preset",
+            "format": "uuid",
+            "readOnly": true
+          },
+          "name": {
+            "type": "string",
+            "description": "The name of the preset",
+            "nullable": true,
+            "readOnly": true
+          }
+        }
+      },
+      "PassportRequest": {
+        "type": "object",
+        "properties": {
+          "passportType": {
+            "$ref": "#/components/schemas/PassportType"
+          },
+          "language": {
+            "type": "string",
+            "description": "The language of the passport",
+            "nullable": true
+          },
+          "preset": {
+            "type": "string",
+            "description": "The id of the preset",
+            "format": "uuid"
+          }
+        }
+      },
+      "PassportType": {
+        "enum": [
+          "OnePager",
+          "ExecutiveSummary",
+          "Full"
+        ],
+        "type": "string",
+        "x-ms-enum": {
+          "name": "PassportType",
+          "modelAsString": false,
+          "values": [
+            {
+              "name": "OnePager",
+              "value": "OnePager"
+            },
+            {
+              "name": "ExecutiveSummary",
+              "value": "ExecutiveSummary"
+            },
+            {
+              "name": "Full",
+              "value": "Full"
+            }
+          ]
         }
       },
       "PhaseMatch": {
