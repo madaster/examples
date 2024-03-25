@@ -52,19 +52,19 @@ namespace example
             // Madaster database.
             var file = await fileClient.AddFileAsync(id, new BuildingFileRequest()
             {
-                Name = "small.ifc",
+                Name = "220729 DM2 - Constructie.ifc",
                 Type = BuildingRequestFileType.Source,
-                PreferredDatabaseIds = new[] { Guid.Empty },
-                ClassificationTypeId = Guid.Parse("88eb09b8-d3f5-4cb1-a732-eb64281a585c") 
+                PreferredDatabaseIds = new[] { Guid.Parse("00000000-0000-0000-0000-000000000003") }, // EPEA database
+                ClassificationTypeId = Guid.Parse("e6bbe656-6722-4f7c-a825-8be526e13189") // OMNIclass
             });
             Console.WriteLine($"  - Created file");
 
             // Open the file from disk as a stream and upload using the API
-            var filePath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "small.ifc");
-            if (!System.IO.File.Exists(filePath)) { throw new Exception("The file 'small.ifc' is missing."); }
+            var filePath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "220729 DM2 - Constructie.ifc");
+            if (!System.IO.File.Exists(filePath)) { throw new Exception("The file '220729 DM2 - Constructie.ifc' is missing."); }
 
             using var stream = System.IO.File.OpenRead(filePath);
-            await fileClient.UploadFileAsync(file.BuildingId, file.Id, "small.ifc", stream);
+            await fileClient.UploadFileAsync(file.BuildingId, file.Id, "220729 DM2 - Constructie.ifc", stream);
             Console.Write($"  - File uploaded");
 
             // After the file is uploaded, the Madaster platform starts importing the file. 
