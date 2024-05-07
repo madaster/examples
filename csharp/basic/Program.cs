@@ -1,11 +1,8 @@
-﻿using System;
-using System.Linq;
-using System.Net.Http;
-using System.Threading.Tasks;
-
-using Example.Client.Shared;
+﻿using Example.Client.Shared;
 using Example.Client.V3;
 using Example.Client.V4;
+
+using Database = Example.Client.V4.Database;
 
 namespace Example.Client;
 
@@ -14,7 +11,7 @@ internal class Program
     private const string environmentUrl = "https://api.madaster.com";
     private const string token = "-- REPLACE ME --";
 
-    private static async Task Main(string[] args)
+    private static async Task Main()
     {
         using (var httpClientV3 = new HttpClient() { BaseAddress = new Uri(environmentUrl) })
         using (var httpClientV4 = new HttpClient() { BaseAddress = new Uri(environmentUrl) })
@@ -26,13 +23,9 @@ internal class Program
 
             var productId = await GetOrCreateProductAsync(httpClientV4);
 
-            var folderTypeId = await GetFolderTypeIdAsync(httpClientV3);
-            if (folderTypeId == null)
-            {
-                throw new Exception("No foldertype for Portfolio found");
-            }
+            var folderTypeId = await GetFolderTypeIdAsync(httpClientV3) ?? throw new Exception("No foldertype for Portfolio found");
 
-            var folderId = await GetOrCreateFolderAsync(httpClientV3, folderTypeId.Value);
+            var folderId = await GetOrCreateFolderAsync(httpClientV3, folderTypeId);
 
             var buildingId = await CreateBuildingAsync(httpClientV3, folderId);
 
@@ -224,7 +217,7 @@ internal class Program
         {
             Name = "API ifc file",
             Type = BuildingRequestFileType.Source,
-            PreferredDatabaseIds = new[] { Guid.Empty },
+            PreferredDatabaseIds = [Guid.Empty],
             ClassificationTypeId = classifications.First(c => c.Name.AdditionalProperties["iv"].Equals("NL-SfB")).Id,
         });
 

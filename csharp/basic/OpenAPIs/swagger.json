@@ -1,7 +1,7 @@
 {
   "openapi": "3.0.1",
   "info": {
-    "title": "Madaster Private API - Build: 18991",
+    "title": "Madaster Private API - Build: 28168",
     "description": "Welcome to the **Madaster Private API** endpoint. This endpoint can be used to interact with the Madaster Platform and its resources. This API does not fully cover all functionality of the platform yet, please see below for the available functions and what they can be used for. For detailed information about the platform and this API, please refer to the [Madaster Documentation](https://docs.madaster.com) or the [Madaster API Documentation](https://docs.madaster.com/nl/en/api.html).<br/><br/>To access these resources, you need an authorization token. If you do not have one yet, see the chapter about Authorization in the [API documentation](https://docs.madaster.com/nl/en/api.html). This token should be sent as a header with the name 'X-API-Key', which will authenticate the request with the token. The documentation below specifies which requests are available and which responses they might produce.<br/><br/>This API can be reached at the endpoint: **[https://api.madaster.com/](https://api.madaster.com/)**",
     "contact": {
       "name": "Madaster Services B.V.",
@@ -667,6 +667,110 @@
         }
       }
     },
+    "/api/v3.0/building/{id}/database": {
+      "post": {
+        "tags": [
+          "Building"
+        ],
+        "summary": "Creates a database under the building",
+        "operationId": "Building_AddDatabase",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The building identifier",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The database was successfully added, the database ID is returned",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string",
+                  "format": "uuid"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Building"
+        ],
+        "summary": "Gets the databases under the building",
+        "operationId": "Building_GetBuildingDatabases",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The building identifier",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "\t\r\nThe request was successful and will return all databases.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Database"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v3.0/building/{id}/availabledatabases": {
+      "get": {
+        "tags": [
+          "Building"
+        ],
+        "summary": "Gets the available databases for refinement in the specified building",
+        "operationId": "Building_GetAvailableDatabases",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The building identifier",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "\t\r\nThe request was successful and will return the available databases (for refinement).",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Database"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/v3.0/building/{buildingId}/files": {
       "get": {
         "tags": [
@@ -825,7 +929,7 @@
         ],
         "responses": {
           "204": {
-            "description": "The building was successfully deleted."
+            "description": "The building file was successfully deleted."
           }
         }
       }
@@ -1043,6 +1147,51 @@
             }
           }
         ],
+        "responses": {
+          "202": {
+            "description": "The refinement of the building file was started and the location to fetch it's status can be found in the header."
+          }
+        }
+      }
+    },
+    "/api/v3.0/building/{buildingId}/files/restartrefinement": {
+      "post": {
+        "tags": [
+          "BuildingFile"
+        ],
+        "summary": "Updates the refinement settings and starts the refinement of a building file. Depending on the settings provided, only unmatched items or everything is refined.",
+        "operationId": "BuildingFile_RestartRefinement",
+        "parameters": [
+          {
+            "name": "buildingId",
+            "in": "path",
+            "description": "The building identifier",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RestartRefinementRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RestartRefinementRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/RestartRefinementRequest"
+              }
+            }
+          }
+        },
         "responses": {
           "202": {
             "description": "The refinement of the building file was started and the location to fetch it's status can be found in the header."
@@ -1594,6 +1743,30 @@
             }
           }
         }
+      },
+      "delete": {
+        "tags": [
+          "Folder"
+        ],
+        "summary": "Deletes the folder and all related data",
+        "operationId": "Folder_DeleteFolder",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The folder identifier",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "The folder was successfully deleted."
+          }
+        }
       }
     },
     "/api/v3.0/system/classificationmethods": {
@@ -1704,6 +1877,47 @@
         "description": "The culture to use for the request",
         "default": "en"
       },
+      "Accessibility": {
+        "enum": [
+          "Unknown",
+          "NotAccessible",
+          "PartialWithDamage",
+          "PartialWithRepairableDamage",
+          "PartialNoDamage",
+          "Accessible"
+        ],
+        "type": "string",
+        "x-ms-enum": {
+          "name": "Accessibility",
+          "modelAsString": false,
+          "values": [
+            {
+              "name": "Unknown",
+              "value": "Unknown"
+            },
+            {
+              "name": "NotAccessible",
+              "value": "NotAccessible"
+            },
+            {
+              "name": "PartialWithDamage",
+              "value": "PartialWithDamage"
+            },
+            {
+              "name": "PartialWithRepairableDamage",
+              "value": "PartialWithRepairableDamage"
+            },
+            {
+              "name": "PartialNoDamage",
+              "value": "PartialNoDamage"
+            },
+            {
+              "name": "Accessible",
+              "value": "Accessible"
+            }
+          ]
+        }
+      },
       "AccountResponse": {
         "type": "object",
         "properties": {
@@ -1784,7 +1998,8 @@
           "circularityUsagePhase": {
             "type": "number",
             "description": "The utility of the building.",
-            "format": "double"
+            "format": "double",
+            "deprecated": true
           },
           "circularityEndOfLifePhase": {
             "type": "number",
@@ -1888,6 +2103,39 @@
             "type": "string",
             "description": "The floor of the element",
             "nullable": true
+          },
+          "GTIN": {
+            "type": "string",
+            "description": "The GTIN of the product, used in matching process",
+            "nullable": true
+          },
+          "articleNumber": {
+            "type": "string",
+            "description": "The article number of the product, used in matching process",
+            "nullable": true
+          },
+          "buildingNumbers": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BuildingNumberRatio"
+            },
+            "description": "The buildingnumber(s) assigned to the element.",
+            "nullable": true
+          },
+          "detachabilityConnectionType": {
+            "$ref": "#/components/schemas/ConnectionType"
+          },
+          "detachabilityConnectionTypeDetail": {
+            "$ref": "#/components/schemas/ConnectionTypeDetail"
+          },
+          "detachabilityIntersection": {
+            "$ref": "#/components/schemas/Intersection"
+          },
+          "detachabilityAccessibility": {
+            "$ref": "#/components/schemas/Accessibility"
+          },
+          "detachabilityProductEdge": {
+            "$ref": "#/components/schemas/ProductEdge"
           }
         },
         "description": "A request for a building file element."
@@ -1982,11 +2230,49 @@
             "type": "string",
             "description": "Gets or sets the floor name.",
             "nullable": true
+          },
+          "GTIN": {
+            "type": "string",
+            "description": "The GTIN of the product, used in matching process",
+            "nullable": true
+          },
+          "articleNumber": {
+            "type": "string",
+            "description": "The article number of the product, used in matching process",
+            "nullable": true
+          },
+          "buildingNumbers": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BuildingNumberRatio"
+            },
+            "description": "The buildingnumber(s) assigned to the element.",
+            "nullable": true
+          },
+          "detachabilityConnectionType": {
+            "$ref": "#/components/schemas/ConnectionType"
+          },
+          "detachabilityConnectionTypeDetail": {
+            "$ref": "#/components/schemas/ConnectionTypeDetail"
+          },
+          "detachabilityIntersection": {
+            "$ref": "#/components/schemas/Intersection"
+          },
+          "detachabilityAccessibility": {
+            "$ref": "#/components/schemas/Accessibility"
+          },
+          "detachabilityProductEdge": {
+            "$ref": "#/components/schemas/ProductEdge"
           }
         },
         "description": "A response for a building file element."
       },
       "BuildingFileRequest": {
+        "required": [
+          "name",
+          "preferredDatabaseIds",
+          "type"
+        ],
         "type": "object",
         "properties": {
           "type": {
@@ -2001,9 +2287,9 @@
             "nullable": true
           },
           "name": {
+            "minLength": 1,
             "type": "string",
-            "description": "The name of the building file",
-            "nullable": true
+            "description": "The name of the building file"
           },
           "timeStamp": {
             "type": "string",
@@ -2017,7 +2303,14 @@
               "type": "string",
               "format": "uuid"
             },
-            "description": "The identifiers of the material databases to use for automatic mapping, in their preferred order",
+            "description": "The identifiers of the material databases to use for automatic mapping, in their preferred order"
+          },
+          "languages": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "The language(s) to use for the mapping",
             "nullable": true
           },
           "classificationTypeId": {
@@ -2258,15 +2551,22 @@
             "type": "number",
             "description": "The percentage of elements that have been mapped to an element, counted by number of elements",
             "format": "double"
-          },
-          "percentageElementsMappedByVolume": {
-            "type": "number",
-            "description": "The percentage of elements that have been mapped to an element, counted by volume of elements",
-            "format": "double",
-            "deprecated": true
           }
         },
         "description": "Validation data about a building file."
+      },
+      "BuildingNumberRatio": {
+        "type": "object",
+        "properties": {
+          "buildingNumber": {
+            "type": "string",
+            "nullable": true
+          },
+          "ratio": {
+            "type": "number",
+            "format": "double"
+          }
+        }
       },
       "BuildingPhase": {
         "enum": [
@@ -2401,6 +2701,18 @@
             "format": "double",
             "nullable": true
           },
+          "grossInternalArea": {
+            "type": "number",
+            "description": "The gross internal area of the building",
+            "format": "double",
+            "nullable": true
+          },
+          "grossAssetValue": {
+            "type": "number",
+            "description": "The gross asset value of the building",
+            "format": "double",
+            "nullable": true
+          },
           "energyLabel": {
             "type": "string",
             "description": "The current energy label of the building",
@@ -2476,6 +2788,11 @@
             "type": "integer",
             "description": "The BREEAM label",
             "format": "int32"
+          },
+          "breeamRegistrationNumber": {
+            "type": "string",
+            "description": "The BREEAM registration number",
+            "nullable": true
           },
           "gprScoreEnergy": {
             "type": "number",
@@ -2748,6 +3065,18 @@
             "description": "The gross surface area of the building",
             "format": "double"
           },
+          "grossInternalArea": {
+            "type": "number",
+            "description": "The gross internal area of the building",
+            "format": "double",
+            "nullable": true
+          },
+          "grossAssetValue": {
+            "type": "number",
+            "description": "The gross asset value of the building",
+            "format": "double",
+            "nullable": true
+          },
           "energyLabel": {
             "type": "string",
             "description": "The current energy label of the building",
@@ -2818,6 +3147,11 @@
             "description": "The BREEAM label",
             "format": "int32"
           },
+          "breeamRegistrationNumber": {
+            "type": "string",
+            "description": "The BREEAM registration number",
+            "nullable": true
+          },
           "gprScoreEnergy": {
             "type": "number",
             "description": "The GPR-energy score of the building",
@@ -2851,16 +3185,6 @@
           "mpgLabel": {
             "type": "number",
             "description": "The MPG-score of the building",
-            "format": "double"
-          },
-          "mpgLabelManual": {
-            "type": "number",
-            "description": "The manual MPG-score of the building",
-            "format": "double"
-          },
-          "mpgLabelIndicative": {
-            "type": "number",
-            "description": "The indicative MPG-score of the building",
             "format": "double"
           },
           "leedLabel": {
@@ -2911,11 +3235,6 @@
             "description": "The geo longtitude of the building",
             "format": "double",
             "nullable": true
-          },
-          "phaseType": {
-            "type": "string",
-            "description": "The identifier of the phase type of the buildinge",
-            "format": "uuid"
           },
           "classificationType": {
             "type": "string",
@@ -3028,6 +3347,216 @@
         },
         "description": "A classification method."
       },
+      "CommodityType": {
+        "enum": [
+          "Material",
+          "Volume",
+          "Quantity",
+          "Area",
+          "Length",
+          "OtherUnitQuantity",
+          "Energy",
+          "Weight"
+        ],
+        "type": "string",
+        "x-ms-enum": {
+          "name": "CommodityType",
+          "modelAsString": false,
+          "values": [
+            {
+              "name": "Material",
+              "value": "Material"
+            },
+            {
+              "name": "Volume",
+              "value": "Volume"
+            },
+            {
+              "name": "Quantity",
+              "value": "Quantity"
+            },
+            {
+              "name": "Area",
+              "value": "Area"
+            },
+            {
+              "name": "Length",
+              "value": "Length"
+            },
+            {
+              "name": "OtherUnitQuantity",
+              "value": "OtherUnitQuantity"
+            },
+            {
+              "name": "Energy",
+              "value": "Energy"
+            },
+            {
+              "name": "Weight",
+              "value": "Weight"
+            }
+          ]
+        }
+      },
+      "ConnectionType": {
+        "enum": [
+          "Unknown",
+          "HardChemicalConnection",
+          "SoftChemicalConnection",
+          "DirectConnection",
+          "AddedConnectionConnection",
+          "DryConnection"
+        ],
+        "type": "string",
+        "x-ms-enum": {
+          "name": "ConnectionType",
+          "modelAsString": false,
+          "values": [
+            {
+              "name": "Unknown",
+              "value": "Unknown"
+            },
+            {
+              "name": "HardChemicalConnection",
+              "value": "HardChemicalConnection"
+            },
+            {
+              "name": "SoftChemicalConnection",
+              "value": "SoftChemicalConnection"
+            },
+            {
+              "name": "DirectConnection",
+              "value": "DirectConnection"
+            },
+            {
+              "name": "AddedConnectionConnection",
+              "value": "AddedConnectionConnection"
+            },
+            {
+              "name": "DryConnection",
+              "value": "DryConnection"
+            }
+          ]
+        }
+      },
+      "ConnectionTypeDetail": {
+        "enum": [
+          "Unknown",
+          "BoltAndNut",
+          "Spring",
+          "Corner",
+          "Screw",
+          "None",
+          "Click",
+          "Velcro",
+          "Magnetic",
+          "Glue",
+          "Dump",
+          "Weld",
+          "Concrete",
+          "ChemicalAnchor",
+          "Sealant",
+          "Foam",
+          "Peg",
+          "Nail"
+        ],
+        "type": "string",
+        "x-ms-enum": {
+          "name": "ConnectionTypeDetail",
+          "modelAsString": false,
+          "values": [
+            {
+              "name": "Unknown",
+              "value": "Unknown"
+            },
+            {
+              "name": "BoltAndNut",
+              "value": "BoltAndNut"
+            },
+            {
+              "name": "Spring",
+              "value": "Spring"
+            },
+            {
+              "name": "Corner",
+              "value": "Corner"
+            },
+            {
+              "name": "Screw",
+              "value": "Screw"
+            },
+            {
+              "name": "None",
+              "value": "None"
+            },
+            {
+              "name": "Click",
+              "value": "Click"
+            },
+            {
+              "name": "Velcro",
+              "value": "Velcro"
+            },
+            {
+              "name": "Magnetic",
+              "value": "Magnetic"
+            },
+            {
+              "name": "Glue",
+              "value": "Glue"
+            },
+            {
+              "name": "Dump",
+              "value": "Dump"
+            },
+            {
+              "name": "Weld",
+              "value": "Weld"
+            },
+            {
+              "name": "Concrete",
+              "value": "Concrete"
+            },
+            {
+              "name": "ChemicalAnchor",
+              "value": "ChemicalAnchor"
+            },
+            {
+              "name": "Sealant",
+              "value": "Sealant"
+            },
+            {
+              "name": "Foam",
+              "value": "Foam"
+            },
+            {
+              "name": "Peg",
+              "value": "Peg"
+            },
+            {
+              "name": "Nail",
+              "value": "Nail"
+            }
+          ]
+        }
+      },
+      "Database": {
+        "type": "object",
+        "properties": {
+          "databaseId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "defaultIncludeForRefinement": {
+            "type": "boolean",
+            "nullable": true
+          }
+        }
+      },
       "DesignStage": {
         "enum": [
           "Unknown",
@@ -3084,47 +3613,6 @@
             },
             "nullable": true
           }
-        }
-      },
-      "ElementType": {
-        "enum": [
-          "Material",
-          "LegacyMaterial",
-          "VolumeProduct",
-          "QuantityProduct",
-          "AreaProduct",
-          "LengthProduct"
-        ],
-        "type": "string",
-        "x-ms-enum": {
-          "name": "ElementType",
-          "modelAsString": false,
-          "values": [
-            {
-              "name": "Material",
-              "value": "Material"
-            },
-            {
-              "name": "LegacyMaterial",
-              "value": "LegacyMaterial"
-            },
-            {
-              "name": "VolumeProduct",
-              "value": "VolumeProduct"
-            },
-            {
-              "name": "QuantityProduct",
-              "value": "QuantityProduct"
-            },
-            {
-              "name": "AreaProduct",
-              "value": "AreaProduct"
-            },
-            {
-              "name": "LengthProduct",
-              "value": "LengthProduct"
-            }
-          ]
         }
       },
       "FileDownloadResponse": {
@@ -3274,6 +3762,37 @@
         },
         "description": "The folder type."
       },
+      "Intersection": {
+        "enum": [
+          "Unknown",
+          "Complete",
+          "Incidental",
+          "None"
+        ],
+        "type": "string",
+        "x-ms-enum": {
+          "name": "Intersection",
+          "modelAsString": false,
+          "values": [
+            {
+              "name": "Unknown",
+              "value": "Unknown"
+            },
+            {
+              "name": "Complete",
+              "value": "Complete"
+            },
+            {
+              "name": "Incidental",
+              "value": "Incidental"
+            },
+            {
+              "name": "None",
+              "value": "None"
+            }
+          ]
+        }
+      },
       "Mapping": {
         "type": "object",
         "properties": {
@@ -3282,7 +3801,7 @@
             "format": "uuid"
           },
           "type": {
-            "$ref": "#/components/schemas/ElementType"
+            "$ref": "#/components/schemas/CommodityType"
           }
         },
         "description": "A mapping."
@@ -3409,6 +3928,71 @@
           }
         },
         "description": "A phase match."
+      },
+      "ProductEdge": {
+        "enum": [
+          "Unknown",
+          "Closed",
+          "Overlapping",
+          "Open"
+        ],
+        "type": "string",
+        "x-ms-enum": {
+          "name": "ProductEdge",
+          "modelAsString": false,
+          "values": [
+            {
+              "name": "Unknown",
+              "value": "Unknown"
+            },
+            {
+              "name": "Closed",
+              "value": "Closed"
+            },
+            {
+              "name": "Overlapping",
+              "value": "Overlapping"
+            },
+            {
+              "name": "Open",
+              "value": "Open"
+            }
+          ]
+        }
+      },
+      "RestartRefinementRequest": {
+        "required": [
+          "fileId"
+        ],
+        "type": "object",
+        "properties": {
+          "fileId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "preferredDatabaseIds": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "description": "The identifiers of the material databases to use for automatic mapping, in their preferred order",
+            "nullable": true
+          },
+          "resetAllMapping": {
+            "type": "boolean",
+            "description": "Should all existing mappings be reset?",
+            "nullable": true
+          },
+          "languages": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "The language(s) to use for the mapping",
+            "nullable": true
+          }
+        }
       }
     },
     "securitySchemes": {

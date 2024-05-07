@@ -1,6 +1,6 @@
 openapi: 3.0.1
 info:
-  title: 'Madaster Private API - Build: 18991'
+  title: 'Madaster Private API - Build: 28168'
   description: 'Welcome to the **Madaster Private API** endpoint. This endpoint can be used to interact with the Madaster Platform and its resources. This API does not fully cover all functionality of the platform yet, please see below for the available functions and what they can be used for. For detailed information about the platform and this API, please refer to the [Madaster Documentation](https://docs.madaster.com) or the [Madaster API Documentation](https://docs.madaster.com/nl/en/api.html).<br /><br />To access these resources, you need an authorization token. If you do not have one yet, see the chapter about Authorization in the [API documentation](https://docs.madaster.com/nl/en/api.html). This token should be sent as a header with the name ''X-API-Key'', which will authenticate the request with the token. The documentation below specifies which requests are available and which responses they might produce.<br /><br />This API can be reached at the endpoint: **[https://api.madaster.com/](https://api.madaster.com/)**'
   contact:
     name: Madaster Services B.V.
@@ -645,6 +645,37 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ProblemDetails'
+  '/api/v4.0/commodity/{id}/children/clear':
+    delete:
+      tags:
+        - Commodity
+      summary: Delete all children from Bill of Materials
+      description: Clears the bill of materials
+      operationId: Commodity_ClearProductChildren
+      parameters:
+        - name: id
+          in: path
+          description: The commodity identifier
+          required: true
+          schema:
+            type: string
+            format: uuid
+          example: 6e943637-0163-4e94-8c17-f0dd7ee4eed5
+      responses:
+        '202':
+          description: Accepted
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
   '/api/v4.0/commodity/{id}/lca':
     get:
       tags:
@@ -804,7 +835,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ProblemDetails'
-  '/api/v4.0/commodity/{id}/lca/{isoCode}':
+  '/api/v4.0/commodity/{id}/lca/{isoCode}/{compliance}':
     get:
       tags:
         - Commodity
@@ -830,6 +861,13 @@ paths:
             pattern: '^[a-z]*$'
             type: string
           example: nl
+        - name: compliance
+          in: path
+          description: 'Request a LCA with a compliance, possible values: EN 15804, EN 15804+A2 or KBOB'
+          required: true
+          schema:
+            type: string
+          example: EN 15804
       responses:
         '200':
           description: Success
@@ -849,6 +887,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ProblemDetails'
+  '/api/v4.0/commodity/{id}/lca/{isoCode}':
     delete:
       tags:
         - Commodity
@@ -1892,6 +1931,18 @@ paths:
           schema:
             type: boolean
             default: false
+        - name: skip
+          in: query
+          description: Bypass the specified number of commodities (used in paging).
+          schema:
+            type: integer
+            format: int32
+        - name: take
+          in: query
+          description: Returns the specified number of commodities (used in paging).
+          schema:
+            type: integer
+            format: int32
       responses:
         '200':
           description: Success
@@ -1979,6 +2030,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ProblemDetails'
+      deprecated: true
   '/api/v4.0/database/{id}/materialfamilies':
     get:
       tags:
@@ -2065,6 +2117,10 @@ components:
           description: 'The quantity to add, depending on the call this quantity is in #, m3, m2 or m.'
           format: double
           example: '1'
+        overrideCircularity:
+          allOf:
+            - $ref: '#/components/schemas/ProductChildCircularity'
+          description: Use this field property to override the circularity of the child commodity.
       additionalProperties: false
       description: Used to add a commodity to the Bill of Materials of a commodity.
     BaseChildReference:
@@ -2202,6 +2258,10 @@ components:
           type: string
           description: Describes the commodity type (Product or Material)
           example: Product
+        functionalUnit:
+          allOf:
+            - $ref: '#/components/schemas/FunctionalUnit'
+          example: Volume
         externalId:
           type: string
           description: 'Optional: external refence identifier. _Doesn''t support updates!_'
@@ -2782,13 +2842,15 @@ components:
           type: number
           description: Rapid Renewables
           format: double
+          deprecated: true
         rapidRenewablesSustainablyProduced:
           type: number
           description: Rapid renewables sustainably produced
           format: double
+          deprecated: true
         notRenewables:
           type: number
-          description: Not Renewables
+          description: Non-Renewables
           format: double
           nullable: true
           readOnly: true
@@ -2923,8 +2985,11 @@ components:
         - Quantity
         - Area
         - Length
+        - OtherUnit
+        - Energy
+        - Weight
       type: string
-      description: "This enumeration describes the possible values for the product functional unit:\n  * `Volume` - A product where scaling is performed based on the volume\n  * `Quantity` - A quantity based product, no scaling is being applied\n  * `Area` - A product where scaling is performed based on the area\n  * `Length` - A product where scaling is performed based on the length"
+      description: "This enumeration describes the possible values for the product functional unit:\n  * `Volume` - A product where scaling is performed based on the volume\n  * `Quantity` - A quantity based product, no scaling is being applied\n  * `Area` - A product where scaling is performed based on the area\n  * `Length` - A product where scaling is performed based on the length\n  * `OtherUnit` - \n  * `Energy` - \n  * `Weight` - "
     ImageInfo:
       type: object
       properties:
@@ -2959,6 +3024,7 @@ components:
         - B1
         - B2
         - B3
+        - B4
         - B5
         - B6
         - B7
@@ -2968,7 +3034,7 @@ components:
         - C4
         - D
       type: string
-      description: "The Life Cycle Assessment phases enum:\n  * `NotSpecified` - Unspecified phase\n  * `A1_A3` - A1-A3: Production\n  * `A4` - A4: Transport\n  * `A5` - A5: Installation\n  * `B1` - B1: Use/application\n  * `B2` - B2: Maintenance\n  * `B3` - B3: Repair\n  * `B5` - B5: Refurbishment\n  * `B6` - B6: Operational energy use\n  * `B7` - B7: Operational water use\n  * `C1` - C1: De-construction\n  * `C2` - C2: Transport\n  * `C3` - C3: Waste processing\n  * `C4` - C4: Disposal\n  * `D` - D: Recycling Potential"
+      description: "The Life Cycle Assessment phases enum:\n  * `NotSpecified` - Unspecified phase [Obsolete - use A1_A3]\n  * `A1_A3` - A1-A3: Production\n  * `A4` - A4: Transport\n  * `A5` - A5: Installation\n  * `B1` - B1: Use/application\n  * `B2` - B2: Maintenance\n  * `B3` - B3: Repair\n  * `B4` - \n  * `B5` - B5: Refurbishment\n  * `B6` - B6: Operational energy use\n  * `B7` - B7: Operational water use\n  * `C1` - C1: De-construction\n  * `C2` - C2: Transport\n  * `C3` - C3: Waste processing\n  * `C4` - C4: Disposal\n  * `D` - D: Recycling Potential"
     LifeCycleAssessment:
       required:
         - isoCode
@@ -3360,6 +3426,23 @@ components:
           nullable: true
       additionalProperties: false
       description: This model describes a product
+    ProductChildCircularity:
+      type: object
+      properties:
+        feedstock:
+          allOf:
+            - $ref: '#/components/schemas/ProductFeedstock'
+          description: Input
+        detachability:
+          allOf:
+            - $ref: '#/components/schemas/Detachability'
+          description: Detachability
+        output:
+          allOf:
+            - $ref: '#/components/schemas/ProductOutput'
+          description: Output
+      additionalProperties: false
+      description: Environment
     ProductChildReference:
       type: object
       allOf:
@@ -3415,6 +3498,7 @@ components:
           additionalProperties:
             type: number
             format: double
+            nullable: true
           description: The family composition
           example: {"q2": 0.88, "h2": 0.12}
       additionalProperties: false
@@ -3434,13 +3518,15 @@ components:
           type: number
           description: Rapid Renewables
           format: double
+          deprecated: true
         rapidRenewablesSustainablyProduced:
           type: number
           description: Rapid renewables sustainably produced
           format: double
+          deprecated: true
         notRenewables:
           type: number
-          description: Not Renewables
+          description: Non-Renewables
           format: double
           nullable: true
           readOnly: true
