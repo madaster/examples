@@ -7,8 +7,8 @@ namespace Example.Client;
 
 internal class Program
 {
-    private const string environmentUrl = "https://api.test.madaster.com";
-    private const string token = "699f9c7387e3468eb46fe50a60e221f3"; //"-- REPLACE ME --";
+    private const string environmentUrl = "https://api.madaster.com";
+    private const string token = "-- REPLACE ME --";
 
     private static async Task Main()
     {
@@ -102,12 +102,12 @@ internal class Program
             Type = BuildingRequestFileType.Source,
             PreferredDatabaseIds = [
                 Guid.Parse("cd2bda71-760b-4fcc-8a0b-3877c10000a8") // cd2bda71-760b-4fcc-8a0b-3877c10000a8 = the Okobaudat 2023 database ID
-            ], 
+            ],
             ClassificationTypeId = Guid.Parse("e6bbe656-6722-4f7c-a825-8be526e13189"), // Omniclass
         });
-        
+
         await fileClient.SetImportingAsync(buildingId, file.Id);
-        
+
         await elementClient.AddElementAsync(buildingId, file.Id, new BuildingFileElementRequest()
         {
             Id = "ifcelement1",
